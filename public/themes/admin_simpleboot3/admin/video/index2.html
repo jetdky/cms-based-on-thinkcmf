@@ -1,0 +1,107 @@
+<include file="public@header" />
+</head>
+<body>
+<div class="wrap js-check-wrap">
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="{:url('video/index')}">视频</a></li>
+        <li><a href="{:url('video/add')}">添加视频</a></li>
+    </ul>
+    <form class="well form-inline margin-top-20" method="get" action="{:url('video/index')}">
+        视频名称:
+        <input type="text" class="form-control" name="keyword" style="width: 220px;" value="{:input('request.keyword/s','')}" placeholder="请输入视频名称">
+        <input type="submit" class="btn btn-primary" value="搜索" />
+        <a class="btn btn-danger" href="{:url('video/index')}">清空</a>
+    </form>
+
+    <form method="post" class="js-ajax-form margin-top-20" action="{:url('video/listOrder')}">
+        <div class="table-actions">
+            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
+            <button class="btn btn-sm btn-success js-ajax-submit" type="submit"
+                    data-action="{:url('video/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
+            </button>
+            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
+                    data-action="{:url('video/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
+            </button>
+        </div>
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                         data-checklist="js-check-x"></label></th>
+            <th width="50">排序</th>
+            <th width="50">ID</th>
+            <th>{:lang('VIDEO_NAME')}</th>
+            <th>{:lang('VIDEO_CONTENT')}</th>
+            <th>{:lang('VIDEO_STATUS')}</th>
+            <th>{:lang('VIDEO_TIME')}</th>
+            <th width="140">{:lang('CLICK')}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <php>
+            $asset_img_suffixes=['bmp','jpg','jpeg','png','gif','tiff'];/*TODO ADD MORE*/
+        </php>
+        <php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
+        <foreach name="list" item="vo">
+            <tr>
+                <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                           value="{$vo.id}"></td>
+                <td><input name='list_orders[{$vo.id}]' class="input input-order mr5" type='text' size='3'
+                           value='{$vo.list_order}'></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.name}</td>
+                <td>{$vo.videoClass.name}</td>
+                <if condition=" $vo['photo'] eq null">
+                    <td>暂无</td>
+                    <else />
+                <td>
+                        <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($vo['photo'])}');">
+                            <i class="fa fa-photo fa-fw"></i>
+                        </a>
+                </td>
+                </if>
+                <td>{$vo.lang|getLang}</td>
+                <td>
+                    <switch name="vo.status">
+                        <case value="0">
+                            <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
+                        </case>
+                        <case value="1">
+                            <span class="label label-success">{$user_statuses[$vo['status']]}</span>
+                        </case>
+                        <case value="2">
+                            <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
+                        </case>
+                    </switch>
+                </td>
+                <td>{$vo.create_time|getTime}</td>
+                <td>
+
+                        <a class="btn btn-xs btn-primary" href='{:url("video/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('video/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                        <if condition="$vo['status'] eq 1">
+                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn" href="{:url('video/ban',array('id'=>$vo['id']))}" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                            <else />
+                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('video/cancelban',array('id'=>$vo['id']))}" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                        </if>
+
+                </td>
+            </tr>
+        </foreach>
+        </tbody>
+    </table>
+        <div class="table-actions">
+            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
+            <button class="btn btn-sm btn-success js-ajax-submit" type="submit"
+                    data-action="{:url('video/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
+            </button>
+            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
+                    data-action="{:url('video/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
+            </button>
+        </div>
+    </form>
+    <div class="pagination">{$page}</div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

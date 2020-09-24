@@ -1,0 +1,51 @@
+/* 独立于框架新增 */
+
+li{
+    list-style: none;
+}
+
+.img-list {
+    /* position: relative;
+    width: 19%;
+    margin-right: 1%;
+    margin-top: 20px; */
+    border: 1px solid #cdcd;
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin-right: 1%;
+    float: left;
+}
+
+.img-list img:first-child {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.img-box {
+    display: flex;
+    justify-content: left;
+    flex-wrap: wrap;
+    margin-top: 1%;
+}
+
+.img-box img {
+    /* width: 100%; */
+    -webkit-user-drag: none;
+    z-index: -1;
+}
+
+.del-img {
+    position: absolute;
+    z-index: 2!important;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    width: 15px;
+}

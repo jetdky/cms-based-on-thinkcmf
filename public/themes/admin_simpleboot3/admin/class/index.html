@@ -1,0 +1,76 @@
+<include file="public@header" />
+</head>
+
+<body>
+<php>$typeList = array('1'=>'内容分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
+    <div class="wrap js-check-wrap">
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{:url('Class/index',['type'=>$type])}">{$typeList[$type]}</a></li>
+            <li><a href="{:url('Class/add',['type'=>$type])}">添加{$typeList[$type]}</a></li>
+        </ul>
+
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    <th width="50">ID</th>
+                    <th>分类名称</th>
+                    <th>图片</th>
+                    <th>添加时间</th>
+                    <th>状态</th>
+                    <th>语言</th>
+                    <th width="140">{:lang('CLICK')}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <php>
+                    $asset_img_suffixes=['bmp','jpg','jpeg','png','gif','tiff'];/*TODO ADD MORE*/
+                </php>
+                <php>
+                    $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+                </php>
+                <foreach name="arrayClass" item="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.name}</td>
+                        <td>暂无</td>
+                        <td>{$vo.create_time|getTime}</td>
+                        <td>
+                            <switch name="vo.status">
+                                <case value="0">
+                                    <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
+                                </case>
+                                <case value="1">
+                                    <span class="label label-success">{$user_statuses[$vo['status']]}</span>
+                                </case>
+                                <case value="2">
+                                    <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
+                                </case>
+                            </switch>
+                        </td>
+                        <td>{$vo.lang|getLang}</td>
+                        <td>
+
+                            <a class="btn btn-xs btn-primary"
+                                href='{:url("Class/edit",array("id"=>$vo["id"],"type"=>$type))}'>{:lang('EDIT')}</a>
+                            <a class="btn btn-xs btn-danger js-ajax-delete"
+                                href="{:url('Class/delete',array('id'=>$vo['id'],'type'=>$type))}">{:lang('DELETE')}</a>
+                            <if condition="$vo['status'] eq 1">
+                                <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
+                                    href="{:url('Class/ban',array('id'=>$vo['id'],'type'=>$type))}"
+                                    data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                                <else />
+                                <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
+                                    href="{:url('Class/cancelban',array('id'=>$vo['id'],'type'=>$type))}"
+                                    data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                            </if>
+
+                        </td>
+                    </tr>
+                </foreach>
+            </tbody>
+        </table>
+    </div>
+    <script src="__STATIC__/js/admin.js"></script>
+</body>
+
+</html>

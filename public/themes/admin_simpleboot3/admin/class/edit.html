@@ -1,0 +1,141 @@
+<include file="public@header" />
+</head>
+<body>
+<php>$typeList = array('1'=>'内容分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
+
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('Class/index',['type'=>$type])}">{$typeList[$type]}</a></li>
+        <li><a href="{:url('Class/add',['type'=>$type])}">添加{$typeList[$type]}</a></li>
+        <li class="active"><a>编辑{$typeList[$type]}</a></li>
+    </ul>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Class/editPost',['type'=>$type])}">
+        <div class="col-xs-8">
+            <div class="form-group">
+                <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>分类名称</label>
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" id="input-user_login" name="name" value="{$classinfo['name']}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-image" class="col-sm-2 control-label">图片</label>
+                <div class="col-md-6 col-sm-10">
+                    <input type="hidden" class="form-control" id="input-image">
+                    <a class="btn btn-primary"
+                       href="javascript:uploadMultiImage('图片上传','#input-image', 'input-image');">上传图片</a>
+                    <ul class="img-box">
+                        <!-- 存放预览图片 -->
+                    </ul>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>内容</label>
+                <div class="col-md-6 col-sm-12">
+                    <script type="text/plain" id="content" name="classcon"><?php echo htmlspecialchars_decode((isset($classinfo['classcon']) && ($classinfo['classcon'] !== '')?$classinfo['classcon']:"")); ?></script>
+                    <span style="color: #ffb752;"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="remark" class="col-sm-2 control-label"><span class="form-required">*</span>备注</label>
+                <div class="col-md-6 col-sm-12">
+                    <script type="text/plain" id="remark" name="remark"><?php echo htmlspecialchars_decode((isset($classinfo['remark']) && ($classinfo['remark'] !== '')?$classinfo['remark']:"")); ?></script>
+                    <span style="color: #ffb752;"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="hidden" name="id" value="{$classinfo['id']}" />
+                    <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
+                    <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-4">
+            <div class="form-group">
+                <label for="js-smtpsecure" class="col-sm-2 control-label">
+                    <span class="form-required">*</span>语言
+                </label>
+                <div class="col-md-6 col-sm-10">
+                    <select name="lang" id="js-smtpsecure" class="form-control">
+                        <option value="1" <if condition="$classinfo['lang'] eq 1">selected</if>>中文</option>
+                        <option value="0"  <if condition="$classinfo['lang'] eq 0">selected</if>>英文</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="js-smtpsecure" class="col-sm-2 control-label">
+                    <span class="form-required">*</span>是否显示
+                </label>
+                <div class="col-md-6 col-sm-10">
+                    <select name="status" id="js-smtpsecure" class="form-control">
+                        <option value="1" <if condition="$classinfo['status'] eq 1">selected</if>>显示</option>
+                        <option value="0" <if condition="$classinfo['status'] eq 0">selected</if>>不显示</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="tag" class="col-sm-2 control-label">
+                    <span class="form-required">*</span>标签
+                </label>
+                <div class="col-md-6 col-sm-10">
+                    <!--               <input type="text" class="form-control" id="tag" name="name" value="">-->
+                    <div id="tagAdd" class="xm-select-demo"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="order_num" class="col-sm-2 control-label">
+                    <span class="form-required">*</span>排序数
+                </label>
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" id="order_num" name="order_num" value="{$classinfo['order_num']}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-6 col-sm-10">
+                    自动SEO<input type="radio" name="is_auto_seo" value="1" checked>
+                    手动SEO<input type="radio" name="is_auto_seo" value="0">
+                </div>
+            </div>
+            <div id="seo">
+                <div class="form-group">
+                    <label for="seo_title" class="col-sm-2 control-label"><span
+                            class="form-required">*</span>title</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="seo_keywords" class="col-sm-2 control-label"><span
+                            class="form-required">*</span>description</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input class="form-control" type="text" id="seo_keywords" placeholder=""
+                               name="seo_keywords">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="seo_description" class="col-sm-2 control-label"><span
+                            class="form-required">*</span>content</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input class="form-control" type="text" id="seo_description" placeholder=""
+                               name="seo_description">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="/static/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    var editorcontent = new baidu.editor.ui.Editor();
+    editorcontent.render('content');
+    editorcontent.render('remark');
+</script>
+</body>
+</html>
