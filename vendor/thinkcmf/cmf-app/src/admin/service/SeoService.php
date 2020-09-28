@@ -28,7 +28,27 @@ class SeoService
     public function read($id, $typeId)
     {
         $seoContentModel = new SeoContentModel();
-        $seo = $seoContentModel->where('content_id', $id)->where('type', $typeId)->column('seo_id');
-        return $seo;
+        $seoModel = new SeoModel();
+        $seoId = $seoContentModel->where('content_id', $id)->where('type', $typeId)->value('seo_id');
+        if($seoId){
+            $seo = $seoModel->find($seoId)->toArray();
+            $seo['is_auto_seo'] = 0;
+            return $seo;
+        }else{
+            $seo['is_auto_seo'] = 1;
+            $seo['title'] = "";
+            $seo['description'] = "";
+            $seo['keywords'] = "";
+            return $seo;
+        }
+
+    }
+
+    public function delete($id, $typeId)
+    {
+        $seoContentModel = new SeoContentModel();
+        $seoId = $seoContentModel->where('content_id', $id)->where('type', $typeId)->column('seo_id');
+        SeoModel::destroy($seoId);
+        return $seoContentModel->where('content_id', $id)->where('type', $typeId)->delete();
     }
 }

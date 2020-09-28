@@ -12,7 +12,6 @@ class ClassValidate extends Validate
         'name' => 'require',
 //        'pacon'  => 'require',
 //        'painfo' => 'require',
-//        'photo' => 'require',
 //        'cid' => 'require',
     ];
     protected $message = [

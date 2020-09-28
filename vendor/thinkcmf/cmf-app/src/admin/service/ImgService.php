@@ -4,7 +4,8 @@ namespace app\admin\service;
 
 use app\admin\model\ImgModel;
 use app\admin\model\ImgContentModel;
-
+use think\facade\Env;
+use think\Image;
 class ImgService
 {
     /**
@@ -31,7 +32,12 @@ class ImgService
             // $imgArrayData['order_num'] = $order[$i];
             // $imgArrayData['is_cover'] = $isCover[$i];
             $imgArrayData['origi_img'] = $imgList[$i];
-            $imgArrayData['thumb_img'] = 's_' . $imgList[$i];
+            $imgNameBeforeLastSlash = substr($imgList[$i], 0, strrpos($imgList[$i], "/") + 1);
+            $thumbName = str_replace("/", "t_", strrchr($imgList[$i], "/"));
+            $originDir =  Env::get('root_path'). 'public/upload/';
+            $image = Image::open($originDir . $imgList[$i]);
+            $image->thumb(150, 150)->save($originDir. $imgNameBeforeLastSlash . $thumbName);
+            $imgArrayData['thumb_img'] = $imgNameBeforeLastSlash . $thumbName;
             $imgArrayData['show_time'] = time();
             $ImgModel = new ImgModel();
             $imgRes = $ImgModel->save($imgArrayData);
@@ -58,7 +64,7 @@ class ImgService
      */
     public function read($id, $typeId)
     {
-        $where = '';
+        $where = [];
         $imgContentModel = new ImgContentModel();
         $imgsId = $imgContentModel->where('content_id', $id)->where('type', $typeId)->column('img_id');
         if ($imgsId) {
@@ -71,4 +77,13 @@ class ImgService
             return '';
         }
     }
+
+    public function delete($id, $typeId)
+    {
+        $imgContentModel = new ImgContentModel();
+        $imgsId = $imgContentModel->where('content_id', $id)->where('type', $typeId)->column('img_id');
+        ImgModel::destroy($imgsId);
+        return $imgContentModel->where('content_id', $id)->where('type', $typeId)->delete();
+    }
+
 }

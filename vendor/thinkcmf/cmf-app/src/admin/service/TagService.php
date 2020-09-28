@@ -48,4 +48,10 @@ class TagService
         $tags = $tagContentModel->where('content_id', $id)->where('type', $typeId)->column('tag_id');
         return $tags;
     }
+
+    public function delete($id, $typeId)
+    {
+        $tagContentModel = new TagContentModel();
+        return $tagContentModel->where('content_id', $id)->where('type', $typeId)->delete();
+    }
 }

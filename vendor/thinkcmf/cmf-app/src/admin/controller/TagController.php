@@ -12,12 +12,12 @@ class TagController extends AdminBaseController
     public function initTags()
     {
         $tagService = new TagService();
-        return json($tagService->get());
+        return json(['data' => $tagService->get(), 'status' => []]);
     }
 
     public function readTags($id, $typeId)
     {
-        $tagSercice = new TagService();
-        return json($tagSercice->read($id, $typeId));
+        $tagService = new TagService();
+        return json(['data' => $tagService->get(), 'status' => $tagService->read($id, $typeId)]);
     }
 }

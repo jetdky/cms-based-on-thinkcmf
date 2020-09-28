@@ -21,7 +21,7 @@ use tree\Tree;
 class ClassController extends AdminBaseController
 {
 
-    public function index(ClassModel $classModel)
+    public function index(ClassModel $classModel, ImgService $imgService)
     {
         //        $content = hook_one('admin_pacontent_default_view');
         //
@@ -42,6 +42,7 @@ class ClassController extends AdminBaseController
         $key = 0;
         foreach ($pList as $pk => $pv) {
             $arrayClass[$key] = $pv;
+            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
             $key++;
             foreach ($list as $k => $v) {
                 if ($pv['id'] == $v['parent_id']) {
@@ -52,10 +53,9 @@ class ClassController extends AdminBaseController
             }
         }
 
-        //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
+//        $this->assign('arrayClass', $arrayClass);
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -71,7 +71,7 @@ class ClassController extends AdminBaseController
      * @throws
      */
 
-    public function indexPacontent(ClassModel $classModel)
+    public function indexPacontent(ClassModel $classModel, ImgService $imgService)
     {
         //        $content = hook_one('admin_pacontent_default_view');
         //
@@ -86,17 +86,18 @@ class ClassController extends AdminBaseController
         $key = 0;
         foreach ($pList as $pk => $pv) {
             $arrayClass[$key] = $pv;
+            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
             $key++;
             foreach ($list as $k => $v) {
                 if ($pv['id'] == $v['parent_id']) {
                     $v['name'] = '|-----' . $v['name'];
                     $arrayClass[$key] = $v;
+                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
+
                     $key++;
                 }
             }
         }
-
-        //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
         $this->assign('arrayClass', $arrayClass);
@@ -116,7 +117,7 @@ class ClassController extends AdminBaseController
      * @throws
      */
 
-    public function indexNews(ClassModel $classModel)
+    public function indexNews(ClassModel $classModel, ImgService $imgService)
     {
         //        $content = hook_one('admin_pacontent_default_view');
         //
@@ -131,11 +132,13 @@ class ClassController extends AdminBaseController
         $key = 0;
         foreach ($pList as $pk => $pv) {
             $arrayClass[$key] = $pv;
+            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
             $key++;
             foreach ($list as $k => $v) {
                 if ($pv['id'] == $v['parent_id']) {
                     $v['name'] = '|-----' . $v['name'];
                     $arrayClass[$key] = $v;
+                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
                     $key++;
                 }
             }
@@ -160,7 +163,7 @@ class ClassController extends AdminBaseController
      * @throws
      */
 
-    public function indexProduct(ClassModel $classModel)
+    public function indexProduct(ClassModel $classModel, ImgService $imgService)
     {
         //        $content = hook_one('admin_pacontent_default_view');
         //
@@ -174,16 +177,17 @@ class ClassController extends AdminBaseController
         $key = 0;
         foreach ($pList as $pk => $pv) {
             $arrayClass[$key] = $pv;
+            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
             $key++;
             foreach ($list as $k => $v) {
                 if ($pv['id'] == $v['parent_id']) {
                     $v['name'] = '|-----' . $v['name'];
                     $arrayClass[$key] = $v;
+                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
                     $key++;
                 }
             }
         }
-
         //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
@@ -249,19 +253,19 @@ class ClassController extends AdminBaseController
             }
             $this->error("此分类在" . $lang . "已存在");
         }
-        //        $linkModel = new P();
-        //        $pacontentValidate->with('add')->check($data);
-        //        var_dump($data);die;
-        $classModel->allowField(true)->save($data);
-        if (isset($data['img_list'])) {
-            $imgService->doSave($data['img_list'], $data['type'], $classModel->id);
-        }
-        if ($data['tag_id']) {
-            $tagService->doSave($data['tag_id'], $data['type'], $classModel->id);
-        }
-        if (!$data['is_auto_seo']) {
-            $seoService->dosave($data, $data['type'], $classModel->id);
-        }
+
+        Db::transaction(function () use ($classModel, $imgService, $tagService, $seoService, $data) {
+            $classModel->allowField(true)->save($data);
+            if (isset($data['img_list'])) {
+                $imgService->doSave($data['img_list'], $data['type'], $classModel->id);
+            }
+            if ($data['tag_id']) {
+                $tagService->doSave($data['tag_id'], $data['type'], $classModel->id);
+            }
+            if (!$data['is_auto_seo']) {
+                $seoService->dosave($data, $data['type'], $classModel->id);
+            }
+        });
 
         $this->success("添加成功！", url("Class/index", ['type' => $data['type']]));
     }
@@ -292,12 +296,10 @@ class ClassController extends AdminBaseController
         $classinfo = DB::name('class')->where("id", $id)->find();
         //获得分类下其他信息（关联图片，seo，标签）
         $imgService = new ImgService();
-        $tagService = new TagService();
+        $seoService = new SeoService();
         $classinfo['imgs'] = $imgService->read($data['id'], $classinfo['type']);
-        $classinfo['tags'] = $tagService->read($data['id'], $classinfo['type']);
-        halt($classinfo);
+        $classinfo['seo'] = $seoService->read($data['id'], $classinfo['type']);
         $this->assign("classinfo", $classinfo);
-        //        $paclass = DB::name('class')->where(['id'=>$classinfo['id']])->find();
 
         $tree = new Tree();
         if ($classinfo['parent_id'] == 0) {
@@ -327,7 +329,7 @@ class ClassController extends AdminBaseController
     }
 
 
-    public function editPost(PacontentModel $pacontentModel)
+    public function editPost(ClassModel $classModel, ClassValidate $classValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
@@ -345,14 +347,36 @@ class ClassController extends AdminBaseController
             }
 
             $result = $this->validate($this->request->param(), 'Class.edit');
-
             if ($result !== true) {
                 // 验证失败 输出错误信息
                 $this->error($result);
             } else {
-                $result = DB::name('class')->update($_POST);
+                Db::transaction(function () use ($classModel, $imgService, $tagService, $seoService, $data) {
+                    if (isset($data['img_list'])) {
+                        $imgService->delete($data['id'], $data['type']);
+                        $imgService->doSave($data['img_list'], $data['type'], $data['id']);
+                    } else {
+                        $imgService->delete($data['id'], $data['type']);
+                    }
+
+                    if ($data['tag_id']) {
+                        $tagService->delete($data['id'], $data['type']);
+                        $tagService->doSave($data['tag_id'], $data['type'], $data['id']);
+                    } else {
+                        $tagService->delete($data['id'], $data['type']);
+                    }
+
+                    if (!$data['is_auto_seo']) {
+                        $seoService->delete($data['id'], $data['type']);
+                        $seoService->dosave($data, $data['type'], $data['id']);
+                    } else {
+                        $seoService->delete($data['id'], $data['type']);
+                    }
+                    $result = $classModel->allowField(true)->update($data);
+                });
+
                 if ($result !== false) {
-                    $this->success("保存成功！");
+                    $this->success("保存成功！", url("Class/index", ['type' => $data['type']]));
                 } else {
                     $this->error("保存失败！");
                 }
@@ -361,14 +385,21 @@ class ClassController extends AdminBaseController
     }
 
 
-    public function delete()
+    public function delete(ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $id = $this->request->param('id', 0, 'intval');
+        $typeId = $this->request->param('type', 0, 'intval');
+        $result = false;
         $ifParentClass = Db::name('class')->where(['parent_id' => $id])->count();
         if ($ifParentClass) {
             $this->error("此类拥有子类，删除失败！");
         }
-        if (Db::name('class')->delete($id) !== false) {
+        Db::transaction(function () use ($imgService, $tagService, $seoService, $id, $typeId) {
+            @$imgService->delete($id, $typeId);
+            @$tagService->delete($id, $typeId);
+            @$seoService->delete($id, $typeId);
+        });
+        if (Db::name('class')->where('id', $id)->where('type', $typeId)->delete() !== false) {
             $this->success("删除成功！");
         } else {
             $this->error("删除失败！");

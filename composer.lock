@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "fb81fe2b9305f8dc78b7e09f7b950585",
+    "content-hash": "0f299d8dba7b56246deadcb7f10d9d36",
     "packages": [
         {
             "name": "electrolinux/phpquery",
@@ -614,10 +614,11 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.6.0",
+        "php": ">=7.0",
         "ext-json": "*",
         "ext-curl": "*",
         "ext-pdo": "*"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

@@ -10,19 +10,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- HTML5 shim for IE8 support of HTML5 elements -->
     <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <![endif]-->
-    <script src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__TMPL__/public/assets/js/jquery-1.10.2.min.js"></script>
     <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/bootstrap.min.css" rel="stylesheet">
     <link href="__TMPL__/public/assets/simpleboot3/css/simplebootadmin.css" rel="stylesheet">
     <link href="__STATIC__/font-awesome/css/font-awesome.min.css?page=index" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/simplebootadminindex.min.css">
     <link href="__STATIC__/js/layui/css/layui.css" rel="stylesheet" type="text/css">
-    <script src="__STATIC__/js/layui/layui.all.js"></script>
-    <script src="__STATIC__/js/xm-select/xm-select.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__STATIC__/js/layui/layui.all.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__STATIC__/js/xm-select/xm-select.js"></script>
     <!--[if lt IE 9]>
-    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <script type="text/javascript" charset="utf-8"
+            src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript" charset="utf-8" src="__TMPL__/public/assets/js/admin.js"></script>
+
     <style>
         /*-----------------导航hack--------------------*/
         .nav-list > li.open {
@@ -52,6 +56,7 @@
         .nav-list > li ul.submenu ul.submenu > li a > [class*="fa-"]:first-child {
             left: 30px;
         }
+
         /*----------------导航hack--------------------*/
     </style>
 
@@ -68,7 +73,7 @@
 
     <php>
         if (!function_exists('getsubmenu')) {
-            function getsubmenu($submenus){
+        function getsubmenu($submenus){
 
     </php>
     <notempty name="submenus">
@@ -103,13 +108,13 @@
         <php>}</php>
     </notempty>
     <php>
-            }
+        }
         }
     </php>
 
     <php>
         if (!function_exists('getsubmenu1')) {
-            function getsubmenu1($submenus){
+        function getsubmenu1($submenus){
     </php>
     <php>foreach($submenus as $menu){</php>
     <li>
@@ -141,12 +146,13 @@
 
     <php>}</php>
     <php>}
-    }
+        }
     </php>
 
     <php>
         if (!function_exists('getsubmenu2')) {
-            function getsubmenu2($submenus){</php>
+        function getsubmenu2($submenus){
+    </php>
     <php>foreach($submenus as $menu){</php>
     <li>
         <php>
@@ -164,7 +170,7 @@
 
     <php>}</php>
     <php>}
-    }
+        }
     </php>
 
 
@@ -184,7 +190,7 @@
 <div id="right-tools-wrapper">
     <!--<span id="right_tools_clearcache" title="清除缓存" onclick="javascript:openapp('{:url('admin/Setting/clearcache')}','right_tool_clearcache','清除缓存');"><i class="fa fa-trash-o right_tool_icon"></i></span>-->
     <!--<span id="refresh-wrapper" title="{:lang('REFRESH_CURRENT_PAGE')}"><i-->
-            <!--class="fa fa-refresh right_tool_icon"></i></span>-->
+    <!--class="fa fa-refresh right_tool_icon"></i></span>-->
 </div>
 <div class="navbar navbar-default">
     <div class="container-fluid">
@@ -214,12 +220,14 @@
 
             <ul class="nav navbar-nav navbar-right simplewind-nav">
                 <li class="light-blue" style="border-left:none;display: none;" id="close-all-tabs-btn">
-                    <a id="close-wrapper" href="javascript:void(0);" title="{:lang('CLOSE_TOP_MENU')}" style="color:#fff;font-size: 16px">
+                    <a id="close-wrapper" href="javascript:void(0);" title="{:lang('CLOSE_TOP_MENU')}"
+                       style="color:#fff;font-size: 16px">
                         <i class="fa fa-times right_tool_icon"></i>
                     </a>
                 </li>
                 <li class="light-blue" style="border-left:none;">
-                    <a id="refresh-wrapper" href="javacript:void(0);" title="{:lang('REFRESH_CURRENT_PAGE')}" style="color:#fff;font-size: 16px">
+                    <a id="refresh-wrapper" href="javacript:void(0);" title="{:lang('REFRESH_CURRENT_PAGE')}"
+                       style="color:#fff;font-size: 16px">
                         <i class="fa fa-refresh right_tool_icon"></i>
                     </a>
                 </li>
@@ -338,10 +346,10 @@
     </div>
 </div>
 
-<script src="__STATIC__/js/wind.js"></script>
-<script src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
-<script src="__STATIC__/js/admin.js"></script>
-<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/js/wind.js"></script>
+<script type="text/javascript" charset="utf-8" src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript" charset="utf-8" src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
 <script>
     $(function () {
         $("[data-toggle='tooltip']").tooltip();
@@ -351,26 +359,24 @@
             $(this).removeClass("open");
         });
 
-        var menus= {:$menus_js_var};
+        var menus = {:$menus_js_var};
         //读取url参数。尝试执行菜单功能。
-        if(typeof(menus) != "undefined"){
+        if (typeof (menus) != "undefined") {
 
             var tw = window.top;
-            var twa =tw.location.href.split("#");
+            var twa = tw.location.href.split("#");
             var url = twa[1];
             var urlTmp = url;
-            if (url !=null ){
+            if (url != null) {
                 //去掉/ 去掉_ 全部小写。
-                urlTmp = urlTmp.replace(/[\\/|_|]/g,"");
-                urlTmp = urlTmp.replace(".html","");
+                urlTmp = urlTmp.replace(/[\\/|_|]/g, "");
+                urlTmp = urlTmp.replace(".html", "");
                 var menu = menus[urlTmp];
-                if (menu){
-                    openapp(url,menu.id+menu.app,menu.name,true);
+                if (menu) {
+                    openapp(url, menu.id + menu.app, menu.name, true);
                 }
             }
         }
-
-
 
 
     });
@@ -408,7 +414,6 @@
         $(closest_a_next).slideToggle(150).parent().toggleClass("open");
         return false;
     });
-
 
 
 </script>

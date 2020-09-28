@@ -124,7 +124,7 @@
                     </div>
                     <div class="form-group">
                         <label for="seo_keywords" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>description</label>
+                                class="form-required">*</span>keywords</label>
                         <div class="col-md-6 col-sm-10">
                             <input class="form-control" type="text" id="seo_keywords" placeholder=""
                                    name="seo_keywords">
@@ -132,7 +132,7 @@
                     </div>
                     <div class="form-group">
                         <label for="seo_description" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>content</label>
+                                class="form-required">*</span>description</label>
                         <div class="col-md-6 col-sm-10">
                             <input class="form-control" type="text" id="seo_description" placeholder=""
                                    name="seo_description">
@@ -154,76 +154,8 @@
     var editorcontent = new baidu.editor.ui.Editor();
     editorcontent.render('content');
     editorcontent.render('remark');
-</script>
-<script type="text/javascript">
-
-    function clickHide(clickElemName, hideElemId, judgeHideVal) {
-        //初始化隐藏
-        var initVal = $("input[name='" + clickElemName + "']:checked").val();
-        if (initVal == judgeHideVal) {
-            $("#" + hideElemId).css('display', 'none');
-        }
-        //点击隐藏和显示
-        $("input[name='" + clickElemName + "']").on('click', function () {
-            var val = $("input[name='" + clickElemName + "']:checked").val();
-            if (val == judgeHideVal) {
-                $("#" + hideElemId).fadeOut();
-            } else {
-                $("#" + hideElemId).fadeIn();
-            }
-        });
-    }
-
-    function initTags(tagId, url) {
-        var data = '';
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: {},
-            dataType: 'json',
-            async: false,
-            success: function (res, status, xhr) {
-                data = res;
-            },
-            error: function (res, status, xhr) {
-
-            }
-        });
-        var tags = xmSelect.render({
-            el: tagId,
-            prop: {
-                value: 'id',
-                name: 'title'
-            },
-            initValue: [],
-            paging: true,
-            name: 'tag_id',
-            pageSize: 5,
-            tips: '无标签',
-            filterable: true,
-            data: data
-        });
-    }
-    function readTags(tagId, url){
-        var data = '';
-        $.ajax({
-            url: url,
-            type: 'post',
-            data: {},
-            dataType: 'json',
-            async: false,
-            success: function (res, status, xhr) {
-                data = res;
-            },
-            error: function (res, status, xhr) {
-
-            }
-        });
-        initTags(tagId, url);
-    }
     initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
     clickHide('is_auto_seo', 'seo', 1);
-
 </script>
 </body>
 
