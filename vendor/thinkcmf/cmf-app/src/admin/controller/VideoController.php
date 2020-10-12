@@ -25,7 +25,7 @@ class VideoController extends AdminBaseController
         }
         $list = $videoModel->where($where)
             ->with(['videoClass'])
-            ->order("list_order ASC")
+            ->order("order_num ASC")
             ->paginate(10);
         // 获取分页显示
         $page = $list->render();
@@ -46,7 +46,7 @@ class VideoController extends AdminBaseController
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-       $result = Db::name('class')->where(["type" => 4])->order(["list_order" => "ASC"])->select();
+       $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -56,9 +56,9 @@ class VideoController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
-        $orderby1 = $videoModel->order(["list_order" => "DESC"])->find();
+        $orderby1 = $videoModel->order(["order_num" => "DESC"])->find();
         if ($orderby1) {
-            $orderbydata = $orderby1['list_order'] + 1;
+            $orderbydata = $orderby1['order_num'] + 1;
         } else {
             $orderbydata = 1;
         }
@@ -127,7 +127,7 @@ class VideoController extends AdminBaseController
             $parentId = $videoClass['parent_id'];
         }
 
-        $result = Db::name('class')->where(["type" => 4])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';

@@ -29,7 +29,7 @@ class PacontentController extends AdminBaseController
 
         $tree = new Tree();
         $parentId = $this->request->param("cid", 0, 'intval');
-        $result = Db::name('class')->where(["type" => 1])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -49,7 +49,7 @@ class PacontentController extends AdminBaseController
         }
         $list = $pacontentModel->with(['PaGetClass'])
             ->where($where)
-            ->order("list_order ASC")
+            ->order("order_num ASC")
             ->paginate(10);
         if (!empty($data['cid'])) {
             $list->appends(['cid' => $data['cid']]);
@@ -75,7 +75,7 @@ class PacontentController extends AdminBaseController
     {
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
-        $result = Db::name('class')->where(["type" => 1])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -149,7 +149,7 @@ class PacontentController extends AdminBaseController
             $parentId = $paclass['parent_id'];
         }
 
-        $result = Db::name('class')->where(["type" => 1])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';

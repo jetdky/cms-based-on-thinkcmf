@@ -29,7 +29,7 @@ class AdminMenuModel extends Model
     {
         //父节点ID
         $parentId = intval($parentId);
-        $result   = $this->where(['parent_id' => $parentId, 'status' => 1])->order("list_order", "ASC")->select();
+        $result   = $this->where(['parent_id' => $parentId, 'status' => 1])->order("order_num", "ASC")->select();
 
         if ($withSelf) {
             $result2[] = $this->where('id', $parentId)->find();
@@ -167,7 +167,7 @@ class AdminMenuModel extends Model
     public function menuCache($data = null)
     {
         if (empty($data)) {
-            $data = $this->order("list_order", "ASC")->column('*');
+            $data = $this->order("order_num", "ASC")->column('*');
             Cache::set('Menu', $data, 0);
         } else {
             Cache::set('Menu', $data, 0);
@@ -197,7 +197,7 @@ class AdminMenuModel extends Model
      */
     public function getMenuTree($parentId = 0)
     {
-        $menus = $this->where("parent_id", $parentId)->order(["list_order" => "ASC"])->select();
+        $menus = $this->where("parent_id", $parentId)->order(["order_num" => "ASC"])->select();
 
         if ($menus) {
             foreach ($menus as $key => $menu) {

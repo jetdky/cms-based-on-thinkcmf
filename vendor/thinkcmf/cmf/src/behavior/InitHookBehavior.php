@@ -38,7 +38,7 @@ class InitHookBehavior
 
             $systemHookPlugins = Db::name('hook_plugin')->field('hook,plugin')->where('status', 1)
                 ->where('hook', 'in', $systemHooks)
-                ->order('list_order ASC')
+                ->order('order_num ASC')
                 ->select()->toArray();
 
             if (!empty($systemHookPlugins)) {

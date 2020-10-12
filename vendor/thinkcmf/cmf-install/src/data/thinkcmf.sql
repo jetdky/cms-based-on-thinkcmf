@@ -7,7 +7,7 @@ CREATE TABLE IF NOT EXISTS `cmf_admin_menu` (
   `parent_id` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '父菜单id',
   `type` tinyint(3) UNSIGNED NOT NULL DEFAULT '1' COMMENT '菜单类型;1:有界面可访问菜单,2:无界面可访问菜单,0:只作为菜单',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '状态;1:显示,0:不显示',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `app` varchar(40) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '应用名',
   `controller` varchar(30) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '控制器名',
   `action` varchar(30) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '操作名称',
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `cmf_admin_menu` (
 -- 转存表中的数据 `cmf_admin_menu`
 --
 
-INSERT INTO `cmf_admin_menu` (`id`, `parent_id`, `type`, `status`, `list_order`, `app`, `controller`, `action`, `param`, `name`, `icon`, `remark`) VALUES
+INSERT INTO `cmf_admin_menu` (`id`, `parent_id`, `type`, `status`, `order_num`, `app`, `controller`, `action`, `param`, `name`, `icon`, `remark`) VALUES
 (1, 0, 0, 1, 20, 'admin', 'Plugin', 'default', '', '插件中心', 'cloud', '插件中心'),
 (2, 1, 1, 1, 10000, 'admin', 'Hook', 'index', '', '钩子管理', '', '钩子管理'),
 (3, 2, 1, 0, 10000, 'admin', 'Hook', 'plugins', '', '钩子插件管理', '', '钩子插件管理'),
@@ -477,7 +477,7 @@ INSERT INTO `cmf_hook` (`id`, `type`, `once`, `name`, `hook`, `app`, `descriptio
 
 CREATE TABLE IF NOT EXISTS `cmf_hook_plugin` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT '1' COMMENT '状态(0:禁用,1:显示)',
   `hook` varchar(50) NOT NULL DEFAULT '' COMMENT '钩子名',
   `plugin` varchar(50) NOT NULL DEFAULT '' COMMENT '插件',
@@ -494,7 +494,7 @@ CREATE TABLE IF NOT EXISTS `cmf_link` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1' COMMENT '状态;1:显示;0:不显示',
   `rating` int(11) NOT NULL DEFAULT '0' COMMENT '友情链接评级',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `description` varchar(255) NOT NULL DEFAULT '' COMMENT '友情链接描述',
   `url` varchar(255) NOT NULL DEFAULT '' COMMENT '友情链接地址',
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '友情链接名称',
@@ -509,7 +509,7 @@ CREATE TABLE IF NOT EXISTS `cmf_link` (
 -- 转存表中的数据 `cmf_link`
 --
 
-INSERT INTO `cmf_link` (`id`, `status`, `rating`, `list_order`, `description`, `url`, `name`, `image`, `target`, `rel`) VALUES
+INSERT INTO `cmf_link` (`id`, `status`, `rating`, `order_num`, `description`, `url`, `name`, `image`, `target`, `rel`) VALUES
 (1, 1, 1, 8, 'thinkcmf官网', 'http://www.thinkcmf.com', 'ThinkCMF', '', '_blank', '');
 
 -- --------------------------------------------------------
@@ -545,7 +545,7 @@ CREATE TABLE IF NOT EXISTS `cmf_nav_menu` (
   `nav_id` int(11) NOT NULL COMMENT '导航 id',
   `parent_id` int(11) NOT NULL COMMENT '父 id',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1' COMMENT '状态;1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
   `target` varchar(10) NOT NULL DEFAULT '' COMMENT '打开方式',
   `href` varchar(100) NOT NULL DEFAULT '' COMMENT '链接',
@@ -558,7 +558,7 @@ CREATE TABLE IF NOT EXISTS `cmf_nav_menu` (
 -- 转存表中的数据 `cmf_nav_menu`
 --
 
-INSERT INTO `cmf_nav_menu` (`id`, `nav_id`, `parent_id`, `status`, `list_order`, `name`, `target`, `href`, `icon`, `path`) VALUES
+INSERT INTO `cmf_nav_menu` (`id`, `nav_id`, `parent_id`, `status`, `order_num`, `name`, `target`, `href`, `icon`, `path`) VALUES
 (1, 1, 0, 1, 0, '首页', '', 'home', '', '0-1');
 
 -- --------------------------------------------------------
@@ -628,7 +628,7 @@ CREATE TABLE IF NOT EXISTS `cmf_role` (
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '0' COMMENT '状态;0:禁用;1:正常',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT '0' COMMENT '更新时间',
-  `list_order` float NOT NULL DEFAULT '0' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '0' COMMENT '排序',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色名称',
   `remark` varchar(255) NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`),
@@ -640,7 +640,7 @@ CREATE TABLE IF NOT EXISTS `cmf_role` (
 -- 转存表中的数据 `cmf_role`
 --
 
-INSERT INTO `cmf_role` (`id`, `parent_id`, `status`, `create_time`, `update_time`, `list_order`, `name`, `remark`) VALUES
+INSERT INTO `cmf_role` (`id`, `parent_id`, `status`, `create_time`, `update_time`, `order_num`, `name`, `remark`) VALUES
 (1, 0, 1, 1329633709, 1329633709, 0, '超级管理员', '拥有网站最高管理员权限！'),
 (2, 0, 1, 1329633709, 1329633709, 0, '普通管理员', '权限由最高管理员分配！');
 
@@ -667,7 +667,7 @@ CREATE TABLE IF NOT EXISTS `cmf_role_user` (
 
 CREATE TABLE IF NOT EXISTS `cmf_route` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '路由id',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT '1' COMMENT '状态;1:显示,0:不显示',
   `type` tinyint(4) NOT NULL DEFAULT '1' COMMENT 'URL规则类型;1:用户自定义;2:别名添加',
   `full_url` varchar(255) NOT NULL DEFAULT '' COMMENT '完整url',
@@ -700,7 +700,7 @@ CREATE TABLE IF NOT EXISTS `cmf_slide_item` (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `slide_id` int(11) NOT NULL DEFAULT '0' COMMENT '幻灯片id',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT '1' COMMENT '状态,1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `title` varchar(50) NOT NULL DEFAULT '' COMMENT '幻灯片名称',
   `image` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '幻灯片图片',
   `url` varchar(255) CHARACTER SET utf8 NOT NULL DEFAULT '' COMMENT '幻灯片链接',
@@ -746,7 +746,7 @@ CREATE TABLE IF NOT EXISTS `cmf_theme` (
 CREATE TABLE IF NOT EXISTS `cmf_theme_file` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `is_public` tinyint(4) NOT NULL DEFAULT '0' COMMENT '是否公共的模板文件',
-  `list_order` float NOT NULL DEFAULT '10000' COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT '10000' COMMENT '排序',
   `theme` varchar(20) NOT NULL DEFAULT '' COMMENT '模板名称',
   `name` varchar(20) NOT NULL DEFAULT '' COMMENT '模板文件名',
   `action` varchar(50) NOT NULL DEFAULT '' COMMENT '操作',

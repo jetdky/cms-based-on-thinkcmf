@@ -121,7 +121,7 @@ class ThemeModel extends Model
                     'config_more' => json_encode($configMore),
                     'description' => $config['description'],
                     'is_public'   => $isPublic,
-                    'list_order'  => $listOrder
+                    'order_num'  => $listOrder
                 ]);
             } else { // 更新文件
                 $moreInDb = json_decode($findFile['more'], true);
@@ -135,7 +135,7 @@ class ThemeModel extends Model
                     'config_more' => json_encode($configMore),
                     'description' => $config['description'],
                     'is_public'   => $isPublic,
-                    'list_order'  => $listOrder
+                    'order_num'  => $listOrder
                 ]);
             }
         }

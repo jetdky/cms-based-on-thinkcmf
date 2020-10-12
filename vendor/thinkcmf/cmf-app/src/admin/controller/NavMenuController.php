@@ -42,7 +42,7 @@ class NavMenuController extends AdminBaseController
             $this->error("请指定导航!");
         }
 
-        $objResult = $navMenuModel->where("nav_id", $intNavId)->order(["list_order" => "ASC"])->select();
+        $objResult = $navMenuModel->where("nav_id", $intNavId)->order(["order_num" => "ASC"])->select();
         $arrResult = $objResult ? $objResult->toArray() : [];
 
         $tree       = new Tree();
@@ -60,7 +60,7 @@ class NavMenuController extends AdminBaseController
 
         $tree->init($array);
         $str = "<tr>
-            <td><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
+            <td><input name='order_nums[\$id]' type='text' size='3' value='\$order_num' class='input input-order'></td>
             <td>\$id</td>
             <td >\$spacer\$name</td>
             <td>\$status</td>
@@ -93,7 +93,7 @@ class NavMenuController extends AdminBaseController
         $navMenuModel = new NavMenuModel();
         $intNavId     = $this->request->param("nav_id", 0, 'intval');
         $intParentId  = $this->request->param("parent_id", 0, 'intval');
-        $objResult    = $navMenuModel->where("nav_id", $intNavId)->order(["list_order" => "ASC"])->select();
+        $objResult    = $navMenuModel->where("nav_id", $intNavId)->order(["order_num" => "ASC"])->select();
         $arrResult    = $objResult ? $objResult->toArray() : [];
 
         $tree       = new Tree();
@@ -175,7 +175,7 @@ class NavMenuController extends AdminBaseController
         $objResult    = $navMenuModel
             ->where("nav_id", $intNavId)
             ->where("id", "<>", $intId)
-            ->order(["list_order" => "ASC"])
+            ->order(["order_num" => "ASC"])
             ->select();
         $arrResult    = $objResult ? $objResult->toArray() : [];
 

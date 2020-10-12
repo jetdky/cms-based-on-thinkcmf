@@ -36,8 +36,8 @@ class ClassController extends AdminBaseController
             $this->assign('keyword', $data['keyword']);
         }
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
-        $list = $classModel->where(['type' => $data['type']])->where($where)->order("list_order ASC")->select()->toArray();
+        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
         $arrayClass = [];
         $key = 0;
         foreach ($pList as $pk => $pv) {
@@ -82,8 +82,8 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
-        $list = $classModel->where(['type' => $data['type']])->order("list_order ASC")->select()->toArray();
+        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $arrayClass = [];
         $key = 0;
         foreach ($pList as $pk => $pv) {
@@ -128,8 +128,8 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
-        $list = $classModel->where(['type' => $data['type']])->order("list_order ASC")->select()->toArray();
+        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $arrayClass = [];
         $key = 0;
         foreach ($pList as $pk => $pv) {
@@ -173,9 +173,9 @@ class ClassController extends AdminBaseController
         //            return $content;
         //        }
         $data = $this->request->param();
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
+        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
 
-        $list = $classModel->where(['type' => $data['type']])->order("list_order ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         halt(build_category_tree($list));
 
         $arrayClass = [];
@@ -219,7 +219,7 @@ class ClassController extends AdminBaseController
         $order_num = $FunctionService->get_order_num('class', $data['type']);
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
-        $result = Db::name('class')->where(["type" => $data])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -314,7 +314,7 @@ class ClassController extends AdminBaseController
             $parentId = $classinfo['parent_id'];
         }
 
-        $result = Db::name('class')->where(["type" => $data])->order(["list_order" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -468,8 +468,8 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
-        $list = $classModel->where(['type' => $data['type']])->order("list_order ASC")->select()->toArray();
+        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $arrayClass = [];
         $key = 0;
         foreach ($pList as $pk => $pv) {

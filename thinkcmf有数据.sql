@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 12/10/2020 10:16:02
+ Date: 12/10/2020 11:04:40
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `cmf_admin_menu`  (
   `parent_id` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '父菜单id',
   `type` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '菜单类型;1:有界面可访问菜单,2:无界面可访问菜单,0:只作为菜单',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态;1:显示,0:不显示',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `app` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '应用名',
   `controller` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '控制器名',
   `action` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作名称',
@@ -435,7 +435,6 @@ CREATE TABLE `cmf_class`  (
   `status` int(1) NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `list_order` float NULL DEFAULT NULL,
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
@@ -448,18 +447,18 @@ CREATE TABLE `cmf_class`  (
 -- ----------------------------
 -- Records of cmf_class
 -- ----------------------------
-INSERT INTO `cmf_class` VALUES (1, 0, NULL, NULL, 1, '内容分类', '1', 1, '内容分类', NULL, NULL, 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (2, 0, NULL, NULL, 1, 'banner', '1', 2, NULL, NULL, NULL, 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (65, 0, 6, NULL, 1, '顶级分类3', '3', NULL, NULL, '1602300092', '1602300092', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (4, 1, NULL, NULL, 1, 'yesia', '1', NULL, '', '1595483762', '1595483762', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (5, 1, NULL, NULL, 1, '6', '1', NULL, '', '1595484029', '1595484029', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (63, 62, 4, NULL, 0, '我是三级分类', '3', NULL, NULL, '1602294846', '1601271721', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (8, 0, 0, NULL, 1, '我是文章分类第一1', '2', NULL, '&lt;p&gt;fasf呃呃呃&lt;/p&gt;', '1601192918', '1595554437', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (9, 0, NULL, NULL, 1, '我是新闻分类', '2', NULL, 'fasf', '1595554641', '1595554641', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (62, 61, 3, NULL, 1, '我是二级分类', '3', NULL, NULL, '1602294830', '1601271710', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (61, 0, 2, NULL, 1, '我是顶级分类', '3', NULL, NULL, '1601260419', '1601192702', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (64, 0, 5, NULL, 1, '顶级分类2', '3', NULL, NULL, '1602300076', '1602300076', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (66, 64, 7, NULL, 1, '二级分类2', '3', NULL, NULL, '1602300102', '1602300102', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (1, 0, NULL, NULL, 1, '内容分类', '1', '内容分类', NULL, NULL, 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (2, 0, NULL, NULL, 1, 'banner', '1', NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (65, 0, 6, NULL, 1, '顶级分类3', '3', NULL, '1602300092', '1602300092', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (4, 1, NULL, NULL, 1, 'yesia', '1', '', '1595483762', '1595483762', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (5, 1, NULL, NULL, 1, '6', '1', '', '1595484029', '1595484029', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (63, 62, 4, NULL, 0, '我是三级分类', '3', NULL, '1602294846', '1601271721', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (8, 0, 0, NULL, 1, '我是文章分类第一1', '2', '&lt;p&gt;fasf呃呃呃&lt;/p&gt;', '1601192918', '1595554437', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (9, 0, NULL, NULL, 1, '我是新闻分类', '2', 'fasf', '1595554641', '1595554641', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (62, 61, 3, NULL, 1, '我是二级分类', '3', NULL, '1602294830', '1601271710', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (61, 0, 2, NULL, 1, '我是顶级分类', '3', NULL, '1601260419', '1601192702', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (64, 0, 5, NULL, 1, '顶级分类2', '3', NULL, '1602300076', '1602300076', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (66, 64, 7, NULL, 1, '二级分类2', '3', NULL, '1602300102', '1602300102', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for cmf_comment
@@ -593,7 +592,7 @@ INSERT INTO `cmf_hook` VALUES (73, 1, 0, '应用调度', 'app_dispatch', 'cmf', 
 DROP TABLE IF EXISTS `cmf_hook_plugin`;
 CREATE TABLE `cmf_hook_plugin`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '状态(0:禁用,1:启用)',
   `hook` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '钩子名',
   `plugin` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '插件',
@@ -658,7 +657,7 @@ CREATE TABLE `cmf_link`  (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '状态;1:显示;0:不显示',
   `rating` int(11) NOT NULL DEFAULT 0 COMMENT '友情链接评级',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '友情链接描述',
   `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '友情链接地址',
   `name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '友情链接名称',
@@ -684,7 +683,7 @@ CREATE TABLE `cmf_message`  (
   `phone` int(15) NULL DEFAULT NULL COMMENT '电话',
   `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '地址',
   `create_time` int(12) NULL DEFAULT NULL COMMENT '添加时间',
-  `list_order` int(10) NULL DEFAULT NULL COMMENT '排序',
+  `order_num` int(10) NULL DEFAULT NULL COMMENT '排序',
   `status` int(1) NULL DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
@@ -721,7 +720,7 @@ CREATE TABLE `cmf_nav_menu`  (
   `nav_id` int(11) NOT NULL COMMENT '导航 id',
   `parent_id` int(11) NOT NULL COMMENT '父 id',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '状态;1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '菜单名称',
   `target` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '打开方式',
   `href` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '链接',
@@ -752,7 +751,7 @@ CREATE TABLE `cmf_news`  (
   `release_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `list_order` int(5) NULL DEFAULT NULL COMMENT '排序',
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作者',
   `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
   PRIMARY KEY (`id`) USING BTREE
@@ -802,7 +801,7 @@ CREATE TABLE `cmf_pacontent`  (
   `keywords` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '页面关键字',
   `descri` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '页面描述',
   `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否显示',
-  `orderby` int(4) NULL DEFAULT 0 COMMENT '排序',
+  `order_num` int(4) NULL DEFAULT 0 COMMENT '排序',
   `create_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `isphoto` tinyint(1) NULL DEFAULT 0 COMMENT '是否有照片',
@@ -878,7 +877,7 @@ CREATE TABLE `cmf_product`  (
 -- Records of cmf_product
 -- ----------------------------
 INSERT INTO `cmf_product` VALUES (1, 'yesia', NULL, '', NULL, 3, 61, 1, 1, 1, '1595569864', '1595569864');
-INSERT INTO `cmf_product` VALUES (3, '发放', NULL, '', NULL, 2, 62, 1, 1, 1, '1595573499', '1595573499');
+INSERT INTO `cmf_product` VALUES (3, '发放', NULL, '', NULL, 11, 62, 1, 1, 1, '1595573499', '1595573499');
 INSERT INTO `cmf_product` VALUES (6, '呜呜呜', NULL, '', '', 6, 61, 1, 1, 1, '1602233049', '1602233049');
 INSERT INTO `cmf_product` VALUES (5, '大大大', NULL, '&lt;p&gt;打打&lt;/p&gt;', '&lt;p&gt;打打&lt;/p&gt;', 5, 61, 1, 1, 1, '1602222535', '1602222535');
 
@@ -910,7 +909,7 @@ CREATE TABLE `cmf_role`  (
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 0 COMMENT '状态;0:禁用;1:正常',
   `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
   `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '更新时间',
-  `list_order` float NOT NULL DEFAULT 0 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 0 COMMENT '排序',
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '' COMMENT '角色名称',
   `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE,
@@ -947,7 +946,7 @@ CREATE TABLE `cmf_role_user`  (
 DROP TABLE IF EXISTS `cmf_route`;
 CREATE TABLE `cmf_route`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '路由id',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `status` tinyint(2) NOT NULL DEFAULT 1 COMMENT '状态;1:启用,0:不启用',
   `type` tinyint(4) NOT NULL DEFAULT 1 COMMENT 'URL规则类型;1:用户自定义;2:别名添加',
   `full_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '完整url',
@@ -1019,7 +1018,7 @@ CREATE TABLE `cmf_slide_item`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
   `slide_id` int(11) NOT NULL DEFAULT 0 COMMENT '幻灯片id',
   `status` tinyint(3) UNSIGNED NOT NULL DEFAULT 1 COMMENT '状态,1:显示;0:隐藏',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '幻灯片名称',
   `image` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '幻灯片图片',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '幻灯片链接',
@@ -1113,7 +1112,7 @@ DROP TABLE IF EXISTS `cmf_theme_file`;
 CREATE TABLE `cmf_theme_file`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `is_public` tinyint(4) NOT NULL DEFAULT 0 COMMENT '是否公共的模板文件',
-  `list_order` float NOT NULL DEFAULT 10000 COMMENT '排序',
+  `order_num` float NOT NULL DEFAULT 10000 COMMENT '排序',
   `theme` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '模板名称',
   `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '模板文件名',
   `action` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '操作',
@@ -1382,7 +1381,7 @@ CREATE TABLE `cmf_video`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `list_order` int(12) NULL DEFAULT NULL,
+  `order_num` int(12) NULL DEFAULT NULL,
   `status` int(1) NULL DEFAULT NULL,
   `create_time` int(12) NULL DEFAULT NULL,
   `lang` int(1) NULL DEFAULT NULL,

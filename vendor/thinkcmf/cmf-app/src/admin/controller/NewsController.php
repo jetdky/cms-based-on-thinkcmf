@@ -29,7 +29,7 @@ class NewsController extends AdminBaseController
         }
         $list = NewsModel::where($where)
             ->with(['newsClass'])
-            ->order("list_order ASC")
+            ->order("order_num ASC")
             ->paginate(10);
         // 获取分页显示
 
@@ -51,7 +51,7 @@ class NewsController extends AdminBaseController
         $tree     = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $result   = Db::name('class')->where(["type"=>2])->order(["list_order" => "ASC"])->select();
+        $result   = Db::name('class')->where(["type"=>2])->order(["order_num" => "ASC"])->select();
         $array    = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -125,7 +125,7 @@ class NewsController extends AdminBaseController
             $parentId = $paclass['parent_id'];
         }
 
-        $result   = Db::name('class')->where(["type"=>2])->order(["list_order" => "ASC"])->select();
+        $result   = Db::name('class')->where(["type"=>2])->order(["order_num" => "ASC"])->select();
         $array    = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';

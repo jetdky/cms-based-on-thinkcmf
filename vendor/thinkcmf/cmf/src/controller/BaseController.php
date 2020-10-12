@@ -52,7 +52,7 @@ class BaseController extends Controller
     }
 
     /**
-     *  排序 排序字段为list_orders数组 POST 排序字段为：list_order
+     *  排序 排序字段为order_nums数组 POST 排序字段为：order_num
      */
     protected function listOrders($model)
     {
@@ -64,7 +64,7 @@ class BaseController extends Controller
         }
 
         $pk  = Db::name($modelName)->getPk(); //获取主键名称
-        $ids = $this->request->post("list_orders/a");
+        $ids = $this->request->post("order_nums/a");
 
         if (!empty($ids)) {
             foreach ($ids as $key => $r) {

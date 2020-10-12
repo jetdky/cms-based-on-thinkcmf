@@ -46,7 +46,7 @@ class MenuController extends AdminBaseController
         }
 
         session('admin_menu_index', 'Menu/index');
-        $result     = Db::name('AdminMenu')->order(["list_order" => "ASC"])->select()->toArray();
+        $result     = Db::name('AdminMenu')->order(["order_num" => "ASC"])->select()->toArray();
         $tree       = new Tree();
         $tree->icon = ['&nbsp;&nbsp;&nbsp;│ ', '&nbsp;&nbsp;&nbsp;├─', '&nbsp;&nbsp;&nbsp;└─ '];
         $tree->nbsp = '&nbsp;&nbsp;&nbsp;';
@@ -70,7 +70,7 @@ class MenuController extends AdminBaseController
 
         $tree->init($result);
         $str      = "<tr id='node-\$id' \$parent_id_node style='\$style'>
-                        <td style='padding-left:20px;'><input name='list_orders[\$id]' type='text' size='3' value='\$list_order' class='input input-order'></td>
+                        <td style='padding-left:20px;'><input name='order_nums[\$id]' type='text' size='3' value='\$order_num' class='input input-order'></td>
                         <td>\$id</td>
                         <td>\$spacer\$name</td>
                         <td>\$app</td>
@@ -128,7 +128,7 @@ class MenuController extends AdminBaseController
     {
         $tree     = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
-        $result   = Db::name('AdminMenu')->order(["list_order" => "ASC"])->select();
+        $result   = Db::name('AdminMenu')->order(["order_num" => "ASC"])->select();
         $array    = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -216,7 +216,7 @@ class MenuController extends AdminBaseController
         $tree   = new Tree();
         $id     = $this->request->param("id", 0, 'intval');
         $rs     = Db::name('AdminMenu')->where("id", $id)->find();
-        $result = Db::name('AdminMenu')->order(["list_order" => "ASC"])->select();
+        $result = Db::name('AdminMenu')->order(["order_num" => "ASC"])->select();
         $array  = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $rs['parent_id'] ? 'selected' : '';

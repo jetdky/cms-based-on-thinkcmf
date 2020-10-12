@@ -44,7 +44,7 @@ class RbacController extends AdminBaseController
             return $content;
         }
 
-        $data = Db::name('role')->order(["list_order" => "ASC", "id" => "DESC"])->select();
+        $data = Db::name('role')->order(["order_num" => "ASC", "id" => "DESC"])->select();
         $this->assign("roles", $data);
         return $this->fetch();
     }

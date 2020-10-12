@@ -24,7 +24,7 @@ class SlideModel extends Model
      */
     protected function items()
     {
-        return $this->hasMany('SlideItemModel')->order('list_order ASC');
+        return $this->hasMany('SlideItemModel')->order('order_num ASC');
     }
 
 }

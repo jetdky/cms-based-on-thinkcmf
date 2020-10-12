@@ -49,7 +49,7 @@ class InitAppHookBehavior
 
             $appHookPlugins = HookPluginModel::field('hook,plugin')->where('status', 1)
                 ->where('hook', 'in', $appHooks)
-                ->order('list_order ASC')
+                ->order('order_num ASC')
                 ->select();
             cache($appHookPluginsCacheKey, $appHookPlugins, null, 'init_hook_plugins');
         }

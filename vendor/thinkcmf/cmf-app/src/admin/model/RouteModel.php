@@ -31,7 +31,7 @@ class RouteModel extends Model
         if ((!empty($routes) || is_array($routes)) && !$refresh) {
             return $routes;
         }
-        $routes      = $this->where("status", 1)->order("list_order asc")->select();
+        $routes      = $this->where("status", 1)->order("order_num asc")->select();
         $allRoutes   = [];
         $cacheRoutes = [];
         foreach ($routes as $er) {
@@ -207,7 +207,7 @@ class RouteModel extends Model
             } else {
                 $this->where('id', $findRoute['id'])->update([
                     'url'        => $url,
-                    'list_order' => $listOrder,
+                    'order_num' => $listOrder,
                     'type'       => $type
                 ]);
             }
@@ -216,7 +216,7 @@ class RouteModel extends Model
                 $this->insert([
                     'full_url'   => $fullUrl,
                     'url'        => $url,
-                    'list_order' => $listOrder,
+                    'order_num' => $listOrder,
                     'type'       => $type
                 ]);
             }

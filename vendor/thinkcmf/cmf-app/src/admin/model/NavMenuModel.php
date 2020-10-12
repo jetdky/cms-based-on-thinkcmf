@@ -31,7 +31,7 @@ class NavMenuModel extends Model
         if (empty($navId)) {
             $navId = Db::name('nav')->where('is_main', 1)->value('id');
         }
-        $navMenus     = $this->where('nav_id', $navId)->where('status', 1)->order('list_order ASC')->select()->toArray();
+        $navMenus     = $this->where('nav_id', $navId)->where('status', 1)->order('order_num ASC')->select()->toArray();
         $navMenusTree = [];
         if (!empty($navMenus)) {
             $tree = new Tree();
@@ -61,7 +61,7 @@ class NavMenuModel extends Model
             return [];
         }
 
-        $navMenus = $this->where('nav_id', $navId)->where('status', 1)->order('list_order ASC')->select()->toArray();
+        $navMenus = $this->where('nav_id', $navId)->where('status', 1)->order('order_num ASC')->select()->toArray();
 
         $navMenusTree = [];
         if (!empty($navMenus)) {

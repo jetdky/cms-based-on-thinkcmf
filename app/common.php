@@ -44,19 +44,16 @@ function removeHtml($data)
  * @param $array
  * @return mixed
  */
-function build_category_tree($array){
-        foreach ($array as $key1 => $value1) {
-            foreach ($array as $key2 => $value2 ){
-                if($value2['id'] == $value1['parent_id']){
-                    $array[$key2]['children'][] = $array[$key1];
-                    unset($array[$key1]);
-                }
+function build_category_tree($array)
+{
+    foreach ($array as $key1 => $value1) {
+        foreach ($array as $key2 => $value2) {
+            if ($value2['id'] == $value1['parent_id']) {
+                $array[$key2]['children'][] = $array[$key1];
+                unset($array[$key1]);
             }
         }
-        return $array;
+    }
+    return $array;
 }
 
-function get_category_recursion($array, $level){
-    
-
-}

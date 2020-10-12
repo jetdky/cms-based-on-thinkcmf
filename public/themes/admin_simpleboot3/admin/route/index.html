@@ -29,8 +29,8 @@
             <foreach name="routes" item="vo">
                 <tr>
                     <td>
-                        <input name="list_orders[{$vo.id}]" class="input-order" type="text"
-                               value="{$vo.list_order}">
+                        <input name="order_nums[{$vo.id}]" class="input-order" type="text"
+                               value="{$vo.order_num}">
                     </td>
                     <td>{$vo.id}</td>
                     <td>{$vo.full_url}</td>

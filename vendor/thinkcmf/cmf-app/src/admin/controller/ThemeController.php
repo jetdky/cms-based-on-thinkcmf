@@ -227,7 +227,7 @@ class ThemeController extends AdminBaseController
     public function files()
     {
         $theme = $this->request->param('theme');
-        $files = Db::name('theme_file')->where('theme', $theme)->order('list_order ASC')->select()->toArray();
+        $files = Db::name('theme_file')->where('theme', $theme)->order('order_num ASC')->select()->toArray();
         $this->assign('files', $files);
         return $this->fetch();
     }
@@ -255,7 +255,7 @@ class ThemeController extends AdminBaseController
             $files = Db::name('theme_file')->where('theme', $theme)
                 ->where(function ($query) use ($file) {
                     $query->where('is_public', 1)->whereOr('file', $file);
-                })->order('list_order ASC')->select();
+                })->order('order_num ASC')->select();
             $file  = Db::name('theme_file')->where(['file' => $file, 'theme' => $theme])->find();
 
         } else {
@@ -263,7 +263,7 @@ class ThemeController extends AdminBaseController
             $files = Db::name('theme_file')->where('theme', $file['theme'])
                 ->where(function ($query) use ($fileId) {
                     $query->where('id', $fileId)->whereOr('is_public', 1);
-                })->order('list_order ASC')->select();
+                })->order('order_num ASC')->select();
         }
 
         $tpl     = 'file_widget_setting';

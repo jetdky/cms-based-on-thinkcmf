@@ -19,7 +19,7 @@ class ApiService
      */
     public static function links()
     {
-        return Db::name('link')->where('status', 1)->order('list_order ASC')->select();
+        return Db::name('link')->where('status', 1)->order('order_num ASC')->select();
     }
 
     /**
@@ -35,7 +35,7 @@ class ApiService
             return [];
         }
 
-        $slides = Db::name('slide_item')->where('status', 1)->where('slide_id', $slideId)->order('list_order ASC')->select();
+        $slides = Db::name('slide_item')->where('status', 1)->where('slide_id', $slideId)->order('order_num ASC')->select();
 
         return $slides;
     }
