@@ -36,31 +36,19 @@ class ClassController extends AdminBaseController
             $this->assign('keyword', $data['keyword']);
         }
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
-        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
-        $arrayClass = [];
-        $key = 0;
-        foreach ($pList as $pk => $pv) {
-            $arrayClass[$key] = $pv;
-            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-            $key++;
-            foreach ($list as $k => $v) {
-                if ($pv['id'] == $v['parent_id']) {
-                    $v['name'] = '|-----' . $v['name'];
-                    $arrayClass[$key] = $v;
-                    $key++;
-                }
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $list = build_category_tree($list);
+
+        foreach ($list as $k => $v) {
+            if($v['parent_id'] && $v['level'] == 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }elseif($v['parent_id'] && $v['level'] == 3){
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
+            $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
-
-        // 获取分页显示
-        //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
-        halt($arrayClass);
-
+        $this->assign('arrayClass', $list);
         $this->assign('type', $data['type']);
-        //        dump($list->items()[0]);die;
-        //        $this->assign('page', $page);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -82,27 +70,21 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
-        $arrayClass = [];
-        $key = 0;
-        foreach ($pList as $pk => $pv) {
-            $arrayClass[$key] = $pv;
-            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-            $key++;
-            foreach ($list as $k => $v) {
-                if ($pv['id'] == $v['parent_id']) {
-                    $v['name'] = '|-----' . $v['name'];
-                    $arrayClass[$key] = $v;
-                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
+        $list = build_category_tree($list);
 
-                    $key++;
-                }
+        foreach ($list as $k => $v) {
+            if($v['parent_id'] && $v['level'] == 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }elseif($v['parent_id'] && $v['level'] == 3){
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
+            $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+
         // 获取分页显示
         //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
+        $this->assign('arrayClass', $list);
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -128,28 +110,21 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
-        $arrayClass = [];
-        $key = 0;
-        foreach ($pList as $pk => $pv) {
-            $arrayClass[$key] = $pv;
-            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-            $key++;
-            foreach ($list as $k => $v) {
-                if ($pv['id'] == $v['parent_id']) {
-                    $v['name'] = '|-----' . $v['name'];
-                    $arrayClass[$key] = $v;
-                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-                    $key++;
-                }
+        $list = build_category_tree($list);
+
+        foreach ($list as $k => $v) {
+            if($v['parent_id'] && $v['level'] == 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }elseif($v['parent_id'] && $v['level'] == 3){
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
+            $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
 
-        //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
+        $this->assign('arrayClass', $list);
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -173,30 +148,24 @@ class ClassController extends AdminBaseController
         //            return $content;
         //        }
         $data = $this->request->param();
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
+//        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
 
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
-        halt(build_category_tree($list));
+        $list = build_category_tree($list);
 
-        $arrayClass = [];
-        $key = 0;
-        foreach ($pList as $pk => $pv) {
-            $arrayClass[$key] = $pv;
-            $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-            $key++;
-            foreach ($list as $k => $v) {
-                if ($pv['id'] == $v['parent_id']) {
-                    $v['name'] = '|-----' . $v['name'];
-                    $arrayClass[$key] = $v;
-                    $arrayClass[$key]['imgs'] = $imgService->read($arrayClass[$key]['id'], $arrayClass[$key]['type']);
-                    $key++;
-                }
+        foreach ($list as $k => $v) {
+            if($v['parent_id'] && $v['level'] == 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }elseif($v['parent_id'] && $v['level'] == 3){
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
+            $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+
         //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
+        $this->assign('arrayClass', $list);
 //        halt($arrayClass);
 
         $this->assign('type', $data['type']);
@@ -459,7 +428,7 @@ class ClassController extends AdminBaseController
      * @throws
      */
 
-    public function indexVideo(ClassModel $classModel)
+    public function indexVideo(ClassModel $classModel, ImgService $imgService)
     {
         //        $content = hook_one('admin_pacontent_default_view');
         //
@@ -468,26 +437,21 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
 
-        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
-        $arrayClass = [];
-        $key = 0;
-        foreach ($pList as $pk => $pv) {
-            $arrayClass[$key] = $pv;
-            $key++;
-            foreach ($list as $k => $v) {
-                if ($pv['id'] == $v['parent_id']) {
-                    $v['name'] = '|-----' . $v['name'];
-                    $arrayClass[$key] = $v;
-                    $key++;
-                }
+        $list = build_category_tree($list);
+
+        foreach ($list as $k => $v) {
+            if($v['parent_id'] && $v['level'] == 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }elseif($v['parent_id'] && $v['level'] == 3){
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
+            $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
 
-        //        var_dump($arrayClass);die;
         // 获取分页显示
         //        $page = $list->render();
-        $this->assign('arrayClass', $arrayClass);
+        $this->assign('arrayClass', $list);
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);

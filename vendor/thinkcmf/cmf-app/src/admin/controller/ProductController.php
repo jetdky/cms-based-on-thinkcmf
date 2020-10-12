@@ -19,29 +19,65 @@ use tree\Tree;
 class ProductController extends AdminBaseController
 {
 
+    public $type = 7;
+
     public function initialize()
     {
         parent::initialize();
-        $this->assign("type", 7);
+        $this->assign("type", $this->type);
     }
 
     public function index(ProductModel $productModel)
     {
+        $tree = new Tree();
+        $parentId = $this->request->param("parent_id", 0, 'intval');
+        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $array = [];
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+
         $data = $this->request->param();
         $where = [];
         if (!empty($data['keyword'])) {
-            $where[] = array('name', 'like', '%' . $data['keyword'] . '%');
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
             $this->assign('keyword', $data['keyword']);
         }
-        $list = $productModel->where($where)
-            ->with(['productClass'])
-            ->order("order_num ASC")
-            ->paginate(10);
-        // 获取分页显示
+        if (!empty($data['cid'])) {
+            $where[] = ['cid', '=', $data['cid']];
+            //todo: 根据父类id获得所有子类id，当前只查询一级父类
+        }
+        if (!empty($data['status'])) {
+            $where[] = ['status', '=', $data['status']];
+            $this->assign('status', $data['status']);
+        }
+        if (!empty($data['is_recom'])) {
+            $where[] = ['is_recom', '=', $data['is_recom']];
+            $this->assign('is_recom', $data['is_recom']);
+        }
+//        halt($where);
+//        $list = $productModel->where($where)
+//            ->with(['productImg.imgs'])
+//            ->with(['productClass'])
+//            ->with(['productImg' => function ($query) {
+//                $query->where('type', '=', 7);
+//            }])
+//            ->order("order_num ASC")->paginate(10);
 
+        $list = $productModel->where($where)
+            ->with(['productImg', 'productImg.imgs', 'productClass'])
+            ->order("order_num ASC")->paginate(10);
+//        halt($productModel->getLastSql());
+        // 获取分页显示
+//        halt($list);
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
+        $this->assign("selectClass", $selectClass);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -76,7 +112,6 @@ class ProductController extends AdminBaseController
     public function addPost(ProductModel $productModel, ProductValidate $productValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
-        halt($data);
         $result = $this->validate($data, 'Product.add');
         if ($result !== true) {
             $this->error($result);
@@ -93,7 +128,7 @@ class ProductController extends AdminBaseController
                 $seoService->dosave($data, $data['type'], $productModel->id);
             }
         });
-        $this->success("添加成功！", url("Product/index"));
+        $this->success("添加成功！", url("Product/index", ['type' => $this->type]));
     }
 
     /**
@@ -128,7 +163,10 @@ class ProductController extends AdminBaseController
         } else {
             $parentId = $productClass['parent_id'];
         }
-
+        $imgService = new ImgService();
+        $seoService = new SeoService();
+        $product['imgs'] = $imgService->read($id, $this->type);
+        $product['seo'] = $seoService->read($id, $this->type);
         $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
@@ -139,44 +177,51 @@ class ProductController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
-        halt($selectClass);
         $this->assign("product", $product);
+//        halt($product);
         return $this->fetch();
     }
 
 
-    public function editPost(ProductModel $productModel)
+    public function editPost(ProductModel $productModel, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         if ($this->request->isPost()) {
-
             $data = $this->request->param();
-
-            $isFindProduct = DB::name('product')->where(['name' => $data['name'], 'lang' => $data['lang']])->all();
-            foreach ($isFindProduct as $FindProduct) {
-
-                if ($FindProduct['id'] != $data['id']) {
-                    if ($data['lang'] == 0) {
-                        $lang = "英文";
-                    } else {
-                        $lang = "中文";
-                    }
-                    $this->error("此产品在" . $lang . "已存在");
-                }
-            }
-            $result = $this->validate($this->request->param(), 'Product.edit');
+            $result = true;
             if ($result !== true) {
                 // 验证失败 输出错误信息
                 $this->error($result);
             } else {
-                $result = DB::name('product')->update($_POST);
+                Db::transaction(function () use ($productModel, $imgService, $tagService, $seoService, $data) {
+                    if (isset($data['img_list'])) {
+                        $imgService->delete($data['id'], $data['type']);
+                        $imgService->doSave($data['img_list'], $data['type'], $data['id']);
+                    } else {
+                        $imgService->delete($data['id'], $data['type']);
+                    }
+
+                    if ($data['tag_id']) {
+                        $tagService->delete($data['id'], $data['type']);
+                        $tagService->doSave($data['tag_id'], $data['type'], $data['id']);
+                    } else {
+                        $tagService->delete($data['id'], $data['type']);
+                    }
+
+                    if (!$data['is_auto_seo']) {
+                        $seoService->delete($data['id'], $data['type']);
+                        $seoService->dosave($data, $data['type'], $data['id']);
+                    } else {
+                        $seoService->delete($data['id'], $data['type']);
+                    }
+                    $result = $productModel->allowField(true)->update($data);
+                });
+
                 if ($result !== false) {
-                    $this->success("保存成功！");
+                    $this->success("保存成功！", url("product/index", ['type' => $data['type']]));
                 } else {
                     $this->error("保存失败！");
                 }
             }
-
-
         }
     }
 

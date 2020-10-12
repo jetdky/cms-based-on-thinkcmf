@@ -6,7 +6,13 @@ namespace app\admin\controller;
 
 use app\admin\model\LinkModel;
 use app\admin\model\PacontentModel;
+use app\admin\model\ProductModel;
+use app\admin\service\FunctionService;
+use app\admin\service\ImgService;
+use app\admin\service\SeoService;
+use app\admin\service\TagService;
 use app\admin\validate\PacontentValidate;
+use app\admin\validate\ProductValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
@@ -14,6 +20,13 @@ use tree\Tree;
 
 class PacontentController extends AdminBaseController
 {
+
+    public $type = 6;
+    public function initialize()
+    {
+        parent::initialize();
+        $this->assign("type", $this->type);
+    }
 
     public function index(PacontentModel $pacontentModel)
     {
@@ -71,10 +84,12 @@ class PacontentController extends AdminBaseController
      *
      *
      * **/
-    public function add()
+    public function add(FunctionService $FunctionService)
     {
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
+        $data = $this->request->param();
+        $order_num = $FunctionService->get_order_num('product');
         $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
@@ -85,32 +100,31 @@ class PacontentController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
+        $this->assign("order_num", $order_num);
         return $this->fetch();
     }
 
 
-    public function addPost(PacontentModel $pacontentModel, PacontentValidate $pacontentValidate)
+    public function addPost(PacontentModel $pacontentModel, PacontentValidate $pacontentValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
-        $isFindPa = $pacontentModel->where(['paname' => $data['paname'], 'lang' => $data['lang']])->find();
-        if ($isFindPa) {
-            if ($data['lang'] == 0) {
-                $lang = "英文";
-            } else {
-                $lang = "中文";
-            }
-            $this->error("此标题在" . $lang . "已存在");
-        }
-//        $linkModel = new P();
-//        $pacontentValidate->with('add')->check($data);
         $result = $this->validate($data, 'Pacontent.add');
-
         if ($result !== true) {
             $this->error($result);
         }
-        $pacontentModel->allowField(true)->save($data);
-
-        $this->success("添加成功！", url("Pacontent/add", ['parent_id' => $data['cid']]));
+        Db::transaction(function () use ($pacontentModel, $imgService, $tagService, $seoService, $data) {
+            $pacontentModel->allowField(true)->save($data);
+            if (isset($data['img_list'])) {
+                $imgService->doSave($data['img_list'], $data['type'], $pacontentModel->id);
+            }
+            if ($data['tag_id']) {
+                $tagService->doSave($data['tag_id'], $data['type'], $pacontentModel->id);
+            }
+            if (!$data['is_auto_seo']) {
+                $seoService->dosave($data, $data['type'], $pacontentModel->id);
+            }
+        });
+        $this->success("添加成功！", url("Pacontent/index", ['type' => $this->type]));
     }
 
     /**

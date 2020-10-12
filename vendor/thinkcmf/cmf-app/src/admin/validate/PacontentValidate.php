@@ -9,14 +9,14 @@ use think\Validate;
 class PacontentValidate extends Validate
 {
     protected $rule = [
-        'paname' => 'require',
+//        'paname' => 'require',
 //        'pacon'  => 'require',
 //        'painfo' => 'require',
 //        'photo' => 'require',
         'cid' => 'require',
     ];
     protected $message = [
-        'paname.require' => '内容的名称不能为空',
+//        'paname.require' => '内容的名称不能为空',
         'cid.unique'  => '内容分类不能为空',
     ];
 

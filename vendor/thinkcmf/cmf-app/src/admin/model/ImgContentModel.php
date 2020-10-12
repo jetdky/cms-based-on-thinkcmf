@@ -16,4 +16,8 @@ class ImgContentModel extends Model
 {
     protected $autoWriteTimestamp = false;
 
+    public function imgs()
+    {
+        return $this->hasOne('ImgModel', 'id', 'img_id');
+    }
 }

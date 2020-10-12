@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 12/10/2020 11:04:40
+ Date: 12/10/2020 22:18:41
 */
 
 SET NAMES utf8mb4;
@@ -442,23 +442,23 @@ CREATE TABLE `cmf_class`  (
   `classcon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
   `show_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 67 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_class
 -- ----------------------------
-INSERT INTO `cmf_class` VALUES (1, 0, NULL, NULL, 1, '内容分类', '1', '内容分类', NULL, NULL, 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (2, 0, NULL, NULL, 1, 'banner', '1', NULL, NULL, NULL, 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (1, 0, 0, NULL, 1, '顶级内容', '1', '&lt;p&gt;内容分类&lt;/p&gt;', '1602486872', NULL, 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (65, 0, 6, NULL, 1, '顶级分类3', '3', NULL, '1602300092', '1602300092', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (4, 1, NULL, NULL, 1, 'yesia', '1', '', '1595483762', '1595483762', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (5, 1, NULL, NULL, 1, '6', '1', '', '1595484029', '1595484029', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (69, 1, 1, NULL, 1, '二级内容', '1', NULL, '1602486892', '1602486892', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (63, 62, 4, NULL, 0, '我是三级分类', '3', NULL, '1602294846', '1601271721', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (8, 0, 0, NULL, 1, '我是文章分类第一1', '2', '&lt;p&gt;fasf呃呃呃&lt;/p&gt;', '1601192918', '1595554437', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (9, 0, NULL, NULL, 1, '我是新闻分类', '2', 'fasf', '1595554641', '1595554641', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (62, 61, 3, NULL, 1, '我是二级分类', '3', NULL, '1602294830', '1601271710', 1, NULL, NULL);
-INSERT INTO `cmf_class` VALUES (61, 0, 2, NULL, 1, '我是顶级分类', '3', NULL, '1601260419', '1601192702', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (61, 0, 2, NULL, 1, '我是顶级分类', '3', NULL, '1602474965', '1601192702', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (64, 0, 5, NULL, 1, '顶级分类2', '3', NULL, '1602300076', '1602300076', 1, NULL, NULL);
 INSERT INTO `cmf_class` VALUES (66, 64, 7, NULL, 1, '二级分类2', '3', NULL, '1602300102', '1602300102', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (67, 0, 1, NULL, 1, '大大大', '4', NULL, '1602472500', '1602472500', 1, NULL, NULL);
+INSERT INTO `cmf_class` VALUES (68, 61, 8, NULL, 1, '我是二级分类1', '3', NULL, '1602473485', '1602473485', 1, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for cmf_comment
@@ -619,15 +619,20 @@ CREATE TABLE `cmf_img`  (
   `update_time` int(10) UNSIGNED NOT NULL COMMENT '更新时间',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_img
 -- ----------------------------
-INSERT INTO `cmf_img` VALUES (31, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1601260419, 1601260419, 1601260419);
 INSERT INTO `cmf_img` VALUES (36, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602233049, 1602233049, 1602233049);
 INSERT INTO `cmf_img` VALUES (37, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602233049, 1602233049, 1602233049);
 INSERT INTO `cmf_img` VALUES (38, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602294830, 1602294830, 1602294830);
+INSERT INTO `cmf_img` VALUES (39, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602474965, 1602474965, 1602474965);
+INSERT INTO `cmf_img` VALUES (40, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602474965, 1602474965, 1602474965);
+INSERT INTO `cmf_img` VALUES (41, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602474965, 1602474965, 1602474965);
+INSERT INTO `cmf_img` VALUES (49, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602487011, 1602487011, 1602487011);
+INSERT INTO `cmf_img` VALUES (50, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602487012, 1602487012, 1602487012);
+INSERT INTO `cmf_img` VALUES (54, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602494500, 1602494500, 1602494500);
 
 -- ----------------------------
 -- Table structure for cmf_img_content
@@ -639,15 +644,20 @@ CREATE TABLE `cmf_img_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 39 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_img_content
 -- ----------------------------
-INSERT INTO `cmf_img_content` VALUES (31, 31, 3, 61);
 INSERT INTO `cmf_img_content` VALUES (36, 36, 4, 6);
 INSERT INTO `cmf_img_content` VALUES (37, 37, 4, 6);
 INSERT INTO `cmf_img_content` VALUES (38, 38, 3, 62);
+INSERT INTO `cmf_img_content` VALUES (39, 39, 3, 61);
+INSERT INTO `cmf_img_content` VALUES (40, 40, 3, 61);
+INSERT INTO `cmf_img_content` VALUES (41, 41, 3, 61);
+INSERT INTO `cmf_img_content` VALUES (49, 49, 6, 11);
+INSERT INTO `cmf_img_content` VALUES (50, 50, 6, 11);
+INSERT INTO `cmf_img_content` VALUES (54, 54, 7, 7);
 
 -- ----------------------------
 -- Table structure for cmf_link
@@ -741,30 +751,23 @@ INSERT INTO `cmf_nav_menu` VALUES (2, 3, 0, 1, 10000, 'yesia', '', 'home', 'penc
 DROP TABLE IF EXISTS `cmf_news`;
 CREATE TABLE `cmf_news`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NULL DEFAULT NULL COMMENT '分类id',
-  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '标题',
-  `abstract` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '摘要',
-  `photo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '图片',
-  `content` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '内容',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
+  `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
   `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
-  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态（是否显示1显示，0不显示）',
-  `release_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间',
+  `is_auto_seo` tinyint(4) NULL DEFAULT 1,
+  `is_recom` tinyint(1) NULL DEFAULT NULL,
+  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
-  `author` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '作者',
-  `source` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '来源',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_news
 -- ----------------------------
-INSERT INTO `cmf_news` VALUES (1, 9, '1', '1', '1', '<p>1</p>', 1, 1, NULL, NULL, NULL, 1000, NULL, NULL);
-INSERT INTO `cmf_news` VALUES (6, 8, '影响了中国几代油画家的作品，在华茂美术馆展出啦！影响了中国几代油画家的作品，在华茂美术馆展出啦！影响了中国几代油画家的作品，在华茂美术馆展出啦！影响了中国几代油画家的作品，在华茂美术馆展出啦！', '', '', '', 1, 1, NULL, '1595563196', '1595563196', 1, NULL, NULL);
-INSERT INTO `cmf_news` VALUES (3, 8, '刊物-3', '', '', NULL, 1, 1, NULL, '1595556188', '1595556188', 1002, NULL, NULL);
-INSERT INTO `cmf_news` VALUES (4, 8, 'test01', '大苏打', 'admin/20200724/329e128a55bc2e397f4ccbeef9f9961a.jpg', '&lt;p&gt;打算大苏打大苏打撒旦撒&lt;/p&gt;', 1, 1, NULL, '1595556247', '1595556247', 1001, NULL, NULL);
-INSERT INTO `cmf_news` VALUES (5, 8, '影响了中国几代油画家的作品，在华茂美术馆展出啦！1', '大苏打', 'admin/20200721/0886ea3c898181680d6e99da53426bae.jpg', NULL, 1, 0, NULL, '1595556400', '1595556400', 1003, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for cmf_option
@@ -790,42 +793,25 @@ INSERT INTO `cmf_option` VALUES (1, 1, 'site_info', '[\"{\\\"site_name\\\":\\\"T
 DROP TABLE IF EXISTS `cmf_pacontent`;
 CREATE TABLE `cmf_pacontent`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `cid` int(11) NULL DEFAULT 0 COMMENT '分类id',
-  `paname` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '内容名称',
-  `lang` tinyint(1) NULL DEFAULT 0 COMMENT '语言：1中文 0英文',
-  `pacon` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '内容',
-  `issj` tinyint(1) NULL DEFAULT 0,
-  `sjpacon` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  `opti` tinyint(1) NULL DEFAULT 0,
-  `yetitle` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '页面标题',
-  `keywords` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '页面关键字',
-  `descri` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '页面描述',
-  `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '是否显示',
-  `order_num` int(4) NULL DEFAULT 0 COMMENT '排序',
-  `create_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `update_time` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `isphoto` tinyint(1) NULL DEFAULT 0 COMMENT '是否有照片',
-  `paphoto` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '照片地址',
-  `pathumb1` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑器1',
-  `pathumb2` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '编辑器2',
-  `describe` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '描述',
-  `painfo` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '简单描述，简介',
-  `list_order` int(5) NULL DEFAULT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
+  `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
+  `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
+  `is_auto_seo` tinyint(4) NULL DEFAULT 1,
+  `is_recom` tinyint(1) NULL DEFAULT NULL,
+  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '内容' ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_pacontent
 -- ----------------------------
-INSERT INTO `cmf_pacontent` VALUES (1, 1, '1', 0, '<p>1</p>', 1, NULL, 0, '1', NULL, NULL, 1, 0, NULL, NULL, 0, '', NULL, NULL, NULL, '你  法大师傅加上发你艾斯芬尼赛风拿三分挨罚三年覅是否奶粉爱妃', 7);
-INSERT INTO `cmf_pacontent` VALUES (3, 3, 'banner1', 0, NULL, 0, NULL, 0, NULL, NULL, NULL, 0, 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, '', 9);
-INSERT INTO `cmf_pacontent` VALUES (4, 3, '资质荣誉2', 0, '&lt;p&gt;的撒大大&lt;br/&gt;&lt;/p&gt;', 0, NULL, 0, NULL, NULL, NULL, 1, 0, NULL, NULL, 0, NULL, NULL, NULL, NULL, '你  法大师傅加上发你艾斯芬尼赛风拿三分挨罚三年覅是否奶粉爱妃', 10);
-INSERT INTO `cmf_pacontent` VALUES (5, 2, '底部地址联系方式', 0, '<p>大苏打</p>', 0, NULL, 0, NULL, NULL, NULL, 1, 0, NULL, NULL, 0, 'admin/20200722/1ab874ec08b12840b1bfaee24ded0449.png', NULL, NULL, NULL, '底部地址联系方式', 8);
-INSERT INTO `cmf_pacontent` VALUES (7, 3, '底部地址联系方式', 0, NULL, 0, NULL, 0, NULL, NULL, NULL, 1, 0, '1595397139', '1595397139', 0, '', NULL, NULL, NULL, '', 6);
-INSERT INTO `cmf_pacontent` VALUES (8, 1, '底部地址联系方式', 0, NULL, 0, NULL, 0, NULL, NULL, NULL, 1, 0, '1595397744', '1595397744', 0, '', NULL, NULL, NULL, '底部地址联系方式', 5);
-INSERT INTO `cmf_pacontent` VALUES (9, 1, '底部地址联系方式', 1, '<p>fdsafaf</p>', 0, NULL, 0, NULL, NULL, NULL, 1, 0, '1595397854', '1595397854', 0, '', NULL, NULL, NULL, '底部地址联系方式', 4);
-INSERT INTO `cmf_pacontent` VALUES (10, 1, '底部地址联系方式', 1, NULL, 0, NULL, 0, NULL, NULL, NULL, 1, 0, '1595398915', '1595398915', 0, '', NULL, NULL, NULL, '你  法大师傅加上发你艾斯芬尼赛风拿三分挨罚三年覅是否奶粉爱妃', 3);
-INSERT INTO `cmf_pacontent` VALUES (11, 1, '底部地址联系方式', 1, NULL, 0, NULL, 0, NULL, NULL, NULL, 1, 0, '1595398922', '1595398922', 0, '', NULL, NULL, NULL, '你  法大师傅加上发你艾斯芬尼赛风拿三分挨罚三年覅是否奶粉爱妃', 2);
+INSERT INTO `cmf_pacontent` VALUES (10, '111', '', '', 59, 1, 1, 1, NULL, 1, '1602486903', '1602486903');
+INSERT INTO `cmf_pacontent` VALUES (11, '222', '', '', 59, 1, 1, 1, NULL, 1, '1602487011', '1602487011');
 
 -- ----------------------------
 -- Table structure for cmf_plugin
@@ -867,19 +853,20 @@ CREATE TABLE `cmf_product`  (
   `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
   `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
   `is_auto_seo` tinyint(4) NULL DEFAULT 1,
-  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `is_recom` tinyint(1) NULL DEFAULT NULL,
+  `status` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_product
 -- ----------------------------
-INSERT INTO `cmf_product` VALUES (1, 'yesia', NULL, '', NULL, 3, 61, 1, 1, 1, '1595569864', '1595569864');
-INSERT INTO `cmf_product` VALUES (3, '发放', NULL, '', NULL, 11, 62, 1, 1, 1, '1595573499', '1595573499');
-INSERT INTO `cmf_product` VALUES (6, '呜呜呜', NULL, '', '', 6, 61, 1, 1, 1, '1602233049', '1602233049');
-INSERT INTO `cmf_product` VALUES (5, '大大大', NULL, '&lt;p&gt;打打&lt;/p&gt;', '&lt;p&gt;打打&lt;/p&gt;', 5, 61, 1, 1, 1, '1602222535', '1602222535');
+INSERT INTO `cmf_product` VALUES (1, 'yesia问问', NULL, '&lt;p&gt;3&lt;/p&gt;', '&lt;p&gt;2&lt;/p&gt;', 55, 61, 1, 1, 0, 1, '1595569864', '1602484941');
+INSERT INTO `cmf_product` VALUES (6, '呜呜呜', NULL, '', '', 6, 61, 1, 1, 1, 0, '1602233049', '1602233049');
+INSERT INTO `cmf_product` VALUES (5, '大大大', NULL, '&lt;p&gt;打打&lt;/p&gt;', '&lt;p&gt;打打&lt;/p&gt;', 5, 61, 1, 1, 0, 1, '1602222535', '1602485491');
+INSERT INTO `cmf_product` VALUES (7, '产品打打1', NULL, '&lt;p&gt;777&lt;/p&gt;', '&lt;p&gt;777&lt;/p&gt;', 56, 62, 1, 0, 0, 1, '1602484032', '1602494500');
 
 -- ----------------------------
 -- Table structure for cmf_recycle_bin
@@ -970,11 +957,12 @@ CREATE TABLE `cmf_seo`  (
   `update_time` int(10) UNSIGNED NOT NULL COMMENT '更新时间',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_seo
 -- ----------------------------
+INSERT INTO `cmf_seo` VALUES (8, '2', '3', '4', 1602494500, 1602494500);
 
 -- ----------------------------
 -- Table structure for cmf_seo_content
@@ -986,11 +974,12 @@ CREATE TABLE `cmf_seo_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_seo_content
 -- ----------------------------
+INSERT INTO `cmf_seo_content` VALUES (8, 8, 7, 7);
 
 -- ----------------------------
 -- Table structure for cmf_slide
@@ -1065,17 +1054,20 @@ CREATE TABLE `cmf_tag_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签/内容关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签/内容关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_tag_content
 -- ----------------------------
-INSERT INTO `cmf_tag_content` VALUES (1, 1, 3, 61);
-INSERT INTO `cmf_tag_content` VALUES (2, 2, 3, 61);
 INSERT INTO `cmf_tag_content` VALUES (5, 1, 4, 6);
 INSERT INTO `cmf_tag_content` VALUES (6, 2, 4, 6);
 INSERT INTO `cmf_tag_content` VALUES (7, 1, 3, 62);
 INSERT INTO `cmf_tag_content` VALUES (8, 2, 3, 62);
+INSERT INTO `cmf_tag_content` VALUES (9, 1, 3, 61);
+INSERT INTO `cmf_tag_content` VALUES (10, 2, 3, 61);
+INSERT INTO `cmf_tag_content` VALUES (16, 2, 7, 5);
+INSERT INTO `cmf_tag_content` VALUES (19, 1, 7, 7);
+INSERT INTO `cmf_tag_content` VALUES (20, 2, 7, 7);
 
 -- ----------------------------
 -- Table structure for cmf_theme
@@ -1103,7 +1095,7 @@ CREATE TABLE `cmf_theme`  (
 -- ----------------------------
 -- Records of cmf_theme
 -- ----------------------------
-INSERT INTO `cmf_theme` VALUES (1, 0, 1602292067, 0, 0, 'default', 'default', '1.0.0', 'http://demo.thinkcmf.com', '', 'ThinkCMF', 'http://www.thinkcmf.com', 'zh-cn', 'ThinkCMF默认模板', 'ThinkCMF默认模板');
+INSERT INTO `cmf_theme` VALUES (1, 0, 1602475139, 0, 0, 'default', 'default', '1.0.0', 'http://demo.thinkcmf.com', '', 'ThinkCMF', 'http://www.thinkcmf.com', 'zh-cn', 'ThinkCMF默认模板', 'ThinkCMF默认模板');
 
 -- ----------------------------
 -- Table structure for cmf_theme_file
@@ -1386,11 +1378,12 @@ CREATE TABLE `cmf_video`  (
   `create_time` int(12) NULL DEFAULT NULL,
   `lang` int(1) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_video
 -- ----------------------------
+INSERT INTO `cmf_video` VALUES (9, 67, '天梯图', '&lt;p&gt;胜多负少的&lt;/p&gt;', 'admin/20200911/5694478c5c3d1e25e3e51188b0699f36.jpg', 3, 1, 1602472520, 1);
 INSERT INTO `cmf_video` VALUES (8, 34, 'uyityjty', '&lt;p&gt;ww&lt;/p&gt;', 'admin/20200911/5694478c5c3d1e25e3e51188b0699f36.jpg', 2, 1, 1600917387, 1);
 
 SET FOREIGN_KEY_CHECKS = 1;

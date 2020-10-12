@@ -4,7 +4,7 @@
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li class="active"><a href="{:url('Pacontent/index')}">{:lang('PACONTENT')}</a></li>
-        <li><a href="{:url('Pacontent/add')}">{:lang('PACONTENT_ADD')}</a></li>
+        <li><a href="{:url('Pacontent/add', ['type' => $type])}">{:lang('PACONTENT_ADD')}</a></li>
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url('Pacontent/index')}">
         标题:
@@ -33,74 +33,88 @@
                     data-action="{:url('Pacontent/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
             </button>
         </div>
-    <table class="table table-hover table-bordered">
-        <thead>
-        <tr>
-            <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
-                                         data-checklist="js-check-x"></label></th>
-            <th width="50">{:lang('PACONTENT_RANK')}</th>
-            <th width="50">ID</th>
-            <th>{:lang('PACONTENT_TITLE')}</th>
-            <th>{:lang('PACONTENT_CLASS')}</th>
-            <th>{:lang('IMAGE')}</th>
-            <th>{:lang('PACONTENT_LANG')}</th>
-            <th>{:lang('PACONTENT_STATUS')}</th>
-            <th>{:lang('UPDATE_TIME')}</th>
-            <th width="140">{:lang('CLICK')}</th>
-        </tr>
-        </thead>
-        <tbody>
-        <php>
-            $asset_img_suffixes=['bmp','jpg','jpeg','png','gif','tiff'];/*TODO ADD MORE*/
-        </php>
-        <php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
-        <foreach name="list" item="vo">
+        <table class="table table-hover table-bordered">
+            <thead>
             <tr>
-                <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
-                           value="{$vo.id}"></td>
-                <td><input name='order_nums[{$vo.id}]' class="input input-order mr5" type='text' size='3'
-                           value='{$vo.order_num}'></td>
-                <td>{$vo.id}</td>
-                <td>{$vo.paname}</td>
-                <td>{$vo.paGetClass.name}</td>
-                <if condition=" $vo['paphoto'] eq null">
-                    <td>暂无</td>
-                    <else />
-                <td>
-                        <a href="javascript:parent.imagePreviewDialog('{:cmf_get_image_preview_url($vo['paphoto'])}');">
-                            <i class="fa fa-photo fa-fw"></i>
-                        </a>
-                </td>
-                </if>
-                <td>{$vo.lang|getLang}</td>
-                <td>
-                    <switch name="vo.status">
-                        <case value="0">
-                            <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                        <case value="1">
-                            <span class="label label-success">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                        <case value="2">
-                            <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                    </switch>
-                </td>
-                <td>{$vo.update_time|getTime}</td>
-                <td>
+                <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
+                                             data-checklist="js-check-x"></label></th>
+                <th width="50">排序</th>
+                <th width="50">ID</th>
+                <th>名称</th>
+                <th>分类</th>
+                <th>图片</th>
+                <th>语言</th>
+                <th>是否显示</th>
+                <th>添加时间</th>
+                <th width="140">{:lang('CLICK')}</th>
+            </tr>
+            </thead>
+            <tbody>
+            <php>
+                $asset_img_suffixes=['bmp','jpg','jpeg','png','gif','tiff'];/*TODO ADD MORE*/
+            </php>
+            <php>
+                $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+            </php>
+            <foreach name="list" item="vo">
+                <tr>
+                    <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
+                               value="{$vo.id}"></td>
+                    <td><input name='order_nums[{$vo.id}]' class="input input-order mr5" type='text' size='3'
+                               value='{$vo.order_num}'></td>
+                    <td>{$vo.id}</td>
+                    <td>{$vo.name}</td>
+                    <td>{$vo.paGetClass.name}</td>
+                    <td>
+                        <if condition="$vo['imgs']">
+                        <span name="imgPreview_{$vo.id}" class="imgPreview">
+                            <volist name="vo['imgs']" id="voo">
+                                <if condition ="$key <= 0">
+                                    <img src="/upload/{$voo['origi_img']}">
+                                <else />
+                                    <img src="/upload/{$voo['origi_img']}" style="display: none">
+                                </if>
+                            </volist>
+                        </span>
+                            <else />
+                            <span class="label label-warning">暂无</span>
+                        </if>
+                    </td>
+                    <td>{$vo.lang|getLang}</td>
+                    <td>
+                        <switch name="vo.status">
+                            <case value="0">
+                                <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
+                            </case>
+                            <case value="1">
+                                <span class="label label-success">{$user_statuses[$vo['status']]}</span>
+                            </case>
+                            <case value="2">
+                                <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
+                            </case>
+                        </switch>
+                    </td>
+                    <td>{$vo.create_time|getTime}</td>
+                    <td>
 
                         <a class="btn btn-xs btn-primary" href='{:url("Pacontent/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
-                        <a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('Pacontent/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                        <a class="btn btn-xs btn-danger js-ajax-delete"
+                           href="{:url('Pacontent/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
                         <if condition="$vo['status'] eq 1">
-                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn" href="{:url('Pacontent/ban',array('id'=>$vo['id']))}" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
-                            <else />
-                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('Pacontent/cancelban',array('id'=>$vo['id']))}" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
+                               href="{:url('Pacontent/ban',array('id'=>$vo['id']))}"
+                               data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                            <else/>
+                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
+                               href="{:url('Pacontent/cancelban',array('id'=>$vo['id']))}"
+                               data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
                         </if>
-                </td>
-            </tr>
-        </foreach>
-        </tbody>
-    </table>
+
+                    </td>
+                </tr>
+            </foreach>
+            </tbody>
+        </table>
         <div class="table-actions">
             <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
             <button class="btn btn-sm btn-success js-ajax-submit" type="submit"
@@ -114,5 +128,17 @@
     <div class="pagination">{$page}</div>
 </div>
 <script src="__STATIC__/js/admin.js"></script>
+<script>
+    window.onload = function () {
+    <foreach name="arrayClass" item="vo">
+            layer.photos({
+                photos: "[name='imgPreview_{$vo.id}']",
+                shadeClose: true,
+                closeBtn: 2,
+                anim: 0
+            });
+    </foreach>
+    }
+</script>
 </body>
 </html>

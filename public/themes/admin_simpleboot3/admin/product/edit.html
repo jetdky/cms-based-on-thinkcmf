@@ -9,13 +9,14 @@
     </ul>
     <div class="row">
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Product/editPost')}">
-            <input type="hidden" name="type" value="4">
+            <input type="hidden" name="type" value="{$type}">
+            <input type="hidden" name="id" value="{$product.id}">
             <div class="col-xs-8">
                 <div class="form-group">
                     <label for="input-user_login" class="col-sm-2 control-label"><span
                             class="form-required">*</span>名称</label>
                     <div class="col-md-6 col-sm-10">
-                        <input type="text" class="form-control" id="input-user_login" name="name">
+                        <input type="text" class="form-control" id="input-user_login" name="name" value="{$product.name}">
                     </div>
                 </div>
                 <div class="form-group">
@@ -35,6 +36,14 @@
                            href="javascript:uploadMultiImage('图片上传','#input-image', 'input-image');">上传图片</a>
                         <ul class="img-box">
                             <!-- 存放预览图片 -->
+                            <volist name="$product['imgs']" id="vo">
+                                <li class="img-list">
+                                    <img src="/upload/{$vo['thumb_img']}">
+                                    <img class="del-img" src="/static/images/cancel.png">
+                                    <input type="hidden" name="img_list[0]"
+                                           value="{$vo['origi_img']}">
+                                </li>
+                            </volist>
                         </ul>
                     </div>
                 </div>
@@ -42,7 +51,7 @@
                     <label for="input-user_email" class="col-sm-2 control-label"><span
                             class="form-required">*</span>内容</label>
                     <div class="col-md-6 col-sm-12">
-                        <textarea id="content" name="content"></textarea>
+                        <textarea id="content" name="content">{$product.content}</textarea>
                         <span style="color: #ffb752;"></span>
                     </div>
                 </div>
@@ -50,7 +59,7 @@
                     <label for="remark" class="col-sm-2 control-label"><span
                             class="form-required">*</span>备注</label>
                     <div class="col-md-6 col-sm-12">
-                        <textarea id="note" name="note"></textarea>
+                        <textarea id="note" name="note">{$product.note}</textarea>
                         <span style="color: #ffb752;"></span>
                     </div>
                 </div>
@@ -98,13 +107,15 @@
                         <span class="form-required">*</span>排序数
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <input type="text" class="form-control" id="order_num" name="order_num" value="{$order_num}">
+                        <input type="text" class="form-control" id="order_num" name="order_num" value="{$product.order_num}">
                     </div>
                 </div>
                 <div class="form-group">
                     <div class="col-md-6 col-sm-10">
-                        自动SEO<input type="radio" name="is_auto_seo" value="1" checked>
-                        手动SEO<input type="radio" name="is_auto_seo" value="0">
+                        <div class="col-md-6 col-sm-10">
+                            <span>自动SEO</span><input type="radio" name="is_auto_seo" value="1"<if condition="$product['seo']['is_auto_seo'] == 1"> checked</if>>
+                            <span>手动SEO</span><input type="radio" name="is_auto_seo" value="0"<if condition="$product['seo']['is_auto_seo'] == 0"> checked</if>>
+                        </div>
                     </div>
                 </div>
                 <div id="seo">
@@ -112,7 +123,7 @@
                         <label for="seo_title" class="col-sm-2 control-label"><span
                                 class="form-required">*</span>title</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title">
+                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title" value="{$product.seo.title}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -120,7 +131,7 @@
                                 class="form-required">*</span>keywords</label>
                         <div class="col-md-6 col-sm-10">
                             <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords">
+                                   name="seo_keywords" value="{$product.seo.keywords}">
                         </div>
                     </div>
                     <div class="form-group">
@@ -128,7 +139,7 @@
                                 class="form-required">*</span>description</label>
                         <div class="col-md-6 col-sm-10">
                             <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description">
+                                   name="seo_description" value="{$product.seo.description}">
                         </div>
                     </div>
                 </div>
@@ -148,7 +159,7 @@
     var editorcontent2 = new baidu.editor.ui.Editor();
     editorcontent.render('content');
     editorcontent2.render('note');
-    initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
+    initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$product['id'].'/typeId/'.$type)}");
     clickHide('is_auto_seo', 'seo', 1);
 </script>
 </body>
