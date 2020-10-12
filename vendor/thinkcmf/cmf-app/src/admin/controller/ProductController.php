@@ -6,6 +6,10 @@ namespace app\admin\controller;
 
 use app\admin\model\NewsModel;
 use app\admin\model\ProductModel;
+use app\admin\service\FunctionService;
+use app\admin\service\ImgService;
+use app\admin\service\SeoService;
+use app\admin\service\TagService;
 use app\admin\validate\NewsValidate;
 use app\admin\validate\ProductValidate;
 use cmf\controller\AdminBaseController;
@@ -15,17 +19,23 @@ use tree\Tree;
 class ProductController extends AdminBaseController
 {
 
+    public function initialize()
+    {
+        parent::initialize();
+        $this->assign("type", 7);
+    }
+
     public function index(ProductModel $productModel)
     {
         $data = $this->request->param();
         $where = [];
-        if(!empty($data['keyword'])){
-            $where[] = array('name','like','%'.$data['keyword'].'%');
+        if (!empty($data['keyword'])) {
+            $where[] = array('name', 'like', '%' . $data['keyword'] . '%');
             $this->assign('keyword', $data['keyword']);
         }
         $list = $productModel->where($where)
             ->with(['productClass'])
-            ->order("list_order ASC")
+            ->order("order_num ASC")
             ->paginate(10);
         // 获取分页显示
 
@@ -42,43 +52,47 @@ class ProductController extends AdminBaseController
      *
      *
      * **/
-    public function add()
+    public function add(FunctionService $FunctionService)
     {
-        $tree     = new Tree();
+        $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $result   = Db::name('class')->where(["type"=>3])->order(["list_order" => "ASC"])->select();
-        $array    = [];
+        $order_num = $FunctionService->get_order_num('product');
+        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
+        $this->assign("order_num", $order_num);
         return $this->fetch();
     }
 
 
-    public function addPost(ProductModel $productModel,ProductValidate $productValidate)
+    public function addPost(ProductModel $productModel, ProductValidate $productValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
-        $isFindProduct = $productModel->where(['name'=>$data['name'],'lang'=>$data['lang']])->find();
-        if($isFindProduct){
-            if($data['lang'] == 0){
-                $lang = "英文";
-            }else{
-                $lang = "中文";
-            }
-            $this->error("此产品在".$lang."已存在");
-        }
+        halt($data);
         $result = $this->validate($data, 'Product.add');
         if ($result !== true) {
             $this->error($result);
         }
-        $productModel->allowField(true)->save($data);
-
+        Db::transaction(function () use ($productModel, $imgService, $tagService, $seoService, $data) {
+            $productModel->allowField(true)->save($data);
+            if (isset($data['img_list'])) {
+                $imgService->doSave($data['img_list'], $data['type'], $productModel->id);
+            }
+            if ($data['tag_id']) {
+                $tagService->doSave($data['tag_id'], $data['type'], $productModel->id);
+            }
+            if (!$data['is_auto_seo']) {
+                $seoService->dosave($data, $data['type'], $productModel->id);
+            }
+        });
         $this->success("添加成功！", url("Product/index"));
     }
 
@@ -103,31 +117,30 @@ class ProductController extends AdminBaseController
         }
 
         $id = $this->request->param('id', 0, 'intval');
-        $this->assign('id',$id);
-
+        $this->assign('id', $id);
         $product = DB::name('product')->where("id", $id)->find();
+        $this->assign("product", $product);
+        $productClass = DB::name('class')->where(['id' => $product['cid']])->find();
 
-
-        $this->assign("product",$product);
-        $productClass = DB::name('class')->where(['id'=>$product['cid']])->find();
-
-        $tree     = new Tree();
-        if($productClass['parent_id'] == 0){
+        $tree = new Tree();
+        if ($productClass['parent_id'] == 0) {
             $parentId = $productClass['id'];
-        }else{
+        } else {
             $parentId = $productClass['parent_id'];
         }
 
-        $result   = Db::name('class')->where(["type"=>3])->order(["list_order" => "ASC"])->select();
-        $array    = [];
+        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
+        halt($selectClass);
+        $this->assign("product", $product);
         return $this->fetch();
     }
 
@@ -138,16 +151,16 @@ class ProductController extends AdminBaseController
 
             $data = $this->request->param();
 
-            $isFindProduct = DB::name('product')->where(['name'=>$data['name'],'lang'=>$data['lang']])->all();
-            foreach($isFindProduct as $FindProduct){
+            $isFindProduct = DB::name('product')->where(['name' => $data['name'], 'lang' => $data['lang']])->all();
+            foreach ($isFindProduct as $FindProduct) {
 
-                if($FindProduct['id'] != $data['id']){
-                    if($data['lang'] == 0){
+                if ($FindProduct['id'] != $data['id']) {
+                    if ($data['lang'] == 0) {
                         $lang = "英文";
-                    }else{
+                    } else {
                         $lang = "中文";
                     }
-                    $this->error("此产品在".$lang."已存在");
+                    $this->error("此产品在" . $lang . "已存在");
                 }
             }
             $result = $this->validate($this->request->param(), 'Product.edit');
@@ -197,7 +210,7 @@ class ProductController extends AdminBaseController
     }
 
     /**
-     * 启用
+     * 显示
      */
     public function cancelBan()
     {
@@ -205,9 +218,9 @@ class ProductController extends AdminBaseController
         if (!empty($id)) {
             $result = Db::name('product')->where(["id" => $id])->setField('status', '1');
             if ($result !== false) {
-                $this->success("内容启用成功！", url("Product/index"));
+                $this->success("内容显示成功！", url("Product/index"));
             } else {
-                $this->error('内容启用失败！');
+                $this->error('内容显示失败！');
             }
         } else {
             $this->error('数据传入失败！');
@@ -236,7 +249,7 @@ class ProductController extends AdminBaseController
      */
     public function toggle(ProductModel $productModel)
     {
-        $data      = $this->request->param();
+        $data = $this->request->param();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');

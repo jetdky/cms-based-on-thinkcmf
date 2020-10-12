@@ -1088,7 +1088,7 @@ abstract class Model implements \JsonSerializable, \ArrayAccess
     /**
      * 设置是否使用全局查询范围
      * @access public
-     * @param  bool|array $use 是否启用全局查询范围（或者用数组指定查询范围名称）
+     * @param  bool|array $use 是否显示全局查询范围（或者用数组指定查询范围名称）
      * @return Query
      */
     public static function useGlobalScope($use)

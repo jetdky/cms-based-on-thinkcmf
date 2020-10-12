@@ -185,7 +185,7 @@ function initEvent () {
 
             disableNotPieConfig();
 
-        //启用完整配置
+        //显示完整配置
         } else {
 
             enableNotPieConfig();
@@ -383,7 +383,7 @@ function disableNotPieConfig() {
 }
 
 /*
- * 启用非饼图类型的配置项
+ * 显示非饼图类型的配置项
  */
 function enableNotPieConfig() {
 

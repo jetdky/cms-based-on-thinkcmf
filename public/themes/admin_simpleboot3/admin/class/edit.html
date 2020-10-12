@@ -21,6 +21,16 @@
                 </div>
             </div>
             <div class="form-group">
+                <label for="input-user_email" class="col-sm-2 control-label"><span
+                        class="form-required">*</span>所属父类</label>
+                <div class="col-md-6 col-sm-10">
+                    <select name="parent_id" id="js-smtpsecure" class="form-control">
+                        <option value="0">/</option>
+                        {$selectClass}
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label for="input-image" class="col-sm-2 control-label">图片</label>
                 <div class="col-md-6 col-sm-10">
                     <input type="hidden" class="form-control" id="input-image">
@@ -115,8 +125,12 @@
             </div>
             <div class="form-group">
                 <div class="col-md-6 col-sm-10">
-                    <span>自动SEO</span><input type="radio" name="is_auto_seo" value="1" <if condition="$classinfo['seo']['is_auto_seo'] == 1"> checked</if> >
-                    <span>手动SEO</span><input type="radio" name="is_auto_seo" value="0"<if condition="$classinfo['seo']['is_auto_seo'] == 0"> checked</if> >
+                    <span>自动SEO</span><input type="radio" name="is_auto_seo" value="1"
+                    <if condition="$classinfo['seo']['is_auto_seo'] == 1"> checked</if>
+                    >
+                    <span>手动SEO</span><input type="radio" name="is_auto_seo" value="0"
+                    <if condition="$classinfo['seo']['is_auto_seo'] == 0"> checked</if>
+                    >
                 </div>
             </div>
             <div id="seo">
@@ -124,7 +138,8 @@
                     <label for="seo_title" class="col-sm-2 control-label"><span
                             class="form-required">*</span>title</label>
                     <div class="col-md-6 col-sm-10">
-                        <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title" value="{$classinfo['seo']['title']}">
+                        <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title"
+                               value="{$classinfo['seo']['title']}">
                     </div>
                 </div>
                 <div class="form-group">

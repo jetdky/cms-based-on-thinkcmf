@@ -49,7 +49,7 @@ class PublicController extends RestBaseController
 
             switch ($findUser['user_status']) {
                 case 0:
-                    $this->error('您已被拉黑!');
+                    $this->error('您已被隐藏!');
                 case 2:
                     $this->error('账户还没有验证成功!');
             }

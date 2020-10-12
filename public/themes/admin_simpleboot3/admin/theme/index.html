@@ -26,7 +26,7 @@
                     <td>
                         {$vo.theme}
                         <eq name="vo.theme" value="$default_theme">
-                            <span class="label label-success">当前启用</span>
+                            <span class="label label-success">当前显示</span>
                         </eq>
                     </td>
                     <td>{$vo.name}</td>
@@ -40,10 +40,10 @@
                         <a class="btn btn-xs btn-success js-ajax-dialog-btn" href="{:url('theme/update',array('theme'=>$vo['theme']))}"
                            data-msg="确定更新此模板吗？">更新</a>
                         <if condition="$vo.theme == $default_theme">
-                            <span class="btn btn-xs btn-warning disabled" color="#cccccc">启用</span>
+                            <span class="btn btn-xs btn-warning disabled" color="#cccccc">显示</span>
                             <else/>
                             <a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('theme/active',array('theme'=>$vo['theme']))}"
-                               data-msg="确定使用此模板吗？">启用</a>
+                               data-msg="确定使用此模板吗？">显示</a>
                         </if>
 
                         <if condition="($vo.name == 'simpleboot3') OR ($vo.theme == $default_theme) ">

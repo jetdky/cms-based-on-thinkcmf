@@ -55,7 +55,9 @@ class ClassController extends AdminBaseController
 
         // 获取分页显示
         //        $page = $list->render();
-//        $this->assign('arrayClass', $arrayClass);
+        $this->assign('arrayClass', $arrayClass);
+        halt($arrayClass);
+
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -172,7 +174,10 @@ class ClassController extends AdminBaseController
         //        }
         $data = $this->request->param();
         $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("list_order ASC")->select()->toArray();
+
         $list = $classModel->where(['type' => $data['type']])->order("list_order ASC")->select()->toArray();
+        halt(build_category_tree($list));
+
         $arrayClass = [];
         $key = 0;
         foreach ($pList as $pk => $pv) {
@@ -192,6 +197,8 @@ class ClassController extends AdminBaseController
         // 获取分页显示
         //        $page = $list->render();
         $this->assign('arrayClass', $arrayClass);
+//        halt($arrayClass);
+
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -210,7 +217,6 @@ class ClassController extends AdminBaseController
     {
         $data = $this->request->param();
         $order_num = $FunctionService->get_order_num('class', $data['type']);
-
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $result = Db::name('class')->where(["type" => $data])->order(["list_order" => "ASC"])->select();
@@ -303,7 +309,7 @@ class ClassController extends AdminBaseController
 
         $tree = new Tree();
         if ($classinfo['parent_id'] == 0) {
-            $parentId = $classinfo['id'];
+            $parentId = -1;
         } else {
             $parentId = $classinfo['parent_id'];
         }
@@ -427,7 +433,7 @@ class ClassController extends AdminBaseController
     }
 
     /**
-     * 启用
+     * 显示
      */
     public function cancelBan()
     {
@@ -436,9 +442,9 @@ class ClassController extends AdminBaseController
         if (!empty($id)) {
             $result = Db::name('class')->where(["id" => $id])->setField('status', '1');
             if ($result !== false) {
-                $this->success("内容启用成功！", url("Class/index", ['type' => $type]));
+                $this->success("内容显示成功！", url("Class/index", ['type' => $type]));
             } else {
-                $this->error('内容启用失败！');
+                $this->error('内容显示失败！');
             }
         } else {
             $this->error('数据传入失败！');

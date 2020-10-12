@@ -1016,7 +1016,7 @@ class App extends Container
     }
 
     /**
-     * 是否启用类库后缀
+     * 是否显示类库后缀
      * @access public
      * @return bool
      */

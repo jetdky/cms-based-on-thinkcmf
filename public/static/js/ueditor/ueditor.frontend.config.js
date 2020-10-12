@@ -95,7 +95,7 @@
 
         //,autoClearEmptyNode : true //getContent时，是否删除空的inlineElement节点（包括嵌套的情况）
 
-        //启用自动保存
+        //显示自动保存
         //,enableAutoSave: true
         //自动保存间隔时间， 单位ms
         //,saveInterval: 500
@@ -245,7 +245,7 @@
         //,shortcutMenu:["fontfamily", "fontsize", "bold", "italic", "underline", "forecolor", "backcolor", "insertorderedlist", "insertunorderedlist"]
 
         //elementPathEnabled
-        //是否启用元素路径，默认是显示
+        //是否显示元素路径，默认是显示
         //,elementPathEnabled : true
 
         //wordCount

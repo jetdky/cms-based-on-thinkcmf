@@ -58,15 +58,15 @@ class PluginController extends AdminBaseController
     }
 
     /**
-     * 插件启用/禁用
+     * 插件显示/禁用
      * @adminMenu(
-     *     'name'   => '插件启用禁用',
+     *     'name'   => '插件显示禁用',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '插件启用禁用',
+     *     'remark' => '插件显示禁用',
      *     'param'  => ''
      * )
      */
@@ -81,7 +81,7 @@ class PluginController extends AdminBaseController
         }
 
         $status         = 1;
-        $successMessage = "启用成功！";
+        $successMessage = "显示成功！";
 
         if ($this->request->param('disable')) {
             $status         = 0;

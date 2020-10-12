@@ -173,15 +173,15 @@ class ThemeController extends AdminBaseController
     }
 
     /**
-     * 启用模板
+     * 显示模板
      * @adminMenu(
-     *     'name'   => '启用模板',
+     *     'name'   => '显示模板',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '启用模板',
+     *     'remark' => '显示模板',
      *     'param'  => ''
      * )
      */
@@ -190,7 +190,7 @@ class ThemeController extends AdminBaseController
         $theme = $this->request->param('theme');
 
         if ($theme == config('template.cmf_default_theme')) {
-            $this->error('模板已启用', url("theme/index"));
+            $this->error('模板已显示', url("theme/index"));
         }
 
         $themeModel = new ThemeModel();
@@ -207,7 +207,7 @@ class ThemeController extends AdminBaseController
         }
         session('cmf_default_theme', $theme);
 
-        $this->success("模板启用成功", url("theme/index"));
+        $this->success("模板显示成功", url("theme/index"));
 
     }
 
@@ -220,7 +220,7 @@ class ThemeController extends AdminBaseController
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '启用模板',
+     *     'remark' => '显示模板',
      *     'param'  => ''
      * )
      */

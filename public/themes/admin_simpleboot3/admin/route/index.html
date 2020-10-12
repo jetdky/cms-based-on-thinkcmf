@@ -23,7 +23,7 @@
             </tr>
             </thead>
             <php>
-                $statuses=array('0'=>"已禁用","1"=>"已启用");
+                $statuses=array('0'=>"已禁用","1"=>"已显示");
                 $types=array('1'=>"自定义","2"=>"别名定义");
             </php>
             <foreach name="routes" item="vo">
@@ -63,7 +63,7 @@
                                 <else/>
                                 <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
                                    href="{:url('route/open',array('id'=>$vo['id']))}"
-                                   data-msg="确定启用吗？">启用</a>
+                                   data-msg="确定显示吗？">显示</a>
                             </eq>
                             <a class="btn btn-xs btn-danger js-ajax-delete"
                                href="{:url('route/delete',array('id'=>$vo['id']))}">删除</a>

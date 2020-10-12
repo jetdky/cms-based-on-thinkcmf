@@ -228,9 +228,9 @@ class SlideItemController extends AdminBaseController
         if ($id) {
             $result = Db::name('slideItem')->where('id', $id)->update(['status' => 1]);
             if ($result) {
-                $this->success("幻灯片启用成功！");
+                $this->success("幻灯片显示成功！");
             } else {
-                $this->error('幻灯片启用失败！');
+                $this->error('幻灯片显示失败！');
             }
         } else {
             $this->error('数据传入失败！');

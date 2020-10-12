@@ -145,7 +145,7 @@ class File extends Driver
             $content      = substr($content, 32);
 
             if ($this->options['data_compress'] && function_exists('gzcompress')) {
-                //启用数据压缩
+                //显示数据压缩
                 $content = gzuncompress($content);
             }
             return $this->unserialize($content);

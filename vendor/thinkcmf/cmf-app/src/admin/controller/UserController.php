@@ -352,15 +352,15 @@ class UserController extends AdminBaseController
     }
 
     /**
-     * 启用管理员
+     * 显示管理员
      * @adminMenu(
-     *     'name'   => '启用管理员',
+     *     'name'   => '显示管理员',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '启用管理员',
+     *     'remark' => '显示管理员',
      *     'param'  => ''
      * )
      */
@@ -370,9 +370,9 @@ class UserController extends AdminBaseController
         if (!empty($id)) {
             $result = Db::name('user')->where(["id" => $id, "user_type" => 1])->setField('user_status', '1');
             if ($result !== false) {
-                $this->success("管理员启用成功！", url("user/index"));
+                $this->success("管理员显示成功！", url("user/index"));
             } else {
-                $this->error('管理员启用失败！');
+                $this->error('管理员显示失败！');
             }
         } else {
             $this->error('数据传入失败！');

@@ -96,7 +96,7 @@ class Sqlite extends Driver
         if (sqlite_num_rows($result)) {
             $content = sqlite_fetch_single($result);
             if (function_exists('gzcompress')) {
-                //启用数据压缩
+                //显示数据压缩
                 $content = gzuncompress($content);
             }
 

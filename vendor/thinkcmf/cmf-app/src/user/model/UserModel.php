@@ -32,7 +32,7 @@ class UserModel extends Model
             ];
             hook_one("user_login_start", $hookParam);
             if ($comparePasswordResult) {
-                //拉黑判断。
+                //隐藏判断。
                 if ($result['user_status'] == 0) {
                     return 3;
                 }
@@ -69,7 +69,7 @@ class UserModel extends Model
             ];
             hook_one("user_login_start", $hookParam);
             if ($comparePasswordResult) {
-                //拉黑判断。
+                //隐藏判断。
                 if ($result['user_status'] == 0) {
                     return 3;
                 }
@@ -109,7 +109,7 @@ class UserModel extends Model
             hook_one("user_login_start", $hookParam);
             if ($comparePasswordResult) {
 
-                //拉黑判断。
+                //隐藏判断。
                 if ($result['user_status'] == 0) {
                     return 3;
                 }

@@ -358,7 +358,7 @@ class Template
      */
     private function compiler(&$content, $cacheFile)
     {
-        // 判断是否启用布局
+        // 判断是否显示布局
         if ($this->config['layout_on']) {
             if (false !== strpos($content, '{__NOLAYOUT__}')) {
                 // 可以单独定义不使用布局

@@ -52,7 +52,7 @@ class Session
     protected $lockTimeout = 3;
 
     /**
-     * 是否启用锁机制
+     * 是否显示锁机制
      * @var bool
      */
     protected $lock = false;

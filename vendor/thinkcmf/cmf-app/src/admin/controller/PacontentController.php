@@ -244,7 +244,7 @@ class PacontentController extends AdminBaseController
     }
 
     /**
-     * 启用
+     * 显示
      */
     public function cancelBan()
     {
@@ -252,9 +252,9 @@ class PacontentController extends AdminBaseController
         if (!empty($id)) {
             $result = Db::name('pacontent')->where(["id" => $id])->setField('status', '1');
             if ($result !== false) {
-                $this->success("内容启用成功！", url("Pacontent/index"));
+                $this->success("内容显示成功！", url("Pacontent/index"));
             } else {
-                $this->error('内容启用失败！');
+                $this->error('内容显示失败！');
             }
         } else {
             $this->error('数据传入失败！');

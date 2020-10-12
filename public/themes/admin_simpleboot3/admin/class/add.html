@@ -10,8 +10,6 @@
         <li class="active"><a>添加{$typeList[$type]}</a></li>
     </ul>
     <div class="row">
-
-
         <form method="post" class="form-horizontal js-ajax-form margin-top-20"
               action="{:url('Class/addPost',['type'=>$type])}">
             <div class="col-xs-8">
@@ -27,7 +25,7 @@
                             class="form-required">*</span>所属父类</label>
                     <div class="col-md-6 col-sm-10">
                         <select name="parent_id" id="js-smtpsecure" class="form-control">
-                            <option value="0">作为一级菜单</option>
+                            <option value="0">/</option>
                             {$selectClass}
                         </select>
                     </div>
@@ -152,8 +150,9 @@
 <script type="text/javascript" src="/static/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
     var editorcontent = new baidu.editor.ui.Editor();
+    var editorcontent2 = new baidu.editor.ui.Editor();
     editorcontent.render('content');
-    editorcontent.render('remark');
+    editorcontent2.render('remark');
     initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
     clickHide('is_auto_seo', 'seo', 1);
 </script>

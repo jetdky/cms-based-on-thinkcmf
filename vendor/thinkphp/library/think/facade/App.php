@@ -44,7 +44,7 @@ use think\Facade;
  * @method string getConfigExt() static 获取配置后缀
  * @method string setNamespace(string $namespace) static 设置应用类库命名空间
  * @method string getNamespace() static 获取应用类库命名空间
- * @method string getSuffix() static 是否启用类库后缀
+ * @method string getSuffix() static 是否显示类库后缀
  * @method float getBeginTime() static 获取应用开启时间
  * @method integer getBeginMem() static 获取应用初始内存占用
  * @method \think\Container container() static 获取容器实例

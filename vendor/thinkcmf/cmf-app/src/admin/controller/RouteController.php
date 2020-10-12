@@ -179,15 +179,15 @@ class RouteController extends AdminBaseController
     }
 
     /**
-     * 路由规则启用
+     * 路由规则显示
      * @adminMenu(
-     *     'name'   => '路由规则启用',
+     *     'name'   => '路由规则显示',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '路由规则启用',
+     *     'remark' => '路由规则显示',
      *     'param'  => ''
      * )
      */
@@ -200,7 +200,7 @@ class RouteController extends AdminBaseController
         $routeModel     = new RouteModel();
 
         $routeModel->isUpdate(true)->save($data);
-        $this->success("启用成功！");
+        $this->success("显示成功！");
     }
 
     /**

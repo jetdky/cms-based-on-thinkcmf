@@ -68,7 +68,7 @@ class BaseController extends Controller
 
         if (!empty($ids)) {
             foreach ($ids as $key => $r) {
-                $data['list_order'] = $r;
+                $data['order_num'] = $r;
                 Db::name($modelName)->where($pk, $key)->update($data);
             }
         }

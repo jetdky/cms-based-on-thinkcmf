@@ -87,15 +87,15 @@ class AdminIndexController extends AdminBaseController
     }
 
     /**
-     * 本站用户拉黑
+     * 本站用户隐藏
      * @adminMenu(
-     *     'name'   => '本站用户拉黑',
+     *     'name'   => '本站用户隐藏',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '本站用户拉黑',
+     *     'remark' => '本站用户隐藏',
      *     'param'  => ''
      * )
      */
@@ -105,9 +105,9 @@ class AdminIndexController extends AdminBaseController
         if ($id) {
             $result = Db::name("user")->where(["id" => $id, "user_type" => 2])->setField('user_status', 0);
             if ($result) {
-                $this->success("会员拉黑成功！", "adminIndex/index");
+                $this->success("会员隐藏成功！", "adminIndex/index");
             } else {
-                $this->error('会员拉黑失败,会员不存在,或者是管理员！');
+                $this->error('会员隐藏失败,会员不存在,或者是管理员！');
             }
         } else {
             $this->error('数据传入失败！');
@@ -115,15 +115,15 @@ class AdminIndexController extends AdminBaseController
     }
 
     /**
-     * 本站用户启用
+     * 本站用户显示
      * @adminMenu(
-     *     'name'   => '本站用户启用',
+     *     'name'   => '本站用户显示',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '本站用户启用',
+     *     'remark' => '本站用户显示',
      *     'param'  => ''
      * )
      */
@@ -132,7 +132,7 @@ class AdminIndexController extends AdminBaseController
         $id = input('param.id', 0, 'intval');
         if ($id) {
             Db::name("user")->where(["id" => $id, "user_type" => 2])->setField('user_status', 1);
-            $this->success("会员启用成功！", '');
+            $this->success("会员显示成功！", '');
         } else {
             $this->error('数据传入失败！');
         }
