@@ -80,7 +80,7 @@ class MainController extends AdminBaseController
         $system['mysqlVersion'] = Db::query("select version() as `version`")[0]['version'];
         $system['serverIP'] = $_SERVER["SERVER_ADDR"];
         $system['remoteIP'] = $_SERVER["REMOTE_ADDR"];
-        $this->assign('system', $system);
+        $this->assign('aaa', $system);
 
         $smtpSetting = cmf_get_option('smtp_setting');
 
