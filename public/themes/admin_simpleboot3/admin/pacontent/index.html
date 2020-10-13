@@ -7,20 +7,25 @@
         <li><a href="{:url('Pacontent/add', ['type' => $type])}">{:lang('PACONTENT_ADD')}</a></li>
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url('Pacontent/index')}">
-        标题:
-        <input type="text" class="form-control"  name="keyword" style="width: 220px;" value="{:input('request.keyword/s','')}" placeholder="请输入内容标题">
-        &nbsp;分类:<div class="form-group">
-<!--            <label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>{:lang('PACONTENT_CLASS')}</label>-->
-
-            <div class="col-md-6 col-sm-10">
-                <select name="cid" id="js-smtpsecure" class="form-control">
-                    {$selectClass}
-                </select>
-            </div>
-        </div>
-        <input type="submit" class="btn btn-primary" value="搜索" />
-
-        <a class="btn btn-danger" href="{:url('Pacontent/index')}">清空</a>
+        <input type="text" class="form-control" name="keyword" style="width: 220px;"
+               value="{:input('request.keyword/s','')}" placeholder="请输入产品名称">
+        <select class="form-control" name="cid" style="width: 220px;">
+            <option value="">全部分类</option>
+            {$selectClass}
+        </select>
+        <select class="form-control" name="status" style="width: 220px;">
+            <option value="">是否显示</option>
+            <option value="1" <if condition="isset($status) && $status == 1">selected</if> >显示</option>
+            <option value="0" <if condition="isset($status) && $status == 0">selected</if> >隐藏</option>
+        </select>
+        <select class="form-control" name="is_recom" style="width: 220px;">
+            <option value="">是否推荐</option>
+            <option value="0" <if condition="isset($is_recom) && $is_recom == 1">selected</if> >未推荐</option>
+            <option value="1" <if condition="isset($is_recom) && $is_recom == 1">selected</if> >推荐</option>
+        </select>
+        <br><br>
+        <input type="submit" class="btn btn-primary" value="搜索"/>
+        <a class="btn btn-danger" href="{:url('Pacontent/index')}">重置</a>
     </form>
 
     <form method="post" class="js-ajax-form margin-top-20" action="{:url('Pacontent/listOrder')}">
@@ -47,7 +52,6 @@
                 <th>分类</th>
                 <th>图片</th>
                 <th>语言</th>
-                <th>是否显示</th>
                 <th>添加时间</th>
                 <th width="140">{:lang('CLICK')}</th>
             </tr>
@@ -69,34 +73,21 @@
                     <td>{$vo.name}</td>
                     <td>{$vo.paGetClass.name}</td>
                     <td>
-                        <if condition="$vo['imgs']">
+                        <if condition="isset($vo['pacontent_img'][0])">
                         <span name="imgPreview_{$vo.id}" class="imgPreview">
-                            <volist name="vo['imgs']" id="voo">
-                                <if condition ="$key <= 0">
-                                    <img src="/upload/{$voo['origi_img']}">
-                                <else />
-                                    <img src="/upload/{$voo['origi_img']}" style="display: none">
+                            <volist name="vo['pacontent_img']" id="voo">
+                                <if condition="$key <= 0">
+                                    <img src="/upload/{$voo['imgs']['origi_img']}">
+                                <else/>
+                                    <img src="/upload/{$voo['imgs']['origi_img']}" style="display: none">
                                 </if>
                             </volist>
                         </span>
-                            <else />
+                            <else/>
                             <span class="label label-warning">暂无</span>
                         </if>
                     </td>
                     <td>{$vo.lang|getLang}</td>
-                    <td>
-                        <switch name="vo.status">
-                            <case value="0">
-                                <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
-                            </case>
-                            <case value="1">
-                                <span class="label label-success">{$user_statuses[$vo['status']]}</span>
-                            </case>
-                            <case value="2">
-                                <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
-                            </case>
-                        </switch>
-                    </td>
                     <td>{$vo.create_time|getTime}</td>
                     <td>
 
@@ -112,7 +103,13 @@
                                href="{:url('Pacontent/cancelban',array('id'=>$vo['id']))}"
                                data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
                         </if>
-
+                        <if condition="$vo['is_recom'] eq 1">
+                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
+                               href="{:url('Pacontent/cancelRecom',array('id'=>$vo['id']))}">取消推荐</a>
+                            <else/>
+                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
+                               href="{:url('Pacontent/recom',array('id'=>$vo['id']))}">推荐</a>
+                        </if>
                     </td>
                 </tr>
             </foreach>
@@ -136,7 +133,7 @@
 <script src="__STATIC__/js/admin.js"></script>
 <script>
     window.onload = function () {
-    <foreach name="arrayClass" item="vo">
+    <foreach name="list" item="vo">
             layer.photos({
                 photos: "[name='imgPreview_{$vo.id}']",
                 shadeClose: true,

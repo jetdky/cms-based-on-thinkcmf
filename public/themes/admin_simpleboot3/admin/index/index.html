@@ -273,51 +273,36 @@
 
     <div class="sidebar" id="sidebar">
         <div class="sidebar-shortcuts" id="sidebar-shortcuts">
-            <a class="btn btn-sm btn-warning" href="__ROOT__/"
+            <a class="btn btn-sm btn-warning" href="{:url('index/index')}"
                title="{:lang('WEBSITE_HOME_PAGE')}"
-               target="_blank"
                data-toggle="tooltip">
                 <i class="fa fa-home"></i>
             </a>
-            <!--
-            <if condition="cmf_auth_check(cmf_get_current_admin_id(),'portal/AdminCategory/index')">
-                <a class="btn btn-sm btn-success" href="javascript:openapp('{:url('portal/AdminCategory/index')}','index_termlist','文章分类管理');" title="文章分类管理">
-                    <i class="fa fa-th"></i>
-                </a>
-            </if>
-
-            <if condition="cmf_auth_check(cmf_get_current_admin_id(),'portal/AdminArticle/index')">
-                <a class="btn btn-sm btn-info" href="javascript:openapp('{:url('portal/AdminArticle/index')}','index_postlist','文章管理');" title="文章管理">
-                    <i class="fa fa-pencil"></i>
-                </a>
-            </if>
-            -->
-
             <if condition="cmf_auth_check(cmf_get_current_admin_id(),'user/AdminAsset/index')">
-                <a class="btn btn-sm btn-info"
+                <a class="btn btn-sm btn-danger"
                    href="javascript:openapp('{:url('user/AdminAsset/index')}','userAdminAssetindex','资源管理',true);"
-                   title="资源管理"
+                   title="多语言切换"
                    data-toggle="tooltip">
-                    <i class="fa fa-file"></i>
+                    <i class="fa fa-language"></i>
                 </a>
             </if>
 
             <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/Setting/clearcache')">
-                <a class="btn btn-sm btn-danger"
-                   href="javascript:openapp('{:url('admin/Setting/clearcache')}','index_clearcache','{:lang('ADMIN_SETTING_CLEARCACHE')}',true);"
-                   title="{:lang('ADMIN_SETTING_CLEARCACHE')}"
-                   data-toggle="tooltip">
-                    <i class="fa fa-trash-o"></i>
-                </a>
+<!--                <a class="btn btn-sm btn-danger"-->
+<!--                   href="javascript:openapp('{:url('admin/Setting/clearcache')}','index_clearcache','{:lang('ADMIN_SETTING_CLEARCACHE')}',true);"-->
+<!--                   title="{:lang('ADMIN_SETTING_CLEARCACHE')}"-->
+<!--                   data-toggle="tooltip">-->
+<!--                    <i class="fa fa-trash-o"></i>-->
+<!--                </a>-->
             </if>
 
             <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/RecycleBin/index')">
-                <a class="btn btn-sm btn-danger"
-                   href="javascript:openapp('{:url('admin/RecycleBin/index')}','index_recycle','回收站',true);"
-                   title="回收站"
-                   data-toggle="tooltip">
-                    <i class="fa fa-recycle"></i>
-                </a>
+<!--                <a class="btn btn-sm btn-danger"-->
+<!--                   href="javascript:openapp('{:url('admin/RecycleBin/index')}','index_recycle','回收站',true);"-->
+<!--                   title="回收站"-->
+<!--                   data-toggle="tooltip">-->
+<!--                    <i class="fa fa-recycle"></i>-->
+<!--                </a>-->
             </if>
 
             <if condition="APP_DEBUG">
