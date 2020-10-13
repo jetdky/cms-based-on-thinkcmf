@@ -81,8 +81,7 @@ class BaseController extends Controller
      */
     protected function deleteAlls($model)
     {
-        $ids = $this->request->post("order_nums/a");
-        $ids = array_keys($ids);
+        $ids = $this->request->param('ids/a');
         $ids = implode(',',$ids);
         $model::destroy($ids);
         return true;
