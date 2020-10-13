@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\NewsModel;
+use app\admin\model\PacontentModel;
 use app\admin\validate\NewsValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;
@@ -23,8 +24,8 @@ class NewsController extends AdminBaseController
 //        }
         $data = $this->request->param();
         $where = [];
-        if(!empty($data['keyword'])){
-            $where[] = array('title','like','%'.$data['keyword'].'%');
+        if (!empty($data['keyword'])) {
+            $where[] = array('title', 'like', '%' . $data['keyword'] . '%');
             $this->assign('keyword', $data['keyword']);
         }
         $list = NewsModel::where($where)
@@ -48,14 +49,14 @@ class NewsController extends AdminBaseController
      * **/
     public function add()
     {
-        $tree     = new Tree();
+        $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $result   = Db::name('class')->where(["type"=>2])->order(["order_num" => "ASC"])->select();
-        $array    = [];
+        $result = Db::name('class')->where(["type" => 2])->order(["order_num" => "ASC"])->select();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
@@ -65,21 +66,21 @@ class NewsController extends AdminBaseController
     }
 
 
-    public function addPost(NewsModel $newsModel,NewsValidate $newsValidate)
+    public function addPost(NewsModel $newsModel, NewsValidate $newsValidate)
     {
         $data = $this->request->param();
-        $isFindNews = $newsModel->where(['title'=>$data['title'],'lang'=>$data['lang']])->find();
-        if($isFindNews){
-            if($data['lang'] == 0){
+        $isFindNews = $newsModel->where(['title' => $data['title'], 'lang' => $data['lang']])->find();
+        if ($isFindNews) {
+            if ($data['lang'] == 0) {
                 $lang = "英文";
-            }else{
+            } else {
                 $lang = "中文";
             }
-            $this->error("此标题在".$lang."已存在");
+            $this->error("此标题在" . $lang . "已存在");
         }
 //        $linkModel = new P();
 //        $pacontentValidate->with('add')->check($data);
-        $result    = $this->validate($data, 'news.add');
+        $result = $this->validate($data, 'news.add');
 
         if ($result !== true) {
             $this->error($result);
@@ -110,26 +111,26 @@ class NewsController extends AdminBaseController
         }
 
         $id = $this->request->param('id', 0, 'intval');
-        $this->assign('id',$id);
+        $this->assign('id', $id);
 
         $news = DB::name('news')->where("id", $id)->find();
 
 
-        $this->assign("news",$news);
-        $paclass = DB::name('class')->where(['id'=>$news['cid']])->find();
+        $this->assign("news", $news);
+        $paclass = DB::name('class')->where(['id' => $news['cid']])->find();
 
-        $tree     = new Tree();
-        if($paclass['parent_id'] == 0){
+        $tree = new Tree();
+        if ($paclass['parent_id'] == 0) {
             $parentId = $paclass['id'];
-        }else{
+        } else {
             $parentId = $paclass['parent_id'];
         }
 
-        $result   = Db::name('class')->where(["type"=>2])->order(["order_num" => "ASC"])->select();
-        $array    = [];
+        $result = Db::name('class')->where(["type" => 2])->order(["order_num" => "ASC"])->select();
+        $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[]       = $r;
+            $array[] = $r;
         }
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
@@ -151,16 +152,16 @@ class NewsController extends AdminBaseController
 
             $data = $this->request->param();
 
-            $isFindNews = DB::name('news')->where(['title'=>$data['title'],'lang'=>$data['lang']])->all();
+            $isFindNews = DB::name('news')->where(['title' => $data['title'], 'lang' => $data['lang']])->all();
 
-            foreach($isFindNews as $findNew){
-                if($findNew['id'] != $data['id']){
-                    if($data['lang'] == 0){
+            foreach ($isFindNews as $findNew) {
+                if ($findNew['id'] != $data['id']) {
+                    if ($data['lang'] == 0) {
                         $lang = "英文";
-                    }else{
+                    } else {
                         $lang = "中文";
                     }
-                    $this->error("此标题在".$lang."已存在");
+                    $this->error("此标题在" . $lang . "已存在");
                 }
             }
 //            if($isFindPa){
@@ -259,7 +260,7 @@ class NewsController extends AdminBaseController
      */
     public function toggle(NewsModel $newsModel)
     {
-        $data      = $this->request->param();
+        $data = $this->request->param();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');
@@ -274,6 +275,17 @@ class NewsController extends AdminBaseController
         }
 
 
+    }
+
+    /**
+     * @param NewsModel $newsModel
+     * 批量删除
+     */
+
+    public function deleteAll(NewsModel $newsModel)
+    {
+        parent::deleteAlls($newsModel);
+        $this->success('删除成功！');
     }
 
 

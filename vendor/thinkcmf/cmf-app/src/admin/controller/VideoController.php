@@ -224,10 +224,20 @@ class VideoController extends AdminBaseController
     }
 
 
-    public function listOrder(ProductModel $productModel)
+    public function listOrder(VideoModel $videoModel)
     {
-        parent::listOrders($productModel);
+        parent::listOrders($videoModel);
         $this->success("排序更新成功！");
+    }
+
+    /**
+     * @param VideoModel $videoModel
+     * 批量删除
+     */
+
+    public function deleteAll(VideoModel $videoModel){
+        parent::deleteAlls($videoModel);
+        $this->success('删除成功！');
     }
 
     /**
@@ -243,19 +253,19 @@ class VideoController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function toggle(ProductModel $productModel)
+    public function toggle(VideoModel $videoModel)
     {
         $data = $this->request->param();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');
-            $productModel->where('id', 'in', $ids)->update(['status' => 1]);
+            $videoModel->where('id', 'in', $ids)->update(['status' => 1]);
             $this->success("更新成功！");
         }
 
         if (isset($data['ids']) && !empty($data["hide"])) {
             $ids = $this->request->param('ids/a');
-            $productModel->where('id', 'in', $ids)->update(['status' => 0]);
+            $videoModel->where('id', 'in', $ids)->update(['status' => 0]);
             $this->success("更新成功！");
         }
 

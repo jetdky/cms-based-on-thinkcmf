@@ -5,8 +5,10 @@ namespace app\admin\controller;
 
 
 use app\admin\model\LinkModel;
+use app\admin\model\MessageModel;
 use app\admin\model\PacontentModel;
 use app\admin\model\ProductModel;
+use app\admin\model\VideoModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
@@ -312,6 +314,16 @@ class PacontentController extends AdminBaseController
         }
 
 
+    }
+
+    /**
+     * @param PacontentModel $pacontentModel
+     * 批量删除
+     */
+
+    public function deleteAll(PacontentModel $pacontentModel){
+        parent::deleteAlls($pacontentModel);
+        $this->success('删除成功！');
     }
 
 

@@ -22,6 +22,11 @@
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('video/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
             </button>
+
+            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
+                    data-action="{:url('video/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
+            </button>
+
         </div>
         <table class="table table-hover table-bordered">
             <thead>
@@ -91,6 +96,9 @@
             </button>
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('video/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
+            </button>
+            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
+                    data-action="{:url('video/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
             </button>
         </div>
     </form>

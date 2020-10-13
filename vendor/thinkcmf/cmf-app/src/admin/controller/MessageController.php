@@ -6,6 +6,7 @@ namespace app\admin\controller;
 
 use app\admin\model\LinkModel;
 use app\admin\model\MessageModel;
+use app\admin\model\VideoModel;
 use cmf\controller\AdminBaseController;
 
 class MessageController extends AdminBaseController
@@ -210,6 +211,16 @@ class MessageController extends AdminBaseController
         }
 
 
+    }
+
+    /**
+     * @param VideoModel $videoModel
+     * 批量删除
+     */
+
+    public function deleteAll(MessageModel $messageModel){
+        parent::deleteAlls($messageModel);
+        $this->success('删除成功！');
     }
 
 

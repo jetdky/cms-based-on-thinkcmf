@@ -5,6 +5,7 @@ namespace app\admin\controller;
 
 
 use app\admin\model\NewsModel;
+use app\admin\model\PacontentModel;
 use app\admin\model\ProductModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
@@ -309,6 +310,17 @@ class ProductController extends AdminBaseController
         }
 
 
+    }
+
+
+    /**
+     * @param ProductModel $productModel
+     * 批量删除
+     */
+
+    public function deleteAll(ProductModel $productModel){
+        parent::deleteAlls($productModel);
+        $this->success('删除成功！');
     }
 
 }

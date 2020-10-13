@@ -136,6 +136,7 @@ return [
     "SORT"                               => '排序',
     "DISPLAY"                            => '显示',
     "HIDDEN"                             => '隐藏',
+    "DELETE_ALL"                         => '批量删除',
     "HIDE"                               => '隐藏',
     'DELETE_CONFIRM_MESSAGE'             => '你确定删除吗？',
     'SETTING'                            => '设置',

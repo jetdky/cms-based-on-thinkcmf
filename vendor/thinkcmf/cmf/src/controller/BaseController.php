@@ -76,4 +76,16 @@ class BaseController extends Controller
         return true;
     }
 
+    /**
+     *  排序 排序字段为order_nums数组 POST 排序字段为：order_num
+     */
+    protected function deleteAlls($model)
+    {
+        $ids = $this->request->post("order_nums/a");
+        $ids = array_keys($ids);
+        $ids = implode(',',$ids);
+        $model::destroy($ids);
+        return true;
+    }
+
 }
