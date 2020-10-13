@@ -77,9 +77,20 @@ class BaseController extends Controller
     }
 
     /**
-     *  排序 排序字段为order_nums数组 POST 排序字段为：order_num
+     *  批量删除
      */
     protected function deleteAlls($model)
+    {
+        $ids = $this->request->param('ids/a');
+        $ids = implode(',',$ids);
+        $model::destroy($ids);
+        return true;
+    }
+
+    /**
+     *  批量移动
+     */
+    protected function moveAlls($model)
     {
         $ids = $this->request->param('ids/a');
         $ids = implode(',',$ids);

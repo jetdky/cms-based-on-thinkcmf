@@ -241,6 +241,26 @@ class VideoController extends AdminBaseController
     }
 
     /**
+     * @param VideoModel $videoModel
+     * 批量删除
+     */
+
+    public function remove(VideoModel $videoModel){
+        parent::moveAlls($videoModel);
+        $this->success('移动成功！');
+    }
+
+    /**
+     * @param VideoModel $videoModel
+     */
+
+    public function copy(VideoModel $videoModel){
+        parent::copyAlls($videoModel);
+        $this->success('复制成功！');
+    }
+
+
+    /**
      * 友情链接显示隐藏
      * @adminMenu(
      *     'name'   => '友情链接显示隐藏',
