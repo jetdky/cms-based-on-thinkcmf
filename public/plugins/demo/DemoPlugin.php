@@ -22,7 +22,7 @@ class DemoPlugin extends Plugin
         'status'      => 1,
         'author'      => 'ThinkCMF',
         'version'     => '1.0',
-        'demo_url'    => 'http://demo.thinkcmf.com',
+        'demo_url'    => 'http://index.thinkcmf.com',
         'author_url'  => 'http://www.thinkcmf.com',
     ];
 

@@ -31,9 +31,23 @@ class ProductController extends AdminBaseController
     public function index(ProductModel $productModel)
     {
         $tree = new Tree();
-        $parentId = $this->request->param("parent_id", 0, 'intval');
         $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
         $array = [];
+
+        $data = $this->request->param();
+        $where = [];
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
+            $this->assign('keyword', $data['keyword']);
+        }
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $where[] = ['cid', '=', $data['cid']];
+            $parentId = $data['cid'];
+            //todo: 根据父类id获得所有子类id，当前只查询一级父类
+        } else {
+            $parentId = 0;
+        }
+        //根据上次搜索分类选中分类
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
@@ -42,39 +56,19 @@ class ProductController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
 
-        $data = $this->request->param();
-        $where = [];
-        if (!empty($data['keyword'])) {
-            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
-            $this->assign('keyword', $data['keyword']);
-        }
-        if (!empty($data['cid'])) {
-            $where[] = ['cid', '=', $data['cid']];
-            //todo: 根据父类id获得所有子类id，当前只查询一级父类
-        }
-        if (!empty($data['status'])) {
+        if (isset($data['status']) && $data['status'] !== "") {
             $where[] = ['status', '=', $data['status']];
             $this->assign('status', $data['status']);
         }
-        if (!empty($data['is_recom'])) {
+        if (isset($data['is_recom']) && $data['is_recom'] !== "") {
             $where[] = ['is_recom', '=', $data['is_recom']];
             $this->assign('is_recom', $data['is_recom']);
         }
-//        halt($where);
-//        $list = $productModel->where($where)
-//            ->with(['productImg.imgs'])
-//            ->with(['productClass'])
-//            ->with(['productImg' => function ($query) {
-//                $query->where('type', '=', 7);
-//            }])
-//            ->order("order_num ASC")->paginate(10);
-
         $list = $productModel->where($where)
             ->with(['productImg', 'productImg.imgs', 'productClass'])
-            ->order("order_num ASC")->paginate(10);
-//        halt($productModel->getLastSql());
+            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+
         // 获取分页显示
-//        halt($list);
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
@@ -318,9 +312,28 @@ class ProductController extends AdminBaseController
      * 批量删除
      */
 
-    public function deleteAll(ProductModel $productModel){
+    public function deleteAll(ProductModel $productModel)
+    {
         parent::deleteAlls($productModel);
         $this->success('删除成功！');
     }
 
+    /**推荐&&取消推荐
+     * @param ProductModel $productModel
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function recom(ProductModel $productModel)
+    {
+        $data = $this->request->param();
+        $productModel->where('id', $data['id'])->update(['is_recom' => 1]);
+        $this->success('推荐成功！');
+    }
+
+    public function cancelRecom(ProductModel $productModel)
+    {
+        $data = $this->request->param();
+        $productModel->where('id', $data['id'])->update(['is_recom' => 0]);
+        $this->success('取消推荐成功！');
+    }
 }

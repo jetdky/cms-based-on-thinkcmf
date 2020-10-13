@@ -32,11 +32,6 @@ class PacontentController extends AdminBaseController
 
     public function index(PacontentModel $pacontentModel)
     {
-//        $content = hook_one('admin_pacontent_default_view');
-//
-//        if (!empty($content)) {
-//            return $content;
-//        }
 
         /* 查询条件
          * 分类\关键词\中英文\是否显示\
@@ -56,12 +51,23 @@ class PacontentController extends AdminBaseController
         $this->assign("selectClass", $selectClass);
         $data = $this->request->param();
         $where = [];
-        if (!empty($data['cid'])) {
-            $where['cid'] = $data['cid'];
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
+            $this->assign('keyword', $data['keyword']);
         }
-        if (!empty($data['keyword'])) {
-            $where['paname'] = $data['keyword'];
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $where[] = ['cid', '=', $data['cid']];
+            //todo: 根据父类id获得所有子类id，当前只查询一级父类
         }
+        if (isset($data['status']) && $data['status'] !== "") {
+            $where[] = ['status', '=', $data['status']];
+            $this->assign('status', $data['status']);
+        }
+        if (isset($data['is_recom']) && $data['is_recom'] !== "") {
+            $where[] = ['is_recom', '=', $data['is_recom']];
+            $this->assign('is_recom', $data['is_recom']);
+        }
+
         $list = $pacontentModel->with(['PaGetClass'])
             ->where($where)
             ->order("order_num ASC")

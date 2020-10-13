@@ -77,7 +77,7 @@ class BaseController extends Controller
     }
 
     /**
-     *  排序 排序字段为order_nums数组 POST 排序字段为：order_num
+     *  删除全部
      */
     protected function deleteAlls($model)
     {
