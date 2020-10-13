@@ -17,7 +17,7 @@ if (!is_dir($vendor_path)) {
 require_once($vendor_path . '/autoload.php');
 
 $auto_loader = new ClassLoader();
-$auto_loader->addPsr4("mindplay\\demo\\", __DIR__);
+$auto_loader->addPsr4("mindplay\\index\\", __DIR__);
 $auto_loader->register();
 
 ## Configure the cache-path. The static `Annotations` class will configure any public
@@ -27,7 +27,7 @@ $auto_loader->register();
 
 Annotations::$config['cache'] = new AnnotationCache(__DIR__ . '/runtime');
 
-## Register demo annotations.
+## Register index annotations.
 Package::register(Annotations::getManager());
 
 ## For this example, we're going to generate a simple form that allows us to edit a `Person`
@@ -249,7 +249,7 @@ class Form
         foreach ($class->getProperties() as $property) {
             $type = $this->getMetadata($property->name, '@var', 'type', 'string');
 
-            $wtype = 'mindplay\\demo\\' . ucfirst($type) . 'Widget';
+            $wtype = 'mindplay\\index\\' . ucfirst($type) . 'Widget';
 
             $this->widgets[$property->name] = new $wtype($this->object, $property->name);
         }

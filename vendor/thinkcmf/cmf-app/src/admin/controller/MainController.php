@@ -23,18 +23,18 @@ class MainController extends AdminBaseController
     public function index()
     {
         $dashboardWidgets = [];
-        $widgets          = cmf_get_option('admin_dashboard_widgets');
+        $widgets = cmf_get_option('admin_dashboard_widgets');
 
         $defaultDashboardWidgets = [
-            '_SystemCmfHub'           => ['name' => 'CmfHub', 'is_system' => 1],
-            '_SystemCmfDocuments'     => ['name' => 'CmfDocuments', 'is_system' => 1],
+            '_SystemCmfHub' => ['name' => 'CmfHub', 'is_system' => 1],
+            '_SystemCmfDocuments' => ['name' => 'CmfDocuments', 'is_system' => 1],
             '_SystemMainContributors' => ['name' => 'MainContributors', 'is_system' => 1],
-            '_SystemContributors'     => ['name' => 'Contributors', 'is_system' => 1],
-            '_SystemCustom1'          => ['name' => 'Custom1', 'is_system' => 1],
-            '_SystemCustom2'          => ['name' => 'Custom2', 'is_system' => 1],
-            '_SystemCustom3'          => ['name' => 'Custom3', 'is_system' => 1],
-            '_SystemCustom4'          => ['name' => 'Custom4', 'is_system' => 1],
-            '_SystemCustom5'          => ['name' => 'Custom5', 'is_system' => 1],
+            '_SystemContributors' => ['name' => 'Contributors', 'is_system' => 1],
+            '_SystemCustom1' => ['name' => 'Custom1', 'is_system' => 1],
+            '_SystemCustom2' => ['name' => 'Custom2', 'is_system' => 1],
+            '_SystemCustom3' => ['name' => 'Custom3', 'is_system' => 1],
+            '_SystemCustom4' => ['name' => 'Custom4', 'is_system' => 1],
+            '_SystemCustom5' => ['name' => 'Custom5', 'is_system' => 1],
         ];
 
         if (empty($widgets)) {
@@ -70,6 +70,18 @@ class MainController extends AdminBaseController
             }
         }
 
+        //系统信息
+        $system['server'] = $_SERVER["SERVER_SOFTWARE"];
+        $system['phpVersion'] = PHP_VERSION;
+        $system['maxFilesize'] = ini_get('upload_max_filesize');
+        $system['maxExecTime'] = ini_get('max_execution_time') . 'S';
+        $system['freeSpace'] = round((disk_free_space(".") / (1024 * 1024 * 1024)), 2) . 'GB';
+        $system['totalSpace'] = round((disk_total_space(".") / (1024 * 1024 * 1024)), 2) . 'GB';
+        $system['mysqlVersion'] = Db::query("select version() as `version`")[0]['version'];
+        $system['serverIP'] = $_SERVER["SERVER_ADDR"];
+        $system['remoteIP'] = $_SERVER["REMOTE_ADDR"];
+        $this->assign('system', $system);
+
         $smtpSetting = cmf_get_option('smtp_setting');
 
         $this->assign('dashboard_widgets', $dashboardWidgets);
@@ -82,7 +94,7 @@ class MainController extends AdminBaseController
     public function dashboardWidget()
     {
         $dashboardWidgets = [];
-        $widgets          = $this->request->param('widgets/a');
+        $widgets = $this->request->param('widgets/a');
         if (!empty($widgets)) {
             foreach ($widgets as $widget) {
                 if ($widget['is_system']) {

@@ -1,9 +1,9 @@
 <?php
 
-## This script generates formatted documentation for the demo, in RST format.
+## This script generates formatted documentation for the index, in RST format.
 
 header('Content-type: text/plain');
-echo 'File: **demo/index.php**' . PHP_EOL;
+echo 'File: **index/index.php**' . PHP_EOL;
 
 $codeStart = 1;
 
@@ -11,7 +11,7 @@ foreach (file('index.php') as $lineNumber => $line) {
     if (substr(ltrim($line), 0, 2) == '##') {
         if ($codeStart !== false) {
             echo PHP_EOL;
-            echo '.. literalinclude:: ../demo/index.php' . PHP_EOL;
+            echo '.. literalinclude:: ../index/index.php' . PHP_EOL;
             echo '   :lines: ' . ($codeStart + 1) . '-' . $lineNumber . PHP_EOL;
             echo PHP_EOL;
             $codeStart = false;
@@ -27,6 +27,6 @@ foreach (file('index.php') as $lineNumber => $line) {
 }
 
 echo PHP_EOL;
-echo '.. literalinclude:: ../demo/index.php' . PHP_EOL;
+echo '.. literalinclude:: ../index/index.php' . PHP_EOL;
 echo '   :lines: ' . ($codeStart + 1) . '-' . ($lineNumber + 1) . PHP_EOL;
 echo PHP_EOL;

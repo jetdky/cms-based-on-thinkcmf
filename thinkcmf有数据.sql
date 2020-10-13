@@ -1095,7 +1095,7 @@ CREATE TABLE `cmf_theme`  (
 -- ----------------------------
 -- Records of cmf_theme
 -- ----------------------------
-INSERT INTO `cmf_theme` VALUES (1, 0, 1602475139, 0, 0, 'default', 'default', '1.0.0', 'http://demo.thinkcmf.com', '', 'ThinkCMF', 'http://www.thinkcmf.com', 'zh-cn', 'ThinkCMF默认模板', 'ThinkCMF默认模板');
+INSERT INTO `cmf_theme` VALUES (1, 0, 1602475139, 0, 0, 'default', 'default', '1.0.0', 'http://index.thinkcmf.com', '', 'ThinkCMF', 'http://www.thinkcmf.com', 'zh-cn', 'ThinkCMF默认模板', 'ThinkCMF默认模板');
 
 -- ----------------------------
 -- Table structure for cmf_theme_file

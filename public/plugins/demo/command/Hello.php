@@ -12,7 +12,7 @@ class Hello extends Command
 {
     protected function configure()
     {
-        $this->setName('demo:hello')
+        $this->setName('index:hello')
             ->addArgument('name', Argument::OPTIONAL, "your name")
             ->addOption('city', '-c', Option::VALUE_REQUIRED, 'city name')
             ->setDescription('Say Hello');

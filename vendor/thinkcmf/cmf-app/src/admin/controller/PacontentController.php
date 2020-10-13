@@ -23,7 +23,7 @@ use tree\Tree;
 class PacontentController extends AdminBaseController
 {
 
-    public $type = 6;
+    public $type = 5;
     public function initialize()
     {
         parent::initialize();
@@ -32,11 +32,6 @@ class PacontentController extends AdminBaseController
 
     public function index(PacontentModel $pacontentModel)
     {
-//        $content = hook_one('admin_pacontent_default_view');
-//
-//        if (!empty($content)) {
-//            return $content;
-//        }
 
         /* 查询条件
          * 分类\关键词\中英文\是否显示\
@@ -46,6 +41,21 @@ class PacontentController extends AdminBaseController
         $parentId = $this->request->param("cid", 0, 'intval');
         $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
+
+        $data = $this->request->param();
+        $where = [];
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
+            $this->assign('keyword', $data['keyword']);
+        }
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $where[] = ['cid', '=', $data['cid']];
+            $parentId = $data['cid'];
+            //todo: 根据父类id获得所有子类id，当前只查询一级父类
+        } else {
+            $parentId = 0;
+        }
+        //根据上次搜索分类选中分类
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
@@ -53,29 +63,23 @@ class PacontentController extends AdminBaseController
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
-        $this->assign("selectClass", $selectClass);
-        $data = $this->request->param();
-        $where = [];
-        if (!empty($data['cid'])) {
-            $where['cid'] = $data['cid'];
+
+        if (isset($data['status']) && $data['status'] !== "") {
+            $where[] = ['status', '=', $data['status']];
+            $this->assign('status', $data['status']);
         }
-        if (!empty($data['keyword'])) {
-            $where['paname'] = $data['keyword'];
+        if (isset($data['is_recom']) && $data['is_recom'] !== "") {
+            $where[] = ['is_recom', '=', $data['is_recom']];
+            $this->assign('is_recom', $data['is_recom']);
         }
-        $list = $pacontentModel->with(['PaGetClass'])
-            ->where($where)
-            ->order("order_num ASC")
-            ->paginate(10);
-        if (!empty($data['cid'])) {
-            $list->appends(['cid' => $data['cid']]);
-        }
-        if (!empty($data['keyword'])) {
-            $list->appends(['keyword' => $data['keyword']]);
-        }
+        $list = $pacontentModel->where($where)
+            ->with(['pacontentImg', 'pacontentImg.imgs', 'paGetClass'])
+            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
+        $this->assign("selectClass", $selectClass);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -91,7 +95,7 @@ class PacontentController extends AdminBaseController
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $order_num = $FunctionService->get_order_num('product');
+        $order_num = $FunctionService->get_order_num('Pacontent');
         $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
@@ -326,5 +330,22 @@ class PacontentController extends AdminBaseController
         $this->success('删除成功！');
     }
 
+    /**推荐&&取消推荐
+     * @param ProductModel $productModel
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function recom(PacontentModel $pacontentModel)
+    {
+        $data = $this->request->param();
+        $pacontentModel->where('id', $data['id'])->update(['is_recom' => 1]);
+        $this->success('推荐成功！');
+    }
 
+    public function cancelRecom(PacontentModel $pacontentModel)
+    {
+        $data = $this->request->param();
+        $pacontentModel->where('id', $data['id'])->update(['is_recom' => 0]);
+        $this->success('取消推荐成功！');
+    }
 }

@@ -77,20 +77,9 @@ class BaseController extends Controller
     }
 
     /**
-     *  批量删除
+     *  删除全部
      */
     protected function deleteAlls($model)
-    {
-        $ids = $this->request->param('ids/a');
-        $ids = implode(',',$ids);
-        $model::destroy($ids);
-        return true;
-    }
-
-    /**
-     *  批量移动
-     */
-    protected function moveAlls($model)
     {
         $ids = $this->request->param('ids/a');
         $ids = implode(',',$ids);
