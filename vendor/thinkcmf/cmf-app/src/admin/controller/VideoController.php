@@ -4,8 +4,10 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\ClassModel;
 use app\admin\model\ProductModel;
 use app\admin\model\VideoModel;
+use app\admin\service\ClassService;
 use app\admin\validate\ProductValidate;
 use app\admin\validate\VideoValidate;
 use cmf\controller\AdminBaseController;
@@ -41,12 +43,12 @@ class VideoController extends AdminBaseController
      *
      *
      * **/
-    public function add(Tree $tree,VideoModel $videoModel)
+    public function add(Tree $tree, VideoModel $videoModel)
     {
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-       $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -70,7 +72,7 @@ class VideoController extends AdminBaseController
     public function addPost(VideoModel $videoModel, VideoValidate $videoValidate)
     {
         $data = $this->request->param();
-        $isFindVideo= $videoModel->where(['name' => $data['name'], 'lang' => $data['lang']])->find();
+        $isFindVideo = $videoModel->where(['name' => $data['name'], 'lang' => $data['lang']])->find();
         if ($isFindVideo) {
             if ($data['lang'] == 0) {
                 $lang = "英文";
@@ -235,7 +237,8 @@ class VideoController extends AdminBaseController
      * 批量删除
      */
 
-    public function deleteAll(VideoModel $videoModel){
+    public function deleteAll(VideoModel $videoModel)
+    {
         parent::deleteAlls($videoModel);
         $this->success('删除成功！');
     }
@@ -245,7 +248,8 @@ class VideoController extends AdminBaseController
      * 批量删除
      */
 
-    public function remove(VideoModel $videoModel){
+    public function remove(VideoModel $videoModel)
+    {
         parent::moveAlls($videoModel);
         $this->success('移动成功！');
     }
@@ -254,7 +258,8 @@ class VideoController extends AdminBaseController
      * @param VideoModel $videoModel
      */
 
-    public function copy(VideoModel $videoModel){
+    public function copy(VideoModel $videoModel)
+    {
         parent::copyAlls($videoModel);
         $this->success('复制成功！');
     }
@@ -288,8 +293,49 @@ class VideoController extends AdminBaseController
             $videoModel->where('id', 'in', $ids)->update(['status' => 0]);
             $this->success("更新成功！");
         }
+    }
 
+    /**
+     * ajax 获取class列表用于批量移动和复制
+     * @param
+     */
+    public function getClassList(ClassModel $classModel)
+    {
+        $list = $classModel->where(['type' => 4])->order("order_num ASC")->select()->toArray();
+        return json_encode($list);
+    }
 
+    /**
+     * ajax 移动数据
+     * @param
+     */
+    public function saveMove()
+    {
+        $data = $this->request->param();
+        $id_array = explode(',', $data['id']);
+        Db::name('video')->whereIn('id', $id_array)->update(['cid' => $data['cid'], 'lang' => $data['lang']]);
+        return true;
+
+    }
+
+    /**
+     * ajax 批量复制
+     * @param
+     */
+    public function saveCopy(VideoModel $videoModel)
+    {
+        $data = $this->request->param();
+        $id_array = explode(',', $data['id']);
+        $result = Db::name('video')->whereIn('id', $id_array)->select();
+        $inData = [];
+        foreach ($result as $k => $v) {
+            unset($v['id']);
+            $v['cid'] = $data['cid'];
+            $v['lang'] = $data['lang'];
+            $inData[] = $v;
+        }
+        $videoModel->saveAll($inData);
+        return true;
     }
 
 }
