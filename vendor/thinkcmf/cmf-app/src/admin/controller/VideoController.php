@@ -27,6 +27,7 @@ class VideoController extends AdminBaseController
             ->with(['videoClass'])
             ->order("order_num ASC")
             ->paginate(10);
+//        halt($list->toArray());
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);

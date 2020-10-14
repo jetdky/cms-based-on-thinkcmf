@@ -25,8 +25,6 @@ function initTags(tagId, url) {
         async: false,
         success: function (res, status, xhr) {
             data = res;
-            console.log(res)
-
         },
         error: function (res, status, xhr) {
 

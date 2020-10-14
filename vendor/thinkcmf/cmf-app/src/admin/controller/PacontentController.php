@@ -111,7 +111,7 @@ class PacontentController extends AdminBaseController
         if ($result !== true) {
             $this->error($result);
         }
-        Db::transaction(function () use ($pacontentModel, $imgService, $tagService, $seoService, $data) {
+        Db::transaction(function () use ($pacontentModel, $imgService, $data) {
             $pacontentModel->allowField(true)->save($data);
             if (isset($data['img_list'])) {
                 $imgService->doSave($data['img_list'], $data['type'], $pacontentModel->id);

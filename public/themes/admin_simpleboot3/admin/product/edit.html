@@ -145,26 +145,24 @@
                 </div>
                 <div id="seo">
                     <div class="form-group">
-                        <label for="seo_title" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>title</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title" value="{$product.seo.title}">
+                            <input class="form-control" type="text" name="seo_title" value="{$news.seo.title}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_keywords" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>keywords</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords" value="{$product.seo.keywords}">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_keywords">{$news.seo.keywords}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_description" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>description</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description" value="{$product.seo.description}">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_description">{$news.seo.description}</textarea>
                         </div>
                     </div>
                 </div>

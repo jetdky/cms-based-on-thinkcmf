@@ -1,29 +1,8 @@
 <include file="public@header"/>
-<style type="text/css">
-    .imgPreview img {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        max-width: 80%;
-        max-height: 80%;
-        cursor: pointer;
-    }
-    .imgPreview{
-        border: 1px solid #cdcd;
-        position: relative;
-        width: 50px;
-        height: 50px;
-        margin-right: 1%;
-        float: left;
-    }
-</style>
 </head>
 
 <body>
-<php>$typeList = array('1'=>'内容分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
+<php>$typeList = array('1'=>'单页分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li class="active"><a href="{:url('Class/index',['type'=>$type])}">{$typeList[$type]}</a></li>
@@ -37,7 +16,6 @@
             <th>分类名称</th>
             <th>图片</th>
             <th>添加时间</th>
-            <th>状态</th>
             <th>语言</th>
             <th width="140">{:lang('CLICK')}</th>
         </tr>
@@ -68,26 +46,11 @@
                         <span class="label label-warning">暂无</span>
                     </if>
                 </td>
-                <td>{$vo.create_time|getTime}</td>
-                <td>
-                    <switch name="vo.status">
-                        <case value="0">
-                            <span class="label label-danger">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                        <case value="1">
-                            <span class="label label-success">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                        <case value="2">
-                            <span class="label label-warning">{$user_statuses[$vo['status']]}</span>
-                        </case>
-                    </switch>
-                </td>
+                <td>{$vo.show_time}</td>
                 <td>{$vo.lang|getLang}</td>
                 <td>
-
                     <a class="btn btn-xs btn-primary"
                        href='{:url("Class/edit",array("id"=>$vo["id"],"type"=>$type))}'>{:lang('EDIT')}</a>
-                    <!--                            -->
                     <a class="btn btn-xs btn-danger js-ajax-delete"
                        href="{:url('Class/delete',array('id'=>$vo['id'],'type'=>$type))}">{:lang('DELETE')}</a>
                     <if condition="$vo['status'] eq 1">
@@ -98,6 +61,13 @@
                         <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
                            href="{:url('Class/cancelban',array('id'=>$vo['id'],'type'=>$type))}"
                            data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                    </if>
+                    <if condition="$vo['is_recom'] eq 1">
+                        <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
+                           href="{:url('Class/cancelRecom',array('id'=>$vo['id']))}">取消推荐</a>
+                        <else/>
+                        <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
+                           href="{:url('Class/recom',array('id'=>$vo['id']))}">推荐</a>
                     </if>
                 </td>
             </tr>

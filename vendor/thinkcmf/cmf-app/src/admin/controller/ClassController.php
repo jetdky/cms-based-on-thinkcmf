@@ -258,17 +258,13 @@ class ClassController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function edit()
+    public function edit(ClassModel $classModel)
     {
-        $content = hook_one('admin_pacontent_edit_view');
-        if (!empty($content)) {
-            return $content;
-        }
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
         $data = $this->request->param();
-        $classinfo = DB::name('class')->where("id", $id)->find();
+        $classinfo = $classModel->where("id", $id)->find();
         //获得分类下其他信息（关联图片，seo，标签）
         $imgService = new ImgService();
         $seoService = new SeoService();
@@ -510,5 +506,23 @@ class ClassController extends AdminBaseController
             }
         }
         return $arr;
+    }
+    /**推荐&&取消推荐
+     * @param ClassModel $classModel
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function recom(ClassModel $classModel)
+    {
+        $data = $this->request->param();
+        $classModel->where('id', $data['id'])->update(['is_recom' => 1]);
+        $this->success('推荐成功！');
+    }
+
+    public function cancelRecom(ClassModel $classModel)
+    {
+        $data = $this->request->param();
+        $classModel->where('id', $data['id'])->update(['is_recom' => 0]);
+        $this->success('取消推荐成功！');
     }
 }
