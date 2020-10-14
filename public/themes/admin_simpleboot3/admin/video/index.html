@@ -26,13 +26,16 @@
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('video/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
             </button>
-
+            <a class="btn btn-xs btn-primary btn-danger js-ajax-submit" onclick="go()"
+            >批量移动</a>
+            <a class="btn btn-xs btn-primary btn-danger js-ajax-submit" onclick="goCopy()"
+            >批量复制</a>
         </div>
         <table class="table table-hover table-bordered">
             <thead>
             <tr>
                 <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
-                                             data-checklist="js-check-x"></label></th>
+                                             data-checklist="js-check-x" ></label></th>
                 <th width="50">排序</th>
                 <th width="50">ID</th>
                 <th>{:lang('VIDEO_NAME')}</th>
@@ -57,7 +60,7 @@
                                value='{$vo.order_num}'></td>
                     <td>{$vo.id}</td>
                     <td>{$vo.name}</td>
-                    <td>{$vo.videoClass.name ?? ""}</td>
+                    <td>{$vo.videoClass.name}</td>
                     <td>{$vo.content|removeHtml}</td>
                     <td>{$vo.lang|getLang}</td>
                     <td>
@@ -100,10 +103,145 @@
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('video/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
             </button>
+
+            <a class="btn btn-xs btn-primary btn-danger js-ajax-submit" onclick="go()"
+            >批量移动</a>
+            <a class="btn btn-xs btn-primary btn-danger js-ajax-submit" onclick="goCopy()"
+            >批量复制</a>
         </div>
     </form>
+
     <div class="pagination">{$page}</div>
 </div>
 <script src="__STATIC__/js/admin.js"></script>
+<script >
+    //href="javascript:parent.openIframeLayer('{:url('move/index',array('nav_id'=>$vo['id']))}','{$vo.name}批量移动',{});"
+    function go() {
+        var str="";
+        $("input:checkbox[name='ids[]']:checked").each(function() {
+            str += $(this).val() + ",";
+        });
+        if(str==""){
+            alert('未选择视频');
+            return false;
+        }
+        str=str.substring(0,str.length-1)
+        let content='<select id="yesia"> <option>请选分类</option>'
+        $.get('/admin/video/getClassList',
+            function(data){
+                var data_array=JSON.parse(data);
+
+                for (var i=0;i<data_array.length;i++)
+                {
+                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
+                }
+
+                content+='</select>';
+                content+='<select id="lang"> ' +
+                    '<option>请选语言</option>'+
+                    '<option value="1">中文</option>'+
+                    '<option value="0">英文</option>'+
+                        '</select>';
+                layer.open({
+                    type: 1,
+                    content: content,
+                    btn: ['保存', '取消']
+                    ,yes: function(index, layero){
+                        let cid=$("#yesia ").val();
+                        let lang=$("#lang ").val();
+                        if(cid=='请选分类'){
+                            alert('未选择视频分类');
+                            return false;
+                        }
+                        if(lang=='请选语言'){
+                            alert('未选择视频分类');
+                            return false;
+                        }
+
+                        $.get(
+                            '/admin/video/saveMove?id='+str+'&cid='+cid+'&lang='+lang,
+                            function(d){
+                                alert('保存成功！');
+                                layer.close(index)
+                                window.location.href='/admin/video/index';
+
+                            }
+
+                        )
+                    }
+                    ,btn2: function(index, layero){
+                        layer.close(index)
+                    }
+                });
+
+            }
+
+        )
+
+    }
+    function goCopy() {
+        var str="";
+        $("input:checkbox[name='ids[]']:checked").each(function() {
+            str += $(this).val() + ",";
+        });
+        if(str==""){
+            alert('未选择视频');
+            return false;
+        }
+        str=str.substring(0,str.length-1)
+        let content='<select id="yesia"> <option>请选分类</option>'
+        $.get('/admin/video/getClassList',
+            function(data){
+                var data_array=JSON.parse(data);
+
+                for (var i=0;i<data_array.length;i++)
+                {
+                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
+                }
+
+                content+='</select>';
+                content+='<select id="lang"> ' +
+                    '<option>请选语言</option>'+
+                    '<option value="1">中文</option>'+
+                    '<option value="0">英文</option>'+
+                    '</select>';
+                layer.open({
+                    type: 1,
+                    content: content,
+                    btn: ['保存', '取消']
+                    ,yes: function(index, layero){
+                        let cid=$("#yesia ").val();
+                        let lang=$("#lang ").val();
+                        if(cid=='请选分类'){
+                            alert('未选择视频分类');
+                            return false;
+                        }
+                        if(lang=='请选语言'){
+                            alert('未选择视频分类');
+                            return false;
+                        }
+
+                        $.get(
+                            '/admin/video/saveCopy?id='+str+'&cid='+cid+'&lang='+lang,
+                            function(d){
+                                alert('保存成功！');
+                                layer.close(index)
+                                window.location.href='/admin/video/index';
+                            }
+
+                        )
+                    }
+                    ,btn2: function(index, layero){
+                        layer.close(index)
+                    }
+                });
+
+            }
+
+        )
+
+    }
+</script>
+
 </body>
 </html>
