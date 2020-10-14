@@ -1,7 +1,7 @@
 <include file="public@header"/>
 </head>
 <body>
-<php>$typeList = array('1'=>'内容分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
+<php>$typeList = array('1'=>'单页分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
 
 <div class="wrap">
     <ul class="nav nav-tabs">
@@ -42,7 +42,7 @@
                             <li class="img-list">
                                 <img src="/upload/{$vo['thumb_img']}">
                                 <img class="del-img" src="/static/images/cancel.png">
-                                <input type="hidden" name="img_list[0]"
+                                <input type="hidden" name="img_list[{$key}]"
                                        value="{$vo['origi_img']}">
                             </li>
                         </volist>
@@ -51,7 +51,7 @@
             </div>
             <div class="form-group">
                 <label for="input-user_email" class="col-sm-2 control-label"><span
-                        class="form-required">*</span>内容</label>
+                        class="form-required">*</span>单页</label>
                 <div class="col-md-6 col-sm-12">
                     <script type="text/plain" id="content"
                             name="classcon"><?php echo htmlspecialchars_decode((isset($classinfo['classcon']) && ($classinfo['classcon'] !== '')?$classinfo['classcon']:"")); ?></script>

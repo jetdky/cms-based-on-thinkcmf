@@ -74,13 +74,14 @@ class MainController extends AdminBaseController
         $system['server'] = $_SERVER["SERVER_SOFTWARE"];
         $system['phpVersion'] = PHP_VERSION;
         $system['maxFilesize'] = ini_get('upload_max_filesize');
-        $system['maxExecTime'] = ini_get('max_execution_time') . 'S';
-        $system['freeSpace'] = round((disk_free_space(".") / (1024 * 1024 * 1024)), 2) . 'GB';
-        $system['totalSpace'] = round((disk_total_space(".") / (1024 * 1024 * 1024)), 2) . 'GB';
+        $system['maxFilesize'] = str_replace("M", "<b> M</b>", $system['maxFilesize']);
+        $system['maxExecTime'] = ini_get('max_execution_time') . "<b> S</b>";
+        $system['freeSpace'] = round((disk_free_space(".") / (1024 * 1024 * 1024)), 2) . "<b> GB</b>";
+        $system['totalSpace'] = round((disk_total_space(".") / (1024 * 1024 * 1024)), 2) . "<b> GB</b>";
         $system['mysqlVersion'] = Db::query("select version() as `version`")[0]['version'];
         $system['serverIP'] = $_SERVER["SERVER_ADDR"];
         $system['remoteIP'] = $_SERVER["REMOTE_ADDR"];
-        $this->assign('aaa', $system);
+        $this->assign('system', $system);
 
         $smtpSetting = cmf_get_option('smtp_setting');
 

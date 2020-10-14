@@ -6,6 +6,10 @@ namespace app\admin\controller;
 
 use app\admin\model\NewsModel;
 use app\admin\model\PacontentModel;
+use app\admin\service\FunctionService;
+use app\admin\service\ImgService;
+use app\admin\service\SeoService;
+use app\admin\service\TagService;
 use app\admin\validate\NewsValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;
@@ -15,28 +19,59 @@ use tree\Tree;
 class NewsController extends AdminBaseController
 {
 
+    public $type = 6;
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->assign("type", $this->type);
+    }
+
     public function index(NewsModel $newsModel)
     {
-//        $content = hook_one('admin_pacontent_default_view');
-//
-//        if (!empty($content)) {
-//            return $content;
-//        }
+        $tree = new Tree();
+        $result = Db::name('class')->where(["type" => 2])->order(["order_num" => "ASC"])->select();
+        $array = [];
+
         $data = $this->request->param();
         $where = [];
-        if (!empty($data['keyword'])) {
-            $where[] = array('title', 'like', '%' . $data['keyword'] . '%');
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
             $this->assign('keyword', $data['keyword']);
         }
-        $list = NewsModel::where($where)
-            ->with(['newsClass'])
-            ->order("order_num ASC")
-            ->paginate(10);
-        // 获取分页显示
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $where[] = ['cid', '=', $data['cid']];
+            $parentId = $data['cid'];
+            //todo: 根据父类id获得所有子类id，当前只查询一级父类
+        } else {
+            $parentId = 0;
+        }
+        //根据上次搜索分类选中分类
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
 
+        if (isset($data['status']) && $data['status'] !== "") {
+            $where[] = ['status', '=', $data['status']];
+            $this->assign('status', $data['status']);
+        }
+        if (isset($data['is_recom']) && $data['is_recom'] !== "") {
+            $where[] = ['is_recom', '=', $data['is_recom']];
+            $this->assign('is_recom', $data['is_recom']);
+        }
+        $list = $newsModel->where($where)
+            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
+            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+
+        // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
+        $this->assign("selectClass", $selectClass);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -47,12 +82,13 @@ class NewsController extends AdminBaseController
      *
      *
      * **/
-    public function add()
+    public function add(FunctionService $FunctionService)
     {
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
         $result = Db::name('class')->where(["type" => 2])->order(["order_num" => "ASC"])->select();
+        $order_num = $FunctionService->get_order_num('news');
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -62,32 +98,32 @@ class NewsController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
+        $this->assign("order_num", $order_num);
         return $this->fetch();
     }
 
 
-    public function addPost(NewsModel $newsModel, NewsValidate $newsValidate)
+    public function addPost(NewsModel $newsModel, NewsValidate $newsValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
-        $isFindNews = $newsModel->where(['title' => $data['title'], 'lang' => $data['lang']])->find();
-        if ($isFindNews) {
-            if ($data['lang'] == 0) {
-                $lang = "英文";
-            } else {
-                $lang = "中文";
-            }
-            $this->error("此标题在" . $lang . "已存在");
-        }
-//        $linkModel = new P();
-//        $pacontentValidate->with('add')->check($data);
-        $result = $this->validate($data, 'news.add');
-
+        $data['show_time'] = str_replace('T', ' ', $data['show_time']);
+        $result = $this->validate($data, 'News.add');
         if ($result !== true) {
             $this->error($result);
         }
-        $newsModel->allowField(true)->save($data);
-
-        $this->success("添加成功！", url("news/index"));
+        Db::transaction(function () use ($newsModel, $imgService, $tagService, $seoService, $data) {
+            $newsModel->allowField(true)->save($data);
+            if (isset($data['img_list'])) {
+                $imgService->doSave($data['img_list'], $data['type'], $newsModel->id);
+            }
+            if ($data['tag_id']) {
+                $tagService->doSave($data['tag_id'], $data['type'], $newsModel->id);
+            }
+            if (!$data['is_auto_seo']) {
+                $seoService->dosave($data, $data['type'], $newsModel->id);
+            }
+        });
+        $this->success("添加成功！", url("News/index", ['type' => $this->type]));
     }
 
     /**
@@ -288,5 +324,23 @@ class NewsController extends AdminBaseController
         $this->success('删除成功！');
     }
 
+    /**推荐&&取消推荐
+     * @param ProductModel $productModel
+     * @throws \think\Exception
+     * @throws \think\exception\PDOException
+     */
+    public function recom(NewsModel $newsModel)
+    {
+        $data = $this->request->param();
+        $newsModel->where('id', $data['id'])->update(['is_recom' => 1]);
+        $this->success('推荐成功！');
+    }
+
+    public function cancelRecom(NewsModel $newsModel)
+    {
+        $data = $this->request->param();
+        $newsModel->where('id', $data['id'])->update(['is_recom' => 0]);
+        $this->success('取消推荐成功！');
+    }
 
 }

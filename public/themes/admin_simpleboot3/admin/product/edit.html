@@ -29,6 +29,13 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label"><span
+                            class="form-required">*</span>发布时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="show_time" class="form-control" type="datetime-local" value="{$product.show_time}"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="input-image" class="col-sm-2 control-label">图片</label>
                     <div class="col-md-6 col-sm-10">
                         <input type="hidden" class="form-control" id="input-image">
@@ -40,7 +47,7 @@
                                 <li class="img-list">
                                     <img src="/upload/{$vo['thumb_img']}">
                                     <img class="del-img" src="/static/images/cancel.png">
-                                    <input type="hidden" name="img_list[0]"
+                                    <input type="hidden" name="img_list[{$key}]"
                                            value="{$vo['origi_img']}">
                                 </li>
                             </volist>
@@ -78,8 +85,8 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <select name="lang" class="form-control">
-                            <option value="1">中文</option>
-                            <option value="0">英文</option>
+                            <option value="1" <if condition="$product.lang == 1">selected</if> >中文</option>
+                            <option value="0" <if condition="$product.lang == 0">selected</if> >英文</option>
                         </select>
                     </div>
                 </div>
@@ -89,17 +96,20 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <select name="status" class="form-control">
-                            <option value="1">显示</option>
-                            <option value="0">不显示</option>
+                            <option value="1" <if condition="$product.status == 1">selected</if> >显示</option>
+                            <option value="0" <if condition="$product.status == 0">selected</if> >不显示</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">
-                        <span class="form-required">*</span>标签
+                        <span class="form-required">*</span>是否推荐
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <div id="tagAdd" class="xm-select-demo"></div>
+                        <select name="is_recom"class="form-control">
+                            <option value="0" <if condition="$product.is_recom == 0">selected</if> >不推荐</option>
+                            <option value="1" <if condition="$product.is_recom == 1">selected</if> >推荐</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -110,6 +120,15 @@
                         <input type="text" class="form-control" id="order_num" name="order_num" value="{$product.order_num}">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <span class="form-required">*</span>标签
+                    </label>
+                    <div class="col-md-6 col-sm-10">
+                        <div id="tagAdd" class="xm-select-demo"></div>
+                    </div>
+                </div>
+
                 <div class="form-group">
                     <div class="col-md-6 col-sm-10">
                         <div class="col-md-6 col-sm-10">

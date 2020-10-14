@@ -4,7 +4,7 @@
 <div class="wrap">
     <ul class="nav nav-tabs">
         <li><a href="{:url('Pacontent/index')}">{:lang('PACONTENT')}</a></li>
-        <li class="active"><a>添加内容</a></li>
+        <li class="active"><a>内容添加</a></li>
     </ul>
     <div class="row">
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Pacontent/addPost')}">
@@ -21,9 +21,16 @@
                     <label for="input-user_email" class="col-sm-2 control-label"><span
                             class="form-required">*</span>所属分类</label>
                     <div class="col-md-6 col-sm-10">
-                        <select name="cid" id="js-smtpsecure" class="form-control">
+                        <select name="cid" class="form-control">
                             {$selectClass}
                         </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span
+                            class="form-required">*</span>发布时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="show_time" class="form-control" type="datetime-local"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -78,18 +85,10 @@
                         <span class="form-required">*</span>是否显示
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <select name="status" id="js-smtpsecure" class="form-control">
+                        <select name="status" class="form-control">
                             <option value="1">显示</option>
                             <option value="0">不显示</option>
                         </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="tag" class="col-sm-2 control-label">
-                        <span class="form-required">*</span>标签
-                    </label>
-                    <div class="col-md-6 col-sm-10">
-                        <div id="tagAdd" class="xm-select-demo"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,6 +97,14 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <input type="text" class="form-control" id="order_num" name="order_num" value="{$order_num}">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="tag" class="col-sm-2 control-label">
+                        <span class="form-required">*</span>标签
+                    </label>
+                    <div class="col-md-6 col-sm-10">
+                        <div id="tagAdd" class="xm-select-demo"></div>
                     </div>
                 </div>
                 <div class="form-group">
@@ -149,6 +156,7 @@
     editorcontent2.render('note');
     initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
     clickHide('is_auto_seo', 'seo', 1);
+    writeCurrentDate();
 </script>
 </body>
 </html>

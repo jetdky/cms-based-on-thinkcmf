@@ -7,14 +7,12 @@ namespace app\admin\controller;
 use app\admin\model\LinkModel;
 use app\admin\model\MessageModel;
 use app\admin\model\PacontentModel;
-use app\admin\model\ProductModel;
 use app\admin\model\VideoModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
 use app\admin\service\TagService;
 use app\admin\validate\PacontentValidate;
-use app\admin\validate\ProductValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\db\Query;
@@ -24,6 +22,7 @@ class PacontentController extends AdminBaseController
 {
 
     public $type = 5;
+
     public function initialize()
     {
         parent::initialize();
@@ -44,10 +43,6 @@ class PacontentController extends AdminBaseController
 
         $data = $this->request->param();
         $where = [];
-        if (isset($data['keyword']) && $data['keyword'] !== "") {
-            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
-            $this->assign('keyword', $data['keyword']);
-        }
         if (isset($data['cid']) && $data['cid'] !== "") {
             $where[] = ['cid', '=', $data['cid']];
             $parentId = $data['cid'];
@@ -146,7 +141,7 @@ class PacontentController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function edit()
+    public function edit(PacontentModel $pacontentModel)
     {
         $content = hook_one('admin_pacontent_edit_view');
         if (!empty($content)) {
@@ -156,8 +151,7 @@ class PacontentController extends AdminBaseController
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
 
-        $pacontent = DB::name('pacontent')->where("id", $id)->find();
-
+        $pacontent = $pacontentModel->where("id", $id)->find();
 
         $this->assign("pacontent", $pacontent);
         $paclass = DB::name('class')->where(['id' => $pacontent['cid']])->find();
@@ -168,7 +162,10 @@ class PacontentController extends AdminBaseController
         } else {
             $parentId = $paclass['parent_id'];
         }
-
+        $imgService = new ImgService();
+        $seoService = new SeoService();
+        $pacontent['imgs'] = $imgService->read($id, $this->type);
+        $pacontent['seo'] = $seoService->read($id, $this->type);
         $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
@@ -189,48 +186,45 @@ class PacontentController extends AdminBaseController
     }
 
 
-    public function editPost(PacontentModel $pacontentModel)
+    public function editPost(PacontentModel $pacontentModel, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         if ($this->request->isPost()) {
-
             $data = $this->request->param();
-
-            $isFindPas = DB::name('pacontent')->where(['paname' => $data['paname'], 'lang' => $data['lang']])->all();
-
-            foreach ($isFindPas as $findPa) {
-                if ($findPa['id'] != $data['id']) {
-                    if ($data['lang'] == 0) {
-                        $lang = "英文";
-                    } else {
-                        $lang = "中文";
-                    }
-                    $this->error("此标题在" . $lang . "已存在");
-                }
-            }
-//            if($isFindPa){
-//                if($data['lang'] == 0){
-//                    $lang = "英文";
-//                }else{
-//                    $lang = "中文";
-//                }
-//                $this->error("此标题在".$lang."已存在");
-//            }
-
-            $result = $this->validate($this->request->param(), 'Pacontent.edit');
-
+            $result = true;
             if ($result !== true) {
                 // 验证失败 输出错误信息
                 $this->error($result);
             } else {
-                $result = DB::name('pacontent')->update($_POST);
+                Db::transaction(function () use ($pacontentModel, $imgService, $tagService, $seoService, $data) {
+                    if (isset($data['img_list'])) {
+                        $imgService->delete($data['id'], $data['type']);
+                        $imgService->doSave($data['img_list'], $data['type'], $data['id']);
+                    } else {
+                        $imgService->delete($data['id'], $data['type']);
+                    }
+
+                    if ($data['tag_id']) {
+                        $tagService->delete($data['id'], $data['type']);
+                        $tagService->doSave($data['tag_id'], $data['type'], $data['id']);
+                    } else {
+                        $tagService->delete($data['id'], $data['type']);
+                    }
+
+                    if (!$data['is_auto_seo']) {
+                        $seoService->delete($data['id'], $data['type']);
+                        $seoService->dosave($data, $data['type'], $data['id']);
+                    } else {
+                        $seoService->delete($data['id'], $data['type']);
+                    }
+                    $result = $pacontentModel->allowField(true)->update($data);
+                });
+
                 if ($result !== false) {
-                    $this->success("保存成功！");
+                    $this->success("保存成功！", url("Pacontent/index", ['type' => $data['type']]));
                 } else {
                     $this->error("保存失败！");
                 }
             }
-
-
         }
     }
 
@@ -325,13 +319,14 @@ class PacontentController extends AdminBaseController
      * 批量删除
      */
 
-    public function deleteAll(PacontentModel $pacontentModel){
+    public function deleteAll(PacontentModel $pacontentModel)
+    {
         parent::deleteAlls($pacontentModel);
         $this->success('删除成功！');
     }
 
     /**推荐&&取消推荐
-     * @param ProductModel $productModel
+     * @param PacontentModel $pacontentModel
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */

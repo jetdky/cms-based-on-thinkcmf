@@ -107,6 +107,7 @@ class ProductController extends AdminBaseController
     public function addPost(ProductModel $productModel, ProductValidate $productValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
+        $data['show_time'] = str_replace('T', ' ', $data['show_time']);
         $result = $this->validate($data, 'Product.add');
         if ($result !== true) {
             $this->error($result);
@@ -139,7 +140,7 @@ class ProductController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function edit()
+    public function edit(ProductModel $productModel)
     {
         $content = hook_one('admin_pacontent_edit_view');
         if (!empty($content)) {
@@ -148,7 +149,7 @@ class ProductController extends AdminBaseController
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
-        $product = DB::name('product')->where("id", $id)->find();
+        $product = $productModel->where("id", $id)->find();
         $this->assign("product", $product);
         $productClass = DB::name('class')->where(['id' => $product['cid']])->find();
 

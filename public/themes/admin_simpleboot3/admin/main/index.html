@@ -1,95 +1,11 @@
 <php>
     if (!function_exists('_get_system_widget')) {
     function _get_system_widget($name){
-</php>
-<switch name="name">
-    <case value="CmfHub">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">PHP信息</h3>
-            </div>
-            <div class="panel-body home-info">
-                <ul class="list-unstyled">
-                    <li>
-                        <em>PHP版本</em> {$system.phpVersion}
-                    </li>
-                    <li>
-                        <em>最大上传文件大小</em> {$system.maxFilesize}
-                    </li>
-                    <li>
-                        <em>PHP最多执行时间</em> {$system.maxExecTime}
-                    </li>
-                    <li>
-                        <em>客户端IP</em> {$system.remoteIP}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </case>
-    <case value="CmfDocuments">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">服务器信息</h3>
-            </div>
-            <div class="panel-body home-info">
-                <ul class="list-unstyled">
-                    <li>
-                        <em>服务器类型</em> {$system.server}
-                    </li>
-                    <li>
-                        <em>服务器IP</em> {$system.serverIP}
-                    </li>
-                    <li>
-                        <em>总空间</em> {$system.totalSpace}
-                    </li>
-                    <li>
-                        <em>剩余空间</em> {$system.freeSpace}
-                    </li>
-                    <li>
-                        <em>MySQL版本</em> {$system.mysqlVersion}
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </case>
-    <case value="MainContributors">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">版权所有</h3>
-            </div>
-            <div class="panel-body home-info">
-                Copyright © 2020 浙江搜派信息科技有限公司。
-            </div>
-        </div>
-    </case>
-    <case value="Contributors">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">贡献者</h3>
-            </div>
-            <div class="panel-body home-info">
-                <ul class="list-inline">
-                    <li>xiao deng</li>
-                    <li>a nan</li>
-                </ul>
-            </div>
-        </div>
-    </case>
-</switch>
-<php>
     }
     }
 </php>
-
 <include file="public@header"/>
 <style>
-    .home-info li em {
-        float: left;
-        width: 120px;
-        font-style: normal;
-        font-weight: bold;
-    }
-
     .home-info ul {
         padding: 0;
         margin: 0;
@@ -107,6 +23,30 @@
         margin-bottom: 5px;
         padding: 5px;
     }
+    li{
+        position: relative;
+        line-height: 20px;
+    }
+    .title{
+        position: absolute;
+        width: 85px;
+        text-align: justify;
+        text-align-last: justify;
+    }
+    .title:after{
+        display: inline-block;
+        content: '';
+        width: 100%;
+        height: 0;
+    }
+    .title:before{
+        position: absolute;
+        left: 85px;
+        content: '\FF1A';
+    }
+    .value{
+        padding-left: 110px;
+    }
 
     .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
         padding-left: 5px;
@@ -118,7 +58,77 @@
 <hook name="admin_before_head_end"/>
 </head>
 <body>
+
+
 <div class="wrap">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">PHP信息</h3>
+        </div>
+        <div class="panel-body home-info">
+            <ul class="list-unstyled">
+                <li>
+                    <div class="title">PHP版本</div> <div class="value">{$system.phpVersion}</div>
+                </li>
+                <li>
+                    <div class="title">最大上传文件</div> <div class="value">{$system.maxFilesize}</div>
+                </li>
+                <li>
+                    <div class="title">最多执行时间</div> <div class="value">{$system.maxExecTime}</div>
+                </li>
+                <li>
+                    <div class="title">客户端IP</div> <div class="value">{$system.remoteIP}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">服务器信息</h3>
+        </div>
+        <div class="panel-body home-info">
+            <ul class="list-unstyled">
+                <li>
+                    <div class="title">服务器类型</div> <div class="value">{$system.server}</div>
+                </li>
+                <li>
+                    <div class="title">服务器IP</div> <div class="value">{$system.serverIP}</div>
+                </li>
+                <li>
+                    <div class="title">总空间</div> <div class="value">{$system.totalSpace}</div>
+                </li>
+                <li>
+                    <div class="title">剩余空间</div> <div class="value">{$system.freeSpace}</div>
+                </li>
+                <li>
+                    <div class="title">MySQL版本</div> <div class="value">{$system.mysqlVersion}</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">贡献者</h3>
+        </div>
+        <div class="panel-body home-info">
+            <ul class="list-inline">
+                <li>a nan</li>
+                <li>xiao deng</li>
+            </ul>
+        </div>
+    </div>
+    <br>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">版权所有</h3>
+        </div>
+        <div class="panel-body home-info">
+            Copyright © 2020 浙江搜派信息科技有限公司。
+        </div>
+    </div>
     <if condition="!extension_loaded('fileinfo')">
         <div class="grid-item col-md-12">
             <div class="alert alert-danger alert-dismissible fade in" role="alert" style="margin-bottom: 0;">
@@ -129,7 +139,6 @@
             </div>
         </div>
     </if>
-
     <div class="grid-item col-md-12" id="thinkcmf-notices-grid" style="display:none;">
         <div class="dashboard-box">
             <div class="panel panel-default">
