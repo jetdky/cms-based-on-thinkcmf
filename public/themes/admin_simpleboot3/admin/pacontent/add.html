@@ -4,7 +4,7 @@
 <div class="wrap">
     <ul class="nav nav-tabs">
         <li><a href="{:url('Pacontent/index')}">{:lang('PACONTENT')}</a></li>
-        <li class="active"><a>添加内容</a></li>
+        <li class="active"><a>内容添加</a></li>
     </ul>
     <div class="row">
         <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('Pacontent/addPost')}">
@@ -21,9 +21,22 @@
                     <label for="input-user_email" class="col-sm-2 control-label"><span
                             class="form-required">*</span>所属分类</label>
                     <div class="col-md-6 col-sm-10">
-                        <select name="cid" id="js-smtpsecure" class="form-control">
+                        <select name="cid" class="form-control">
                             {$selectClass}
                         </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label"><span
+                            class="form-required">*</span>发布时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="show_time" class="form-control" type="datetime-local"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">补充信息</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="other_info" class="form-control" type="text"/>
                     </div>
                 </div>
                 <div class="form-group">
@@ -38,16 +51,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="input-user_email" class="col-sm-2 control-label"><span
-                            class="form-required">*</span>内容</label>
+                    <label class="col-sm-2 control-label">内容</label>
                     <div class="col-md-6 col-sm-12">
                         <textarea id="content" name="content"></textarea>
                         <span style="color: #ffb752;"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="remark" class="col-sm-2 control-label"><span
-                            class="form-required">*</span>备注</label>
+                    <label  class="col-sm-2 control-label">备注</label>
                     <div class="col-md-6 col-sm-12">
                         <textarea id="note" name="note"></textarea>
                         <span style="color: #ffb752;"></span>
@@ -55,8 +66,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <!-- js-ajax-submit -->
-                        <button type="submit" class="btn btn-primary">{:lang('SAVE')}</button>
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
                         <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
                     </div>
                 </div>
@@ -78,18 +88,21 @@
                         <span class="form-required">*</span>是否显示
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <select name="status" id="js-smtpsecure" class="form-control">
+                        <select name="status" class="form-control">
                             <option value="1">显示</option>
                             <option value="0">不显示</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="tag" class="col-sm-2 control-label">
-                        <span class="form-required">*</span>标签
+                    <label class="col-sm-2 control-label">
+                        <span class="form-required">*</span>是否推荐
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <div id="tagAdd" class="xm-select-demo"></div>
+                        <select name="is_recom" class="form-control">
+                            <option value="0">不推荐</option>
+                            <option value="1">推荐</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -98,37 +111,6 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <input type="text" class="form-control" id="order_num" name="order_num" value="{$order_num}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-10">
-                        自动SEO<input type="radio" name="is_auto_seo" value="1" checked>
-                        手动SEO<input type="radio" name="is_auto_seo" value="0">
-                    </div>
-                </div>
-                <div id="seo">
-                    <div class="form-group">
-                        <label for="seo_title" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>title</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="seo_keywords" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>keywords</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="seo_description" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>description</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description">
-                        </div>
                     </div>
                 </div>
             </div>
@@ -147,8 +129,7 @@
     var editorcontent2 = new baidu.editor.ui.Editor();
     editorcontent.render('content');
     editorcontent2.render('note');
-    initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
-    clickHide('is_auto_seo', 'seo', 1);
+    writeCurrentDate();
 </script>
 </body>
 </html>

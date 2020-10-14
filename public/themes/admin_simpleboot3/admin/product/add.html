@@ -34,6 +34,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">补充信息</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="other_info" class="form-control" type="text"/>
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="input-image" class="col-sm-2 control-label">图片</label>
                     <div class="col-md-6 col-sm-10">
                         <input type="hidden" class="form-control" id="input-image">
@@ -62,8 +68,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
-                        <!-- js-ajax-submit -->
-                        <button type="submit" class="btn btn-primary">{:lang('SAVE')}</button>
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
                         <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
                     </div>
                 </div>
@@ -96,7 +101,7 @@
                         <span class="form-required">*</span>是否推荐
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <select name="is_recom" id="js-smtpsecure" class="form-control">
+                        <select name="is_recom" class="form-control">
                             <option value="0">不推荐</option>
                             <option value="1">推荐</option>
                         </select>
@@ -126,26 +131,24 @@
                 </div>
                 <div id="seo">
                     <div class="form-group">
-                        <label for="seo_title" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>title</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title">
+                            <input class="form-control" type="text" name="seo_title">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_keywords" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>keywords</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_keywords"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_description" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>description</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_description"></textarea>
                         </div>
                     </div>
                 </div>

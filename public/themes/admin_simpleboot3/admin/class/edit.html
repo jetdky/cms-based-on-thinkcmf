@@ -1,7 +1,7 @@
 <include file="public@header"/>
 </head>
 <body>
-<php>$typeList = array('1'=>'内容分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
+<php>$typeList = array('1'=>'单页分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类')</php>
 
 <div class="wrap">
     <ul class="nav nav-tabs">
@@ -21,13 +21,20 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-user_email" class="col-sm-2 control-label"><span
+                <label  class="col-sm-2 control-label"><span
                         class="form-required">*</span>所属父类</label>
                 <div class="col-md-6 col-sm-10">
                     <select name="parent_id" id="js-smtpsecure" class="form-control">
                         <option value="0">/</option>
                         {$selectClass}
                     </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label"><span
+                        class="form-required">*</span>发布时间</label>
+                <div class="col-md-6 col-sm-10">
+                    <input name="show_time" class="form-control" type="datetime-local" value="{$classinfo.show_time}"/>
                 </div>
             </div>
             <div class="form-group">
@@ -42,7 +49,7 @@
                             <li class="img-list">
                                 <img src="/upload/{$vo['thumb_img']}">
                                 <img class="del-img" src="/static/images/cancel.png">
-                                <input type="hidden" name="img_list[0]"
+                                <input type="hidden" name="img_list[{$key}]"
                                        value="{$vo['origi_img']}">
                             </li>
                         </volist>
@@ -50,20 +57,16 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="input-user_email" class="col-sm-2 control-label"><span
+                <label class="col-sm-2 control-label"><span
                         class="form-required">*</span>内容</label>
                 <div class="col-md-6 col-sm-12">
-                    <script type="text/plain" id="content"
-                            name="classcon"><?php echo htmlspecialchars_decode((isset($classinfo['classcon']) && ($classinfo['classcon'] !== '')?$classinfo['classcon']:"")); ?></script>
-                    <span style="color: #ffb752;"></span>
+                    <textarea name="content" id="content">{$classinfo['content']}</textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label for="remark" class="col-sm-2 control-label"><span class="form-required">*</span>备注</label>
+                <label class="col-sm-2 control-label"><span class="form-required">*</span>备注</label>
                 <div class="col-md-6 col-sm-12">
-                    <script type="text/plain" id="remark"
-                            name="remark"><?php echo htmlspecialchars_decode((isset($classinfo['remark']) && ($classinfo['remark'] !== '')?$classinfo['remark']:"")); ?></script>
-                    <span style="color: #ffb752;"></span>
+                    <textarea name="note" id="note">{$classinfo['note']}</textarea>
                 </div>
             </div>
             <div class="form-group">
@@ -80,7 +83,7 @@
                     <span class="form-required">*</span>语言
                 </label>
                 <div class="col-md-6 col-sm-10">
-                    <select name="lang" id="js-smtpsecure" class="form-control">
+                    <select name="lang" class="form-control">
                         <option value="1"
                         <if condition="$classinfo['lang'] eq 1">selected</if>
                         >中文</option>
@@ -95,7 +98,7 @@
                     <span class="form-required">*</span>是否显示
                 </label>
                 <div class="col-md-6 col-sm-10">
-                    <select name="status" id="js-smtpsecure" class="form-control">
+                    <select name="status" class="form-control">
                         <option value="1"
                         <if condition="$classinfo['status'] eq 1">selected</if>
                         >显示</option>
@@ -106,12 +109,14 @@
                 </div>
             </div>
             <div class="form-group">
-                <label for="tag" class="col-sm-2 control-label">
-                    <span class="form-required">*</span>标签
+                <label class="col-sm-2 control-label">
+                    <span class="form-required">*</span>是否推荐
                 </label>
                 <div class="col-md-6 col-sm-10">
-                    <!--               <input type="text" class="form-control" id="tag" name="name" value="">-->
-                    <div id="tagAdd" class="xm-select-demo"></div>
+                    <select name="is_recom"class="form-control">
+                        <option value="0" <if condition="$classinfo.is_recom == 0">selected</if> >不推荐</option>
+                        <option value="1" <if condition="$classinfo.is_recom == 1">selected</if> >推荐</option>
+                    </select>
                 </div>
             </div>
             <div class="form-group">
@@ -121,6 +126,15 @@
                 <div class="col-md-6 col-sm-10">
                     <input type="text" class="form-control" id="order_num" name="order_num"
                            value="{$classinfo['order_num']}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">
+                    <span class="form-required">*</span>标签
+                </label>
+                <div class="col-md-6 col-sm-10">
+                    <!--               <input type="text" class="form-control" id="tag" name="name" value="">-->
+                    <div id="tagAdd" class="xm-select-demo"></div>
                 </div>
             </div>
             <div class="form-group">
@@ -135,27 +149,24 @@
             </div>
             <div id="seo">
                 <div class="form-group">
-                    <label for="seo_title" class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 control-label"><span
                             class="form-required">*</span>title</label>
                     <div class="col-md-6 col-sm-10">
-                        <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title"
-                               value="{$classinfo['seo']['title']}">
+                        <input class="form-control" type="text" name="seo_title" value="{$classinfo.seo.title}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="seo_keywords" class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 control-label"><span
                             class="form-required">*</span>keywords</label>
                     <div class="col-md-6 col-sm-10">
-                        <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                               name="seo_keywords" value="{$classinfo['seo']['keywords']}">
+                        <textarea rows="5" cols="5" class="form-control" name="seo_keywords">{$classinfo.seo.keywords}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="seo_description" class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 control-label"><span
                             class="form-required">*</span>description</label>
                     <div class="col-md-6 col-sm-10">
-                        <input class="form-control" type="text" id="seo_description" placeholder=""
-                               name="seo_description" value="{$classinfo['seo']['description']}">
+                        <textarea rows="5" cols="5" class="form-control" name="seo_description">{$classinfo.seo.description}</textarea>
                     </div>
                 </div>
             </div>
@@ -171,9 +182,10 @@
 <script type="text/javascript" src="/static/js/ueditor/ueditor.config.js"></script>
 <script type="text/javascript" src="/static/js/ueditor/ueditor.all.min.js"></script>
 <script type="text/javascript">
-    var editorcontent = new baidu.editor.ui.Editor();
-    editorcontent.render('content');
-    editorcontent.render('remark');
+    var editorcontent1 = new baidu.editor.ui.Editor();
+    var editorcontent2 = new baidu.editor.ui.Editor();
+    editorcontent1.render('content');
+    editorcontent2.render('note');
     clickHide('is_auto_seo', 'seo', 1);
     initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$classinfo['id'].'/typeId/'.$classinfo['type'])}");
 </script>

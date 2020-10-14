@@ -34,7 +34,7 @@ class TagService
     public function get()
     {
         $tagModel = new TagModel();
-        return $tagModel->field("id, title")->select()->toArray();
+        return $tagModel->field("id, name")->select()->toArray();
     }
 
     /** 得到该分类下的标签

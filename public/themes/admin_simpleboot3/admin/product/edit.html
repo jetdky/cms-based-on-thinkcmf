@@ -29,6 +29,19 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label"><span
+                            class="form-required">*</span>发布时间</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="show_time" class="form-control" type="datetime-local" value="{$product.show_time}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 control-label">补充信息</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="other_info" class="form-control" type="text" value="{$product.other_info}" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="input-image" class="col-sm-2 control-label">图片</label>
                     <div class="col-md-6 col-sm-10">
                         <input type="hidden" class="form-control" id="input-image">
@@ -40,7 +53,7 @@
                                 <li class="img-list">
                                     <img src="/upload/{$vo['thumb_img']}">
                                     <img class="del-img" src="/static/images/cancel.png">
-                                    <input type="hidden" name="img_list[0]"
+                                    <input type="hidden" name="img_list[{$key}]"
                                            value="{$vo['origi_img']}">
                                 </li>
                             </volist>
@@ -78,8 +91,8 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <select name="lang" class="form-control">
-                            <option value="1">中文</option>
-                            <option value="0">英文</option>
+                            <option value="1" <if condition="$product.lang == 1">selected</if> >中文</option>
+                            <option value="0" <if condition="$product.lang == 0">selected</if> >英文</option>
                         </select>
                     </div>
                 </div>
@@ -89,17 +102,20 @@
                     </label>
                     <div class="col-md-6 col-sm-10">
                         <select name="status" class="form-control">
-                            <option value="1">显示</option>
-                            <option value="0">不显示</option>
+                            <option value="1" <if condition="$product.status == 1">selected</if> >显示</option>
+                            <option value="0" <if condition="$product.status == 0">selected</if> >不显示</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-2 control-label">
-                        <span class="form-required">*</span>标签
+                        <span class="form-required">*</span>是否推荐
                     </label>
                     <div class="col-md-6 col-sm-10">
-                        <div id="tagAdd" class="xm-select-demo"></div>
+                        <select name="is_recom"class="form-control">
+                            <option value="0" <if condition="$product.is_recom == 0">selected</if> >不推荐</option>
+                            <option value="1" <if condition="$product.is_recom == 1">selected</if> >推荐</option>
+                        </select>
                     </div>
                 </div>
                 <div class="form-group">
@@ -111,6 +127,15 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">
+                        <span class="form-required">*</span>标签
+                    </label>
+                    <div class="col-md-6 col-sm-10">
+                        <div id="tagAdd" class="xm-select-demo"></div>
+                    </div>
+                </div>
+
+                <div class="form-group">
                     <div class="col-md-6 col-sm-10">
                         <div class="col-md-6 col-sm-10">
                             <span>自动SEO</span><input type="radio" name="is_auto_seo" value="1"<if condition="$product['seo']['is_auto_seo'] == 1"> checked</if>>
@@ -120,26 +145,24 @@
                 </div>
                 <div id="seo">
                     <div class="form-group">
-                        <label for="seo_title" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>title</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title" value="{$product.seo.title}">
+                            <input class="form-control" type="text" name="seo_title" value="{$news.seo.title}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_keywords" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>keywords</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords" value="{$product.seo.keywords}">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_keywords">{$news.seo.keywords}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="seo_description" class="col-sm-2 control-label"><span
+                        <label class="col-sm-2 control-label"><span
                                 class="form-required">*</span>description</label>
                         <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description" value="{$product.seo.description}">
+                            <textarea rows="5" cols="5" class="form-control" name="seo_description">{$news.seo.description}</textarea>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 12/10/2020 22:18:33
+ Date: 14/10/2020 11:04:58
 */
 
 SET NAMES utf8mb4;
@@ -99,17 +99,18 @@ CREATE TABLE `cmf_auth_rule`  (
 DROP TABLE IF EXISTS `cmf_class`;
 CREATE TABLE `cmf_class`  (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `type` int(11) NULL DEFAULT NULL,
   `parent_id` int(11) NULL DEFAULT NULL,
+  `lang` int(1) NULL DEFAULT 1,
   `order_num` int(11) NULL DEFAULT NULL,
-  `is_suto_seo` tinyint(1) NULL DEFAULT NULL,
   `status` int(1) NULL DEFAULT NULL,
+  `is_recom` tinyint(1) NULL DEFAULT NULL COMMENT '是否推荐',
+  `is_suto_seo` tinyint(1) NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `lang` int(1) NULL DEFAULT 1,
-  `classcon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
   `show_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
@@ -191,7 +192,7 @@ CREATE TABLE `cmf_img`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键id',
   `order_num` int(10) UNSIGNED NULL DEFAULT NULL COMMENT '排序数',
   `is_cover` tinyint(1) UNSIGNED NULL DEFAULT 0 COMMENT '是否是封面图片。0为不是，1为是。默认为0，不是',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '未命名图片' COMMENT '图片名（前台显示图片名）',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '未命名图片' COMMENT '图片名（前台显示图片名）',
   `origi_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '原图',
   `thumb_img` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '缩略图，改变质量但不改变大小',
   `note` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '备注',
@@ -199,7 +200,7 @@ CREATE TABLE `cmf_img`  (
   `update_time` int(10) UNSIGNED NOT NULL COMMENT '更新时间',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_img_content
@@ -211,7 +212,7 @@ CREATE TABLE `cmf_img_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_link
@@ -230,7 +231,7 @@ CREATE TABLE `cmf_link`  (
   `rel` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '链接与网站的关系',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `status`(`status`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '友情链接表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_message
@@ -283,19 +284,21 @@ CREATE TABLE `cmf_nav_menu`  (
 DROP TABLE IF EXISTS `cmf_news`;
 CREATE TABLE `cmf_news`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
-  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
   `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
+  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
   `is_auto_seo` tinyint(4) NULL DEFAULT 1,
   `is_recom` tinyint(1) NULL DEFAULT NULL,
-  `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `other_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他信息',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_option
@@ -308,7 +311,7 @@ CREATE TABLE `cmf_option`  (
   `option_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `option_name`(`option_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '全站配置表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '全站配置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for cmf_pacontent
@@ -316,19 +319,21 @@ CREATE TABLE `cmf_option`  (
 DROP TABLE IF EXISTS `cmf_pacontent`;
 CREATE TABLE `cmf_pacontent`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
-  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
   `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
-  `is_auto_seo` tinyint(4) NULL DEFAULT 1,
-  `is_recom` tinyint(1) NULL DEFAULT NULL,
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `status` int(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `is_auto_seo` tinyint(4) NULL DEFAULT 1 COMMENT '是否自动seo',
+  `is_recom` tinyint(1) NULL DEFAULT NULL COMMENT '是否推荐',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `other_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他信息',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_plugin
@@ -358,20 +363,21 @@ CREATE TABLE `cmf_plugin`  (
 DROP TABLE IF EXISTS `cmf_product`;
 CREATE TABLE `cmf_product`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `price` decimal(10, 2) NULL DEFAULT NULL COMMENT '价格',
-  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
-  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
-  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `cid` int(3) NULL DEFAULT NULL COMMENT '分类id',
   `lang` int(1) NULL DEFAULT 1 COMMENT '语言',
+  `status` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `order_num` int(5) NULL DEFAULT NULL COMMENT '排序',
   `is_auto_seo` tinyint(4) NULL DEFAULT 1,
   `is_recom` tinyint(1) NULL DEFAULT NULL,
-  `status` tinyint(1) UNSIGNED ZEROFILL NULL DEFAULT 1 COMMENT '状态',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '内容',
+  `note` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '简介',
+  `other_info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '其他信息',
   `create_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_recycle_bin
@@ -385,7 +391,7 @@ CREATE TABLE `cmf_recycle_bin`  (
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT '' COMMENT '删除内容名称',
   `user_id` bigint(20) UNSIGNED NOT NULL DEFAULT 0 COMMENT '用户id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = ' 回收站' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = ' 回收站' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_role
@@ -444,7 +450,7 @@ CREATE TABLE `cmf_seo`  (
   `update_time` int(10) UNSIGNED NOT NULL COMMENT '更新时间',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_seo_content
@@ -456,7 +462,7 @@ CREATE TABLE `cmf_seo_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 9 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = 'seo表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_slide
@@ -497,7 +503,7 @@ CREATE TABLE `cmf_slide_item`  (
 DROP TABLE IF EXISTS `cmf_tag`;
 CREATE TABLE `cmf_tag`  (
   `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT '主键id',
-  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标签名',
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '标签名',
   `update_time` int(11) NULL DEFAULT NULL,
   `create_time` int(11) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
@@ -513,7 +519,7 @@ CREATE TABLE `cmf_tag_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签/内容关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 77 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '标签/内容关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for cmf_theme
@@ -760,13 +766,14 @@ DROP TABLE IF EXISTS `cmf_video`;
 CREATE TABLE `cmf_video`  (
   `id` int(12) NOT NULL AUTO_INCREMENT,
   `cid` int(12) NULL DEFAULT NULL,
+  `lang` int(1) NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `order_num` int(12) NULL DEFAULT NULL,
   `status` int(1) NULL DEFAULT NULL,
   `create_time` int(12) NULL DEFAULT NULL,
-  `lang` int(1) NULL DEFAULT NULL,
+  `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 

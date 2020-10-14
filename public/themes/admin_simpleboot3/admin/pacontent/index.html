@@ -7,8 +7,6 @@
         <li><a href="{:url('Pacontent/add', ['type' => $type])}">{:lang('PACONTENT_ADD')}</a></li>
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url('Pacontent/index')}">
-        <input type="text" class="form-control" name="keyword" style="width: 220px;"
-               value="{:input('request.keyword/s','')}" placeholder="请输入产品名称">
         <select class="form-control" name="cid" style="width: 220px;">
             <option value="">全部分类</option>
             {$selectClass}
@@ -88,7 +86,7 @@
                         </if>
                     </td>
                     <td>{$vo.lang|getLang}</td>
-                    <td>{$vo.create_time|getTime}</td>
+                    <td>{$vo->getData('show_time')|getTime}</td>
                     <td>
 
                         <a class="btn btn-xs btn-primary" href='{:url("Pacontent/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
