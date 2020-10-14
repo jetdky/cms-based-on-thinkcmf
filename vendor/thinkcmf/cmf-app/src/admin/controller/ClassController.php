@@ -511,4 +511,22 @@ class ClassController extends AdminBaseController
         }
         return $arr;
     }
+
+
+
+    /**
+     * 视频分类弹框
+     */
+    public function indexVideoMove(ClassModel $classModel, ImgService $imgService)
+    {
+        $list = $classModel->where(['type' => 4])->order("order_num ASC")->select()->toArray();
+        return json_encode($list);
+    }
+    public function saveMove(){
+        $data = $this->request->param();
+        $id_array=explode(',',$data['id']);
+        Db::name('video')->whereIn('id', $id_array)->update(['cid' =>$data['cid'],'lang'=>$data['lang']]);
+        return true;
+
+    }
 }
