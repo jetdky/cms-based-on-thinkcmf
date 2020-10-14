@@ -35,8 +35,7 @@ function initTags(tagId, url) {
     var tags = xmSelect.render({
         el: tagId,
         prop: {
-            value: 'id',
-            name: 'title'
+            value: 'id'
         },
         initValue: data['status'],
         paging: true,

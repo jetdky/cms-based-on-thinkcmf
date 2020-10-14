@@ -21,6 +21,7 @@ class ProductController extends AdminBaseController
 {
 
     public $type = 7;
+    public $categoryType = 3;
 
     public function initialize()
     {
@@ -31,7 +32,7 @@ class ProductController extends AdminBaseController
     public function index(ProductModel $productModel)
     {
         $tree = new Tree();
-        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
 
         $data = $this->request->param();
@@ -89,7 +90,7 @@ class ProductController extends AdminBaseController
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
         $order_num = $FunctionService->get_order_num('product');
-        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -142,15 +143,10 @@ class ProductController extends AdminBaseController
      */
     public function edit(ProductModel $productModel)
     {
-        $content = hook_one('admin_pacontent_edit_view');
-        if (!empty($content)) {
-            return $content;
-        }
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
         $product = $productModel->where("id", $id)->find();
-        $this->assign("product", $product);
         $productClass = DB::name('class')->where(['id' => $product['cid']])->find();
 
         $tree = new Tree();
@@ -163,7 +159,7 @@ class ProductController extends AdminBaseController
         $seoService = new SeoService();
         $product['imgs'] = $imgService->read($id, $this->type);
         $product['seo'] = $seoService->read($id, $this->type);
-        $result = Db::name('class')->where(["type" => 3])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';

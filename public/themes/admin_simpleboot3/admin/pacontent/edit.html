@@ -36,6 +36,12 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-2 control-label">补充信息</label>
+                    <div class="col-md-6 col-sm-10">
+                        <input name="other_info" class="form-control" type="text" value="{$pacontent.other_info}" />
+                    </div>
+                </div>
+                <div class="form-group">
                     <label for="input-image" class="col-sm-2 control-label">图片</label>
                     <div class="col-md-6 col-sm-10">
                         <input type="hidden" class="form-control" id="input-image">
@@ -55,16 +61,14 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span
-                            class="form-required">*</span>内容</label>
+                    <label class="col-sm-2 control-label">内容</label>
                     <div class="col-md-6 col-sm-12">
                         <textarea id="content" name="content">{$pacontent.content}</textarea>
                         <span style="color: #ffb752;"></span>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span
-                            class="form-required">*</span>备注</label>
+                    <label class="col-sm-2 control-label">备注</label>
                     <div class="col-md-6 col-sm-12">
                         <textarea id="note" name="note">{$pacontent.note}</textarea>
                         <span style="color: #ffb752;"></span>
@@ -120,48 +124,6 @@
                         <input type="text" class="form-control" id="order_num" name="order_num" value="{$pacontent.order_num}">
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">
-                        <span class="form-required">*</span>标签
-                    </label>
-                    <div class="col-md-6 col-sm-10">
-                        <div id="tagAdd" class="xm-select-demo"></div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-md-6 col-sm-10">
-                        <div class="col-md-6 col-sm-10">
-                            <span>自动SEO</span><input type="radio" name="is_auto_seo" value="1"<if condition="$pacontent['seo']['is_auto_seo'] == 1"> checked</if>>
-                            <span>手动SEO</span><input type="radio" name="is_auto_seo" value="0"<if condition="$pacontent['seo']['is_auto_seo'] == 0"> checked</if>>
-                        </div>
-                    </div>
-                </div>
-                <div id="seo">
-                    <div class="form-group">
-                        <label for="seo_title" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>title</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_title" placeholder="" name="seo_title" value="{$pacontent.seo.title}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="seo_keywords" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>keywords</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_keywords" placeholder=""
-                                   name="seo_keywords" value="{$pacontent.seo.keywords}">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="seo_description" class="col-sm-2 control-label"><span
-                                class="form-required">*</span>description</label>
-                        <div class="col-md-6 col-sm-10">
-                            <input class="form-control" type="text" id="seo_description" placeholder=""
-                                   name="seo_description" value="{$pacontent.seo.description}">
-                        </div>
-                    </div>
-                </div>
             </div>
         </form>
     </div>
@@ -178,8 +140,6 @@
     var editorcontent2 = new baidu.editor.ui.Editor();
     editorcontent.render('content');
     editorcontent2.render('note');
-    initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$pacontent['id'].'/typeId/'.$type)}");
-    clickHide('is_auto_seo', 'seo', 1);
 </script>
 </body>
 </html>

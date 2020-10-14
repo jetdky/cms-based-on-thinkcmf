@@ -141,18 +141,14 @@
 <script src="__STATIC__/js/admin.js"></script>
 <script>
     window.onload = function () {
-    <
-        foreach
-        name = "list"
-        item = "vo" >
+        <foreach name="list" item="vo">
             layer.photos({
-                photos: "[name='imgPreview_{$vo.id}']",
-                shadeClose: true,
-                closeBtn: 2,
-                anim: 0
-            });
-    <
-        /foreach>
+            photos: "[name='imgPreview_{$vo.id}']",
+            shadeClose: true,
+            closeBtn: 2,
+            anim: 0
+        });
+        </foreach>
     }
 </script>
 </body>

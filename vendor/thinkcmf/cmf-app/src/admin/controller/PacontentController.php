@@ -22,6 +22,7 @@ class PacontentController extends AdminBaseController
 {
 
     public $type = 5;
+    public $categoryType = 1;
 
     public function initialize()
     {
@@ -32,13 +33,9 @@ class PacontentController extends AdminBaseController
     public function index(PacontentModel $pacontentModel)
     {
 
-        /* 查询条件
-         * 分类\关键词\中英文\是否显示\
-         */
-
         $tree = new Tree();
         $parentId = $this->request->param("cid", 0, 'intval');
-        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
 
         $data = $this->request->param();
@@ -50,6 +47,7 @@ class PacontentController extends AdminBaseController
         } else {
             $parentId = 0;
         }
+
         //根据上次搜索分类选中分类
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -91,7 +89,7 @@ class PacontentController extends AdminBaseController
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
         $order_num = $FunctionService->get_order_num('Pacontent');
-        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -106,7 +104,7 @@ class PacontentController extends AdminBaseController
     }
 
 
-    public function addPost(PacontentModel $pacontentModel, PacontentValidate $pacontentValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
+    public function addPost(PacontentModel $pacontentModel, PacontentValidate $pacontentValidate, ImgService $imgService)
     {
         $data = $this->request->param();
         $result = $this->validate($data, 'Pacontent.add');
@@ -117,12 +115,6 @@ class PacontentController extends AdminBaseController
             $pacontentModel->allowField(true)->save($data);
             if (isset($data['img_list'])) {
                 $imgService->doSave($data['img_list'], $data['type'], $pacontentModel->id);
-            }
-            if ($data['tag_id']) {
-                $tagService->doSave($data['tag_id'], $data['type'], $pacontentModel->id);
-            }
-            if (!$data['is_auto_seo']) {
-                $seoService->dosave($data, $data['type'], $pacontentModel->id);
             }
         });
         $this->success("添加成功！", url("Pacontent/index", ['type' => $this->type]));
@@ -143,17 +135,10 @@ class PacontentController extends AdminBaseController
      */
     public function edit(PacontentModel $pacontentModel)
     {
-        $content = hook_one('admin_pacontent_edit_view');
-        if (!empty($content)) {
-            return $content;
-        }
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
-
         $pacontent = $pacontentModel->where("id", $id)->find();
-
-        $this->assign("pacontent", $pacontent);
         $paclass = DB::name('class')->where(['id' => $pacontent['cid']])->find();
 
         $tree = new Tree();
@@ -163,10 +148,8 @@ class PacontentController extends AdminBaseController
             $parentId = $paclass['parent_id'];
         }
         $imgService = new ImgService();
-        $seoService = new SeoService();
         $pacontent['imgs'] = $imgService->read($id, $this->type);
-        $pacontent['seo'] = $seoService->read($id, $this->type);
-        $result = Db::name('class')->where(["type" => 1])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -176,17 +159,13 @@ class PacontentController extends AdminBaseController
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
-
-        $class = DB::name('class')->where('status', 1)->order("id DESC")->select();
-        $this->assign("class", $class);
-        $role_ids = DB::name('class')->column("id");
-        $this->assign("role_ids", $role_ids);
+        $this->assign("pacontent", $pacontent);
 
         return $this->fetch();
     }
 
 
-    public function editPost(PacontentModel $pacontentModel, ImgService $imgService, TagService $tagService, SeoService $seoService)
+    public function editPost(PacontentModel $pacontentModel, ImgService $imgService)
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
@@ -201,20 +180,6 @@ class PacontentController extends AdminBaseController
                         $imgService->doSave($data['img_list'], $data['type'], $data['id']);
                     } else {
                         $imgService->delete($data['id'], $data['type']);
-                    }
-
-                    if ($data['tag_id']) {
-                        $tagService->delete($data['id'], $data['type']);
-                        $tagService->doSave($data['tag_id'], $data['type'], $data['id']);
-                    } else {
-                        $tagService->delete($data['id'], $data['type']);
-                    }
-
-                    if (!$data['is_auto_seo']) {
-                        $seoService->delete($data['id'], $data['type']);
-                        $seoService->dosave($data, $data['type'], $data['id']);
-                    } else {
-                        $seoService->delete($data['id'], $data['type']);
                     }
                     $result = $pacontentModel->allowField(true)->update($data);
                 });
