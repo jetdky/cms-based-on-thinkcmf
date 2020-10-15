@@ -943,10 +943,15 @@ function openUploadDialog(dialog_title, callback, extra_params, multi, filetype,
 function uploadOne(dialog_title, input_selector, filetype, extra_params, app) {
     filetype = filetype ? filetype : 'file';
     openUploadDialog(dialog_title, function (dialog, files) {
+        var val = files[0].filepath;
         $(input_selector).val(files[0].filepath);
-        $(input_selector).src(files[0].filepath);
         $(input_selector + '-preview').attr('href', files[0].preview_url);
-
+        var videoTpl = `
+                <video id="previewVideo" height="200px" controls>
+                    <source src = "../../../upload/${val}" type="video/mp4">
+                </video>
+        `;
+        $("#previewVideoDiv").append(videoTpl);
         $(input_selector + '-name').val(files[0].name);
         $(input_selector + '-name-text').text(files[0].name);
     }, extra_params, 0, filetype, app);

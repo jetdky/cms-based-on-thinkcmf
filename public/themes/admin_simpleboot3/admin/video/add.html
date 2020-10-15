@@ -24,12 +24,9 @@
 
         <div class="form-group">
             <label for="input-video" class="col-sm-2 control-label">视频</label>
-            <div class="col-md-6 col-sm-10">
-<!--                <input type="text" class="form-control" id="input-video" name="path">-->
+            <div class="col-md-6 col-sm-10" id="previewVideoDiv">
+                <input type="hidden" class="form-control" id="input-video" name="path">
                 <a href="javascript:uploadOne('视频上传','#input-video','video');">上传视频</a>
-                <video id="#input-video" src="movie.ogg" controls="controls">
-                    您的浏览器不支持 video 标签。
-                </video>
             </div>
         </div>
         <div class="form-group">
@@ -37,7 +34,7 @@
                 <span class="form-required">*</span>语言
             </label>
             <div class="col-md-6 col-sm-10">
-                <select name="lang" id="js-smtpsecure" class="form-control">
+                <select name="lang" class="form-control">
                     <option value="1">中文</option>
                     <option value="0">英文</option>
                 </select>
