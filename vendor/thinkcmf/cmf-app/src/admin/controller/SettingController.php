@@ -108,6 +108,9 @@ class SettingController extends AdminBaseController
             }
 
             $options = $this->request->param('options/a');
+            if (empty($options['logo'])) {
+                unset($options['logo']);
+            }
             cmf_set_option('site_info', $options);
 
             $cmfSettings = $this->request->param('cmf_settings/a');

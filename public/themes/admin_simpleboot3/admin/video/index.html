@@ -1,4 +1,4 @@
-<include file="public@header" />
+<include file="public@header"/>
 </head>
 <body>
 <div class="wrap js-check-wrap">
@@ -8,8 +8,9 @@
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url('video/index')}">
         视频名称:
-        <input type="text" class="form-control" name="keyword" style="width: 220px;" value="{:input('request.keyword/s','')}" placeholder="请输入视频名称">
-        <input type="submit" class="btn btn-primary" value="搜索" />
+        <input type="text" class="form-control" name="keyword" style="width: 220px;"
+               value="{:input('request.keyword/s','')}" placeholder="请输入视频名称">
+        <input type="submit" class="btn btn-primary" value="搜索"/>
         <a class="btn btn-danger" href="{:url('video/index')}">清空</a>
     </form>
 
@@ -35,7 +36,7 @@
             <thead>
             <tr>
                 <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
-                                             data-checklist="js-check-x" ></label></th>
+                                             data-checklist="js-check-x"></label></th>
                 <th width="50">排序</th>
                 <th width="50">ID</th>
                 <th>{:lang('VIDEO_NAME')}</th>
@@ -51,7 +52,9 @@
             <php>
                 $asset_img_suffixes=['bmp','jpg','jpeg','png','gif','tiff'];/*TODO ADD MORE*/
             </php>
-            <php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
+            <php>
+                $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+            </php>
             <foreach name="list" item="vo">
                 <tr>
                     <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
@@ -80,11 +83,16 @@
                     <td>
 
                         <a class="btn btn-xs btn-primary" href='{:url("video/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
-                        <a class="btn btn-xs btn-danger js-ajax-delete" href="{:url('video/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                        <a class="btn btn-xs btn-danger js-ajax-delete"
+                           href="{:url('video/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
                         <if condition="$vo['status'] eq 1">
-                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn" href="{:url('video/ban',array('id'=>$vo['id']))}" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
-                            <else />
-                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn" href="{:url('video/cancelban',array('id'=>$vo['id']))}" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                            <a class="btn btn-xs btn-danger js-ajax-dialog-btn"
+                               href="{:url('video/ban',array('id'=>$vo['id']))}"
+                               data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                            <else/>
+                            <a class="btn btn-xs btn-warning js-ajax-dialog-btn"
+                               href="{:url('video/cancelban',array('id'=>$vo['id']))}"
+                               data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
                         </if>
 
                     </td>
@@ -114,130 +122,124 @@
     <div class="pagination">{$page}</div>
 </div>
 <script src="__STATIC__/js/admin.js"></script>
-<script >
-    //href="javascript:parent.openIframeLayer('{:url('move/index',array('nav_id'=>$vo['id']))}','{$vo.name}批量移动',{});"
+<script>
     function go() {
-        var str="";
-        $("input:checkbox[name='ids[]']:checked").each(function() {
+        var str = "";
+        $("input:checkbox[name='ids[]']:checked").each(function () {
             str += $(this).val() + ",";
         });
-        if(str==""){
+        if (str == "") {
             alert('未选择视频');
             return false;
         }
-        str=str.substring(0,str.length-1)
-        let content='<select id="yesia"> <option>请选分类</option>'
+        str = str.substring(0, str.length - 1)
+        let content = '<select id="yesia"> <option>请选分类</option>'
         $.get('/admin/video/getClassList',
-            function(data){
-                var data_array=JSON.parse(data);
+            function (data) {
+                var data_array = JSON.parse(data);
 
-                for (var i=0;i<data_array.length;i++)
-                {
-                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
+                for (var i = 0; i < data_array.length; i++) {
+                    content = content + '<option value="' + data_array[i]['id'] + '">' + data_array[i]['name'] + '</option>';
                 }
 
-                content+='</select>';
-                content+='<select id="lang"> ' +
-                    '<option>请选语言</option>'+
-                    '<option value="1">中文</option>'+
-                    '<option value="0">英文</option>'+
-                        '</select>';
-                layer.open({
-                    type: 1,
-                    content: content,
-                    btn: ['保存', '取消']
-                    ,yes: function(index, layero){
-                        let cid=$("#yesia ").val();
-                        let lang=$("#lang ").val();
-                        if(cid=='请选分类'){
-                            alert('未选择视频分类');
-                            return false;
-                        }
-                        if(lang=='请选语言'){
-                            alert('未选择视频分类');
-                            return false;
-                        }
-
-                        $.get(
-                            '/admin/video/saveMove?id='+str+'&cid='+cid+'&lang='+lang,
-                            function(d){
-                                alert('保存成功！');
-                                layer.close(index)
-                                window.location.href='/admin/video/index';
-
-                            }
-
-                        )
-                    }
-                    ,btn2: function(index, layero){
-                        layer.close(index)
-                    }
-                });
-
-            }
-
-        )
-
-    }
-    function goCopy() {
-        var str="";
-        $("input:checkbox[name='ids[]']:checked").each(function() {
-            str += $(this).val() + ",";
-        });
-        if(str==""){
-            alert('未选择视频');
-            return false;
-        }
-        str=str.substring(0,str.length-1)
-        let content='<select id="yesia"> <option>请选分类</option>'
-        $.get('/admin/video/getClassList',
-            function(data){
-                var data_array=JSON.parse(data);
-
-                for (var i=0;i<data_array.length;i++)
-                {
-                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
-                }
-
-                content+='</select>';
-                content+='<select id="lang"> ' +
-                    '<option>请选语言</option>'+
-                    '<option value="1">中文</option>'+
-                    '<option value="0">英文</option>'+
+                content += '</select>';
+                content += '<select id="lang"> ' +
+                    '<option>请选语言</option>' +
+                    '<option value="1">中文</option>' +
+                    '<option value="0">英文</option>' +
                     '</select>';
                 layer.open({
                     type: 1,
                     content: content,
                     btn: ['保存', '取消']
-                    ,yes: function(index, layero){
-                        let cid=$("#yesia ").val();
-                        let lang=$("#lang ").val();
-                        if(cid=='请选分类'){
+                    , yes: function (index, layero) {
+                        let cid = $("#yesia ").val();
+                        let lang = $("#lang ").val();
+                        if (cid == '请选分类') {
                             alert('未选择视频分类');
                             return false;
                         }
-                        if(lang=='请选语言'){
+                        if (lang == '请选语言') {
                             alert('未选择视频分类');
                             return false;
                         }
 
                         $.get(
-                            '/admin/video/saveCopy?id='+str+'&cid='+cid+'&lang='+lang,
-                            function(d){
+                            '/admin/video/saveMove?id=' + str + '&cid=' + cid + '&lang=' + lang,
+                            function (d) {
                                 alert('保存成功！');
                                 layer.close(index)
-                                window.location.href='/admin/video/index';
-                            }
+                                window.location.href = '/admin/video/index';
 
+                            }
                         )
                     }
-                    ,btn2: function(index, layero){
+                    , btn2: function (index, layero) {
                         layer.close(index)
                     }
                 });
 
             }
+        )
 
+    }
+
+    function goCopy() {
+        var str = "";
+        $("input:checkbox[name='ids[]']:checked").each(function () {
+            str += $(this).val() + ",";
+        });
+        if (str == "") {
+            alert('未选择视频');
+            return false;
+        }
+        str = str.substring(0, str.length - 1)
+        let content = '<select id="yesia"> <option>请选分类</option>'
+        $.get('/admin/video/getClassList',
+            function (data) {
+                var data_array = JSON.parse(data);
+
+                for (var i = 0; i < data_array.length; i++) {
+                    content = content + '<option value="' + data_array[i]['id'] + '">' + data_array[i]['name'] + '</option>';
+                }
+
+                content += '</select>';
+                content += '<select id="lang"> ' +
+                    '<option>请选语言</option>' +
+                    '<option value="1">中文</option>' +
+                    '<option value="0">英文</option>' +
+                    '</select>';
+                layer.open({
+                    type: 1,
+                    content: content,
+                    btn: ['保存', '取消']
+                    , yes: function (index, layero) {
+                        let cid = $("#yesia ").val();
+                        let lang = $("#lang ").val();
+                        if (cid == '请选分类') {
+                            alert('未选择视频分类');
+                            return false;
+                        }
+                        if (lang == '请选语言') {
+                            alert('未选择视频分类');
+                            return false;
+                        }
+
+                        $.get(
+                            '/admin/video/saveCopy?id=' + str + '&cid=' + cid + '&lang=' + lang,
+                            function (d) {
+                                alert('保存成功！');
+                                layer.close(index)
+                                window.location.href = '/admin/video/index';
+                            }
+                        )
+                    }
+                    , btn2: function (index, layero) {
+                        layer.close(index)
+                    }
+                });
+
+            }
         )
 
     }

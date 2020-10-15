@@ -1,14 +1,15 @@
 <include file="public@header"/>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=xgur6HFrO6DsQNkEK4N8PjLZzAUzohVW"></script>
 </head>
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li class="active"><a href="#A" data-toggle="tab">{:lang('WEB_SITE_INFOS')}</a></li>
-        <li><a href="#B" data-toggle="tab">{:lang('SEO_SETTING')}</a></li>
+<!--        <li><a href="#B" data-toggle="tab">{:lang('SEO_SETTING')}</a></li>-->
         <!--<li><a href="#C" data-toggle="tab">{:lang('URL_SETTING')}</a></li>-->
         <!--<li><a href="#E" data-toggle="tab">{:lang('COMMENT_SETTING')}</a></li>-->
-        <li><a href="#F" data-toggle="tab">用户注册设置</a></li>
-        <li><a href="#G" data-toggle="tab">CDN设置</a></li>
+<!--        <li><a href="#F" data-toggle="tab">用户注册设置</a></li>-->
+<!--        <li><a href="#G" data-toggle="tab">CDN设置</a></li>-->
     </ul>
     <form class="form-horizontal js-ajax-form margin-top-20" role="form" action="{:url('setting/sitePost')}"
           method="post">
@@ -18,13 +19,21 @@
                     <div class="tab-pane active" id="A">
                         <div class="form-group">
                             <label for="input-site-name" class="col-sm-2 control-label"><span
-                                    class="form-required">*</span>{:lang('WEBSITE_NAME')}</label>
+                                    class="form-required">*</span>{:lang('WEBSITE_NAME')}(中文)</label>
                             <div class="col-md-6 col-sm-10">
                                 <input type="text" class="form-control" id="input-site-name" name="options[site_name]"
                                        value="{$site_info.site_name|default=''}">
                             </div>
                         </div>
                         <div class="form-group">
+                            <label for="input-site-name" class="col-sm-2 control-label"><span
+                                    class="form-required">*</span>{:lang('WEBSITE_NAME')}(英文)</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="input-site-name" name="options[site_name_en]"
+                                       value="{$site_info.site_name_en|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none">
                             <label for="input-admin_url_password" class="col-sm-2 control-label">
                                 后台加密码
                                 <a href="http://www.thinkcmf.com/faq.html?url=https://www.kancloud.cn/thinkcmf/faq/493509"
@@ -60,7 +69,7 @@
                             </div>
                         </div>
                         -->
-                        <div class="form-group">
+                        <div class="form-group" style="display: none">
                             <label for="input-site_admin_theme" class="col-sm-2 control-label">后台模板</label>
                             <div class="col-md-6 col-sm-10">
                                 <php>
@@ -120,6 +129,70 @@
                         </div>
                         -->
                         <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">电话</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="phone" name="options[phone]"
+                                       value="{$site_info.phone|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">传真</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="fax" name="options[fax]"
+                                       value="{$site_info.fax|default=''}">
+                            </div>
+                        </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label for="input-site_icp" class="col-sm-2 control-label">手机</label>-->
+                        <!--                            <div class="col-md-6 col-sm-10">-->
+                        <!--                                <input type="text" class="form-control" id="mobile" name="options[mobile]"-->
+                        <!--                                       value="{$site_info.mobile|default=''}">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">邮箱</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="email" name="options[email]"
+                                       value="{$site_info.email|default=''}">
+                            </div>
+                        </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label for="input-site_icp" class="col-sm-2 control-label">QQ</label>-->
+                        <!--                            <div class="col-md-6 col-sm-10">-->
+                        <!--                                <input type="text" class="form-control" id="qq" name="options[qq]"-->
+                        <!--                                       value="{$site_info.qq|default=''}">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">地址（中文）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="address_cn" name="options[address_cn]"
+                                       value="{$site_info.address_cn|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">地址（英文）</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="address_en" name="options[address_en]"
+                                       value="{$site_info.address_en|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">经度</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="bdlng" name="options[lng]"
+                                       value="{$site_info.lng|default=''}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="input-site_icp" class="col-sm-2 control-label">纬度</label>
+                            <div class="col-md-6 col-sm-10">
+                                <input type="text" class="form-control" id="bdlat" name="options[lat]"
+                                       value="{$site_info.lat|default=''}">
+                            </div>
+                        </div>
+                        <div style="width:60%;height:240px;margin-left: 18%;border:1px solid #ccc" id="container"></div>
+                        <div class="form-group">
                             <label for="input-site_icp" class="col-sm-2 control-label">{:lang('WEBSITE_ICP')}</label>
                             <div class="col-md-6 col-sm-10">
                                 <input type="text" class="form-control" id="input-site_icp" name="options[site_icp]"
@@ -133,20 +206,49 @@
                                        value="{$site_info.site_gwa|default=''}">
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label for="input-site_admin_email" class="col-sm-2 control-label">{:lang('WEBMASTER_EMAIL')}</label>
+                            <label for="input-site_icp" class="col-sm-2 control-label">手机网站</label>
                             <div class="col-md-6 col-sm-10">
-                                <input type="text" class="form-control" id="input-site_admin_email"
-                                       name="options[site_admin_email]"
-                                       value="{$site_info.site_admin_email|default=''}">
+                                <input type="hidden" name="options[phoneweb]" class="form-control" value="{$site_info.phoneweb}"
+                                       id="logo">
+                                <div>
+                                    <a href="javascript:uploadOneImage('图片上传','#logo');">
+                                        <img src=" <if condition='$site_info.phoneweb'>{:cmf_get_image_preview_url($site_info.phoneweb)}<else />__TMPL__/public/assets/images/default-thumbnail.png</if>"
+                                             id="logo-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="input-site_analytics" class="col-sm-2 control-label">{:lang('WEBSITE_STATISTICAL_CODE')}</label>
+                            <label for="input-site_icp" class="col-sm-2 control-label">公众号二维码</label>
                             <div class="col-md-6 col-sm-10">
-                                <textarea class="form-control" id="input-site_analytics" name="options[site_analytics]">{$site_info.site_analytics|default=''}</textarea>
+                                <input type="hidden" name="options[WeChat]" class="form-control"
+                                       id="WeChat" value="{$site_info.WeChat}">
+                                <div>
+                                    <a href="javascript:uploadOneImage('图片上传','#WeChat');">
+                                        <img src=" <if condition='$site_info.WeChat'>{:cmf_get_image_preview_url($site_info.WeChat)}<else />__TMPL__/public/assets/images/default-thumbnail.png</if>"
+                                             id="WeChat-preview"
+                                             width="135" style="cursor: pointer"/>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label for="input-site_admin_email" class="col-sm-2 control-label">{:lang('WEBMASTER_EMAIL')}</label>-->
+                        <!--                            <div class="col-md-6 col-sm-10">-->
+                        <!--                                <input type="text" class="form-control" id="input-site_admin_email"-->
+                        <!--                                       name="options[site_admin_email]"-->
+                        <!--                                       value="{$site_info.site_admin_email|default=''}">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="form-group">-->
+                        <!--                            <label for="input-site_analytics" class="col-sm-2 control-label">{:lang('WEBSITE_STATISTICAL_CODE')}</label>-->
+                        <!--                            <div class="col-md-6 col-sm-10">-->
+                        <!--                                <textarea class="form-control" id="input-site_analytics" name="options[site_analytics]">{$site_info.site_analytics|default=''}</textarea>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <!--<div class="form-group">-->
                         <!--<label for="input-site_copyright" class="col-sm-2 control-label">{:lang('WEBSITE_COPYRIGHT_INFOMATION')}</label>-->
                         <!--<div class="col-md-6 col-sm-10">-->
@@ -161,91 +263,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tab-pane" id="B">
-                        <div class="form-group">
-                            <label for="input-site_seo_title" class="col-sm-2 control-label">{:lang('WEBSITE_SEO_TITLE')}</label>
-                            <div class="col-md-6 col-sm-10">
-                                <input type="text" class="form-control" id="input-site_seo_title"
-                                       name="options[site_seo_title]" value="{$site_info.site_seo_title|default=''}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-site_seo_keywords" class="col-sm-2 control-label">{:lang('WEBSITE_SEO_KEYWORDS')}</label>
-                            <div class="col-md-6 col-sm-10">
-                                <input type="text" class="form-control" id="input-site_seo_keywords"
-                                       name="options[site_seo_keywords]"
-                                       value="{$site_info.site_seo_keywords|default=''}">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="input-site_seo_description" class="col-sm-2 control-label">{:lang('WEBSITE_SEO_DESCRIPTION')}</label>
-                            <div class="col-md-6 col-sm-10">
-                                <textarea class="form-control" id="input-site_seo_description"
-                                          name="options[site_seo_description]">{$site_info.site_seo_description|default=''}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
-                                    {:lang('SAVE')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="F">
-                        <div class="form-group">
-                            <label for="input-banned_usernames" class="col-sm-2 control-label">用户注册验证</label>
-                            <div class="col-md-6 col-sm-10">
-                                <select class="form-control" name="cmf_settings[open_registration]">
-                                    <option value="0">是</option>
-                                    <php>
-                                        $open_registration_selected = empty($cmf_settings['open_registration'])?'':'selected';
-                                    </php>
-                                    <option value="1" {$open_registration_selected}>否</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group" style="display: none;">
-                            <label for="input-banned_usernames" class="col-sm-2 control-label">{:lang('SPECAIL_USERNAME')}</label>
-                            <div class="col-md-6 col-sm-10">
-                                <textarea class="form-control" id="input-banned_usernames"
-                                          name="cmf_settings[banned_usernames]">{$cmf_settings.banned_usernames|default=''}</textarea>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
-                                    {:lang('SAVE')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane" id="G">
-                        <div class="form-group">
-                            <label for="input-cdn_static_root" class="col-sm-2 control-label">静态资源cdn地址</label>
-                            <div class="col-md-6 col-sm-10">
-                                <input type="text" class="form-control" id="input-cdn_static_root"
-                                       name="cdn_settings[cdn_static_root]"
-                                       value="{$cdn_settings.cdn_static_root|default=''}">
-                                <p class="help-block">
-                                    不能以/结尾；设置这个地址后，请将ThinkCMF下的静态资源文件放在其下面；<br>
-                                    ThinkCMF下的静态资源文件大致包含以下(如果你自定义后，请自行增加)：<br>
-                                    themes/admin_simplebootx/public/assets<br>
-                                    static<br>
-                                    themes/simplebootx/public/assets<br>
-                                    例如未设置cdn前：jquery的访问地址是/static/js/jquery.js, <br>
-                                    设置cdn是后它的访问地址就是：静态资源cdn地址/static/js/jquery.js
-                                </p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="submit" class="btn btn-primary js-ajax-submit" data-refresh="0">
-                                    {:lang('SAVE')}
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </div>
             </div>
         </fieldset>
@@ -253,5 +272,58 @@
 
 </div>
 <script type="text/javascript" src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    var lat = $('#bdlat').val();
+    var lng = $('#bdlng').val();
+
+    var map = new BMap.Map("container");//在指定的容器内创建地图实例
+    map.setDefaultCursor("crosshair");//设置地图默认的鼠标指针样式
+    map.enableScrollWheelZoom();//启用滚轮放大缩小，默认禁用。
+    var point = new BMap.Point(lng, lat);
+    map.centerAndZoom(point, 13);
+
+    map.addEventListener("click", function (e) {
+        $('#bdlat').val(e.point.lat);
+        $('#bdlng').val(e.point.lng);
+        map.addOverlay(new BMap.Marker(new BMap.Point(e.point.lng, e.point.lat)));
+        deletePoint();
+    });
+
+    if (lat < 10 && lng < 100) {
+        toLocation();
+    } else {
+        map.addOverlay(new BMap.Marker(point));
+    }
+
+    // 定位
+    function toLocation() {
+        var geolocation = new BMap.Geolocation();
+        geolocation.getCurrentPosition(function (r) {
+            if (this.getStatus() == BMAP_STATUS_SUCCESS) {
+                // var myIcon = new BMap.Icon("/style/mobile/images/location/dd_01.png", new BMap.Size(30, 30));
+                var marker = new BMap.Marker(r.point, {icon: myIcon});
+                map.addOverlay(marker);
+                map.panTo(r.point);
+            }
+        }, {enableHighAccuracy: true})
+    }
+
+    //地图搜索
+    function searchbd() {
+        var result = $('#where').val();
+        var local = new BMap.LocalSearch(map, {
+            renderOptions: {map: map}
+        });
+        local.search(result);
+    }
+
+    //清除地图所有点
+    function deletePoint() {
+        var allOverlay = map.getOverlays();
+        for (var i = 0; i < allOverlay.length - 1; i++) {
+            map.removeOverlay(allOverlay[i]);
+        }
+    }
+</script>
 </body>
 </html>
