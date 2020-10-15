@@ -213,21 +213,11 @@ class ClassController extends AdminBaseController
         if ($result !== true) {
             $this->error($result);
         }
-        $parentClass = ClassModel::get($data['parent_id']);
-
-        if ($parentClass['parent_id'] != 0) {
-            $this->error('只支持二级分类');
-        }
-        $isFindPa = ClassModel::where(['name' => $data['name'], 'lang' => $data['lang']])->find();
-
-        if ($isFindPa) {
-            if ($data['lang'] == 0) {
-                $lang = "英文";
-            } else {
-                $lang = "中文";
-            }
-            $this->error("此分类在" . $lang . "已存在");
-        }
+//        $parentClass = ClassModel::get($data['parent_id']);
+//
+//        if ($parentClass['parent_id'] != 0) {
+//            $this->error('只支持二级分类');
+//        }
 
         Db::transaction(function () use ($classModel, $imgService, $tagService, $seoService, $data) {
             $classModel->allowField(true)->save($data);

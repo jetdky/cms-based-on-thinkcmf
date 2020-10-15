@@ -1,10 +1,10 @@
 {
   "name": "default",
   "version": "1.0.0",
-  "demo_url": "http://demo.thinkcmf.com",
-  "author": "ThinkCMF",
+  "demo_url": "soupai",
+  "author": "soupai",
   "lang": "zh-cn",
-  "author_url": "http://www.thinkcmf.com",
-  "keywords": "ThinkCMF默认模板",
-  "description": "ThinkCMF默认模板"
+  "author_url": "soupai",
+  "keywords": "soupai",
+  "description": "soupai"
 }
