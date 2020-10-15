@@ -4,8 +4,14 @@
 namespace app\admin\controller;
 
 
+use app\admin\model\ClassModel;
+use app\admin\model\ImgContentModel;
+use app\admin\model\ImgModel;
 use app\admin\model\NewsModel;
 use app\admin\model\PacontentModel;
+use app\admin\model\TagContentModel;
+use app\admin\model\TagModel;
+use app\admin\model\VideoModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
@@ -21,6 +27,7 @@ class NewsController extends AdminBaseController
 
     public $type = 6;
     public $categoryType = 2;
+
     public function initialize()
     {
         parent::initialize();
@@ -66,7 +73,10 @@ class NewsController extends AdminBaseController
         $list = $newsModel->where($where)
             ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
             ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
-
+//        $list = $newsModel->where($where)
+//            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
+//            ->order("order_num ASC")->select()->toArray();
+//        var_dump($list);die;
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
@@ -328,6 +338,71 @@ class NewsController extends AdminBaseController
         $data = $this->request->param();
         $newsModel->where('id', $data['id'])->update(['is_recom' => 0]);
         $this->success('取消推荐成功！');
+    }
+
+    /**
+     * ajax 获取class列表用于批量移动和复制
+     * @param
+     */
+    public function getClassList(ClassModel $classModel)
+    {
+        $list = $classModel->where(['type' => 2])->order("order_num ASC")->select()->toArray();
+        return json_encode($list);
+    }
+
+    /**
+     * ajax 移动数据
+     * @param
+     */
+    public function saveMove()
+    {
+        $data = $this->request->param();
+        $id_array = explode(',', $data['id']);
+        Db::name('news')->whereIn('id', $id_array)->update(['cid' => $data['cid'], 'lang' => $data['lang']]);
+        return true;
+
+    }
+
+    /**
+     * ajax 批量复制
+     * @param
+     */
+    public function saveCopy(NewsModel $newsModel, ImgContentModel $imgContentModel,TagContentModel $tagContentModel)
+    {
+        $data = $this->request->param();
+        $id_array = explode(',', $data['id']);
+        $newsData = $newsModel->whereIn('id', $id_array)
+            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
+            ->order("order_num ASC")->select()->toArray();
+        foreach ($newsData as $k => $v) {
+            $imgs = $imgContentModel->where(['content_id'=>$v['id'],'type'=>$this->type])->select()->toArray();
+            $tags = $tagContentModel->where(['content_id'=>$v['id'],'type'=>$this->type])->select()->toArray();
+            unset($v['id']);
+            $v['cid'] = $data['cid'];
+            $v['lang'] = $data['lang'];
+            $newsModel->isUpdate(false)->data($v,true)->save($v);
+            $id = $newsModel->id;
+            if (!empty($imgs)) {
+                $b = [];
+                foreach ($imgs as $vimg) {
+                    unset($vimg['id']);
+                    $vimg['content_id'] = $id;
+                    $b[] = $vimg;
+                }
+                $imgContentModel->saveAll($b);
+            }
+            if (!empty($tags)) {
+                $c = [];
+                foreach ($tags as $vimg) {
+                    unset($vimg['id']);
+                    $vimg['content_id'] = $id;
+                    $c[] = $vimg;
+//                    $imgContentModel->save($vimg);
+                }
+                $tagContentModel->saveAll($c);
+            }
+        }
+        return true;
     }
 
 }

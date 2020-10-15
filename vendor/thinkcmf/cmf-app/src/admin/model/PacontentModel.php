@@ -24,4 +24,6 @@ class PacontentModel extends Model
     {
         return str_replace(' ', 'T', date('Y-m-d H:i:s', $value));
     }
+
+
 }
