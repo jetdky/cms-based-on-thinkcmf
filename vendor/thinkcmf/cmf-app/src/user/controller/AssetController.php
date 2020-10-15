@@ -103,7 +103,6 @@ class AssetController extends AdminBaseController
 
             $this->assign('tab', $tab);
             return $this->fetch(":webuploader");
-
         }
     }
 
