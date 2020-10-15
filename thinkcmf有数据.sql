@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 14/10/2020 11:04:50
+ Date: 15/10/2020 11:26:44
 */
 
 SET NAMES utf8mb4;
@@ -205,40 +205,14 @@ CREATE TABLE `cmf_asset`  (
   `suffix` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文件后缀名,不包括点',
   `more` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '其它详细信息,JSON格式',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_asset
 -- ----------------------------
-INSERT INTO `cmf_asset` VALUES (1, 1, 302106, 1595312768, 1, 0, 'ea96a2596534a70a23ed264b66fa2bd300dc93d641761454217de6f5c8aa3ce1', 'iabout1.jpg', 'admin/20200721/0886ea3c898181680d6e99da53426bae.jpg', 'ea96a2596534a70a23ed264b66fa2bd3', '1a50ad587fa25db3bb2e71c43f9087138596b85e', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (2, 1, 65231, 1595314037, 1, 0, 'b1fd5d4a0c4246c718af930850d4b5c7c69116432e9e1492d71a6a5dca185fe8', 'icase_05.jpg', 'admin/20200721/8abeb97406ea27269372f546b69f443f.jpg', 'b1fd5d4a0c4246c718af930850d4b5c7', '22c2120c0fa44541bbdbfcb8169c436858a7a1ad', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (3, 1, 1521, 1595378022, 1, 0, '449ea6c8374a200ac03f2de7ddcfa0f33fa94031f6634055c49f8e2f305f95e5', 'icon12.png', 'admin/20200722/1ab874ec08b12840b1bfaee24ded0449.png', '449ea6c8374a200ac03f2de7ddcfa0f3', '171d5ce42a54b41fbc630c8e945c083718937844', 'png', NULL);
-INSERT INTO `cmf_asset` VALUES (4, 1, 71002, 1595556235, 1, 0, '08401c2c948a3c5a979bc7e2273e8e24793526e67221a1f292edaf9766bc0952', 'icase_09.jpg', 'admin/20200724/329e128a55bc2e397f4ccbeef9f9961a.jpg', '08401c2c948a3c5a979bc7e2273e8e24', '10eae2cad63b8fbe9e636ed091fb190eb67dd6ab', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (5, 1, 57451, 1595572399, 1, 0, '94ae6114937ffc54eb857282489cd5de3da1ed0b20175647ddf71eff445b7b28', 'icase_17.jpg', 'admin/20200724/480b07033f5022f9cadc6097a09b4809.jpg', '94ae6114937ffc54eb857282489cd5de', '8cd184cc791bde8710719254942010a950480f28', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (6, 1, 59039, 1595572808, 1, 0, '75b67f816fec76545e88bd373e1905775789ef81e8118b5686edcfe2cc9ba6b8', 'icase_03.jpg', 'admin/20200724/b3db91aab97fcfe7bc5f4afb4a143840.jpg', '75b67f816fec76545e88bd373e190577', 'f1ff7ca306cef69eaee8c59cfb83057a1887ba0f', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (7, 1, 83586, 1595572913, 1, 0, '2cbdf6114ddc7e74587712b278c3a3968c6c4539b78783459164c904cd28e764', 'icase_07.jpg', 'admin/20200724/50f95559f0531409890e80e97402b422.jpg', '2cbdf6114ddc7e74587712b278c3a396', 'f670326e68848fcd39783b3dbb783464a4cba088', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (8, 1, 70810, 1595572926, 1, 0, 'e5442829df56e51f5caf24f2a195487cc603455257a18d21a85676df2d9b8c3e', 'icase_15.jpg', 'admin/20200724/aa87d9e3c34f23992ebacf8afc94486e.jpg', 'e5442829df56e51f5caf24f2a195487c', '99b20d7c26a45cbb3e1301e26bab49cbfa043eb8', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (9, 1, 186061, 1595573023, 1, 0, '6ad3b2f2c9a7bd9f0861ac72c1482a7dddf03f832ad9dfd0cf936a91155bb7e4', 'inew.jpg', 'admin/20200724/be5323252e04f3cb3c80d2104f5e383f.jpg', '6ad3b2f2c9a7bd9f0861ac72c1482a7d', 'ef911fb360faaa8af1e654f0d1c819388a5ffde2', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (10, 1, 80346, 1595573424, 1, 0, '48ea12bbd881e8e8f962f4e141cf8a8d940cecf843ea28982d01f74fbc7add1a', 'icase_16.jpg', 'admin/20200724/a735669b8739cc7d7357b1e28a309465.jpg', '48ea12bbd881e8e8f962f4e141cf8a8d', 'be14968de3dfe7fadddfa862e250f154a81301aa', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (11, 1, 74121, 1595573449, 1, 0, '2bfbab81a8283c50983572db23dcfdefb9b1f1bb71b613dae8cba7b7d4983bc4', 'icase_18.jpg', 'admin/20200724/43d61d9f59f23d494c256dc4643b9889.jpg', '2bfbab81a8283c50983572db23dcfdef', 'c81db962e81a1b2e912e62e6b1dd3b63e46cac72', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (12, 1, 363003, 1599715236, 1, 0, '74650a8c10b5309fe0d938e7d83fbbab5d6cfca22f7d4aa69daccc60ffa2ef05', '7.gif', 'admin/20200910/18f31fae73e9d7ad1c087a564b3e866b.gif', '74650a8c10b5309fe0d938e7d83fbbab', '6c4dcf2569aa013f69be967466f3c4b45b5d6e0b', 'gif', NULL);
-INSERT INTO `cmf_asset` VALUES (13, 1, 48312, 1599717923, 1, 0, '13db4412e35ff409402695090ee4c5c4bd72adf84dfdbe4be2621d5ca0f49386', 'e8f8af345982b2b7bd15ad9d26adcbef77099b19.jpg', 'admin/20200910/459adb71e3d0c9aa0e927bb6a13ad9c6.jpg', '13db4412e35ff409402695090ee4c5c4', 'be8ca0713df2b56e1a478efd7110e8a41fc688ec', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (14, 1, 279331, 1599724981, 1, 0, '5974e299c0530407f4e5cb4d0e156d8e5c357ef4ac08c4b8f1aae3981f9b3dbe', '姑苏.jpg', 'admin/20200910/a8b9d99ad00e7c5ea1cdb0afbc0120a7.jpg', '5974e299c0530407f4e5cb4d0e156d8e', '3a5fdb35288a93ca2b954002055fafffd5a1089f', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (15, 1, 54563, 1599727424, 1, 0, '8e1cd1d79a5434cba4ef72fd50946fbd036429103e5981385ae289c477e5cb7c', '44.jpg', 'admin/20200910/9da2dd8281fe9d948daae7749da681c6.jpg', '8e1cd1d79a5434cba4ef72fd50946fbd', '154689523b573c1bcaa5fea23cacfe8ee00430fa', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (16, 1, 10465, 1599790529, 1, 0, 'fe1def150b3127627e666a8ad84bf894d2a670196c829131b90a44c8af26d2b3', '55.jpg', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'fe1def150b3127627e666a8ad84bf894', '9309dfac883f8d684ff9a2855feb6c6375c2a9ba', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (17, 1, 20129, 1599790530, 1, 0, 'f1dc1d7ba952befec6e62d2cc4794c56ef0f3a5c12068a6239e0abc3192cb4df', '66.jpg', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'f1dc1d7ba952befec6e62d2cc4794c56', 'eab20714cdb49320587d6893fda74dbaf573cd59', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (18, 1, 25046, 1599790607, 1, 0, '1b9bbc930d16fa90c673c30402aa7b0ec82217f881341d09bef6c13d9c3e27a8', '11.jpg', 'admin/20200911/8c7bffae481bae048a4229038d837881.jpg', '1b9bbc930d16fa90c673c30402aa7b0e', 'c5dfd89aefd5f27dbac41793711089b8458359e8', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (19, 1, 32283, 1599790753, 1, 0, '296de68c074bf2d9bffecdfab4cd16521e926066219c92d3fb455c6708ea4c31', '33.jpg', 'admin/20200911/bc1581fdd332812ed4b02cdbd02a8fd0.jpg', '296de68c074bf2d9bffecdfab4cd1652', '783d8993288b6bb5a1f95743b7a9724cdaef56e3', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (20, 1, 143447, 1599791074, 1, 0, '0abd1396128ed8e3d5c8605de8e437c3baa3364bbb6dc7566a6f0afdb320a787', '00.pdf.jpg', 'admin/20200911/faa30c3db6b1dcfe1630771df8b8f1b2.jpg', '0abd1396128ed8e3d5c8605de8e437c3', 'b2bdb7a5b3b735ff5ec3ca29feb67fb74b467408', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (21, 1, 12516, 1599791075, 1, 0, '7c8ebaa0196272d79549ab82b89eecba663a63c95e9b434999dddde81acbb593', '22.jpg', 'admin/20200911/749303d6baec11caf2556d885aea41f4.jpg', '7c8ebaa0196272d79549ab82b89eecba', '64f9ad77f730235c252a3118846f4d560a47f38b', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (22, 1, 95073, 1599792506, 1, 0, '6faa1d2bc77f7f96b853fbe49cbfafae4fa235e20dad5fb2308f342d8488e61a', 'July.mp4', 'admin/20200911/5694478c5c3d1e25e3e51188b0699f36.jpg', '6faa1d2bc77f7f96b853fbe49cbfafae', 'c644d23a63245ae4b1f2a7a190451e4670786a14', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (23, 1, 62290, 1599794820, 1, 0, '8afcf2f88c1a0f826974c81d7de695a950dd8ae318a385ae3f80e5946d9fd9e0', 'haha.png', 'admin/20200911/db6512eceb6f0c88d3502862ef0f9d3a.png', '8afcf2f88c1a0f826974c81d7de695a9', 'da3bb0549aeda4c3a01da3626199feda30331625', 'png', NULL);
-INSERT INTO `cmf_asset` VALUES (24, 1, 97036, 1599805342, 1, 0, '1b13681daba5774b7eb961e58ddc6750c32f8b8c754d71e1495d21a1c6833046', '111.jpg', 'admin/20200911/9f139d773c1fbc030c6c13d9f4771b2c.jpg', '1b13681daba5774b7eb961e58ddc6750', '8fb19d8c873b00d10810fd74908fc582e2402642', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (25, 1, 14576, 1599808989, 1, 0, '046ed84504bcc15600a9b090439bc9d9456be2486e438409e3664c0e1a948779', '刘看山.jpg', 'admin/20200911/e33e8ba2aa2343858611cd03794da5cc.jpg', '046ed84504bcc15600a9b090439bc9d9', 'bcafca437075803f0001a165a3fda5e60a7d1e5b', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (26, 1, 67234, 1600413427, 1, 0, '78dbe6d932cdcc1e2b5b386f99fa27f3c6fa4b133136f2a27b09e6f388ac0337', '88.jpg', 'admin/20200918/1c2a54d4d0d8d7cace0cdadfe82b63a0.jpg', '78dbe6d932cdcc1e2b5b386f99fa27f3', 'cfc7485fb4d8f7471602de6da1192858b62cb280', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (27, 1, 48556, 1601023153, 1, 0, 'd3315eeb03dca63cea5f0ca451e2d39d35542374822ce940d186819a0b8bc729', '77.jpg', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'd3315eeb03dca63cea5f0ca451e2d39d', '74ef7313f12ad4e7c3a9cdffa897082a77fae1c5', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (28, 1, 436027, 1601169126, 1, 0, '442bddd267892306338ebc435584f45be1ca1ade1ad7b6906e377a2f830114e1', '11221.jpg', 'admin/20200927/e2b2c91a2d871f1c0167ee95bfb4ccbb.jpg', '442bddd267892306338ebc435584f45b', '30043ec573a3b0d975f0ecb2ef03a0f1511cefd2', 'jpg', NULL);
-INSERT INTO `cmf_asset` VALUES (29, 1, 54667, 1601190503, 1, 0, '10f3dcbbe035a4045e0c93f5bc5adab5077f680d821cde5adf1643b0c35fc254', '微信图片_20200923161257.jpg', 'admin/20200927/6dc7a465073478cfc16db35452eb9c2c.jpg', '10f3dcbbe035a4045e0c93f5bc5adab5', '0896b9f319e99d3bd0da0f718386be0fc80958c4', 'jpg', NULL);
+INSERT INTO `cmf_asset` VALUES (5, 1, 13014, 1602731835, 1, 0, 'ee7f26ba7cf258b12ef1f2d02c5535d639cd764d3d34fdf0ec82374c4ab7ccd9', '匕首.jpg', 'admin/20201015/6c2a5c6a2112af02848aa2122855f3f4.jpg', 'ee7f26ba7cf258b12ef1f2d02c5535d6', 'b8852063869687ea3ba9de9c8e91e8d759e5c476', 'jpg', NULL);
+INSERT INTO `cmf_asset` VALUES (6, 1, 27618, 1602732088, 1, 0, '8995de444383bda6ffeff3c1f0c2e4741999c9a594ed20338b5c37ff03eb258a', 'QBZ95.jpg', 'admin/20201015/ca6a1847e5d032d8ab850b6e4bf62dd5.jpg', '8995de444383bda6ffeff3c1f0c2e474', 'c35c1c4fb1e1a625cb95390a2eb68e1a9d12b767', 'jpg', NULL);
+INSERT INTO `cmf_asset` VALUES (7, 1, 448391, 1602732233, 1, 0, '10b44dbe74f7c6d6337622bfc41c725632dc9e1900789f2ce6430de1a5a9fed1', '东风41.png', 'admin/20201015/e4da4a4495ebd8576c75fb309c23a402.png', '10b44dbe74f7c6d6337622bfc41c7256', 'cf1589f94272461b16718716b672adfe4180e659', 'png', NULL);
 
 -- ----------------------------
 -- Table structure for cmf_auth_access
@@ -443,22 +417,19 @@ CREATE TABLE `cmf_class`  (
   `create_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `show_time` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 70 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 78 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_class
 -- ----------------------------
-INSERT INTO `cmf_class` VALUES (1, 1, 0, 1, 0, 1, NULL, NULL, '首页', NULL, '&lt;p&gt;内容分类&lt;/p&gt;', '1602573113', NULL, '1602575025');
-INSERT INTO `cmf_class` VALUES (65, 3, 0, 1, 6, 1, NULL, NULL, '智能电视', NULL, NULL, '1602574183', '1602300092', '1602575025');
-INSERT INTO `cmf_class` VALUES (69, 1, 1, 1, 1, 1, NULL, NULL, '关于我们', NULL, NULL, '1602573122', '1602486892', '1602575025');
-INSERT INTO `cmf_class` VALUES (63, 3, 62, 1, 4, 1, NULL, NULL, '轻薄本', NULL, NULL, '1602574115', '1601271721', '1602575025');
-INSERT INTO `cmf_class` VALUES (8, 2, 0, 1, 0, 1, 1, NULL, '行业新闻', NULL, '&lt;p&gt;fasf呃呃呃&lt;/p&gt;', '1602574071', '1595554437', '1602575025');
-INSERT INTO `cmf_class` VALUES (9, 2, 0, 1, 0, 1, 1, NULL, '公司动态', NULL, '&lt;p&gt;fasf&lt;/p&gt;', '1602574062', '1595554641', '1602575025');
-INSERT INTO `cmf_class` VALUES (62, 3, 61, 1, 3, 1, NULL, NULL, '笔记本', NULL, NULL, '1602642849', '1601271710', '1602575025');
-INSERT INTO `cmf_class` VALUES (61, 3, 0, 1, 2, 1, 0, NULL, '电脑', '12', '&lt;p&gt;23&lt;/p&gt;', '1602643324', '1601192702', '1602575025');
-INSERT INTO `cmf_class` VALUES (64, 3, 0, 1, 5, 1, NULL, NULL, '冰箱', NULL, NULL, '1602574156', '1602300076', '1602575025');
-INSERT INTO `cmf_class` VALUES (66, 3, 64, 1, 7, 1, NULL, NULL, '双门冰箱', NULL, NULL, '1602574165', '1602300102', '1602575025');
-INSERT INTO `cmf_class` VALUES (67, 4, 0, 1, 1, 1, NULL, NULL, '视频中心', NULL, NULL, '1602574081', '1602472500', '1602575025');
+INSERT INTO `cmf_class` VALUES (70, 3, 0, 1, 1, 1, 0, NULL, '武器', '', '', '1602731791', '1602731791', '1602731787');
+INSERT INTO `cmf_class` VALUES (71, 2, 0, 1, 1, 1, 0, NULL, '毛泽东选集', '', '', '1602731914', '1602731914', '1602731904');
+INSERT INTO `cmf_class` VALUES (72, 1, 0, 1, 1, 1, 0, NULL, '首页', '', '', '1602731957', '1602731957', '1602731951');
+INSERT INTO `cmf_class` VALUES (73, 1, 0, 1, 2, 1, 0, NULL, '关于我们', '', '', '1602731972', '1602731972', '1602731960');
+INSERT INTO `cmf_class` VALUES (74, 1, 72, 1, 3, 1, 0, NULL, '首页关于我们', '', '', '1602732015', '1602731987', '1602731976');
+INSERT INTO `cmf_class` VALUES (75, 3, 70, 1, 2, 1, 0, NULL, '冷兵器', '', '', '1602732114', '1602732114', '1602732108');
+INSERT INTO `cmf_class` VALUES (76, 3, 70, 1, 3, 1, 0, NULL, '步枪', '', '', '1602732156', '1602732120', '1602732117');
+INSERT INTO `cmf_class` VALUES (77, 3, 70, 1, 4, 1, 0, NULL, '核武器', '', '', '1602732161', '1602732138', '1602732123');
 
 -- ----------------------------
 -- Table structure for cmf_comment
@@ -619,32 +590,14 @@ CREATE TABLE `cmf_img`  (
   `update_time` int(10) UNSIGNED NOT NULL COMMENT '更新时间',
   `create_time` int(10) UNSIGNED NOT NULL COMMENT '添加时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 157 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_img
 -- ----------------------------
-INSERT INTO `cmf_img` VALUES (36, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602233049, 1602233049, 1602233049);
-INSERT INTO `cmf_img` VALUES (37, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602233049, 1602233049, 1602233049);
-INSERT INTO `cmf_img` VALUES (73, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602578329, 1602578329, 1602578329);
-INSERT INTO `cmf_img` VALUES (78, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602578594, 1602578594, 1602578594);
-INSERT INTO `cmf_img` VALUES (79, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602578594, 1602578594, 1602578594);
-INSERT INTO `cmf_img` VALUES (80, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602578594, 1602578594, 1602578594);
-INSERT INTO `cmf_img` VALUES (92, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602578724, 1602578724, 1602578724);
-INSERT INTO `cmf_img` VALUES (121, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602638143, 1602638143, 1602638143);
-INSERT INTO `cmf_img` VALUES (122, NULL, 0, '未命名图片', 'admin/20200911/e33e8ba2aa2343858611cd03794da5cc.jpg', 'admin/20200911/t_e33e8ba2aa2343858611cd03794da5cc.jpg', NULL, 1602638143, 1602638143, 1602638143);
-INSERT INTO `cmf_img` VALUES (123, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602639294, 1602639294, 1602639294);
-INSERT INTO `cmf_img` VALUES (124, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602639294, 1602639294, 1602639294);
-INSERT INTO `cmf_img` VALUES (125, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602639351, 1602639351, 1602639351);
-INSERT INTO `cmf_img` VALUES (129, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602639740, 1602639740, 1602639740);
-INSERT INTO `cmf_img` VALUES (130, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602639740, 1602639740, 1602639740);
-INSERT INTO `cmf_img` VALUES (131, NULL, 0, '未命名图片', 'admin/20200925/59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', 'admin/20200925/t_59b90fe60c3fa8b0e7d00da5ec4e6292.jpg', NULL, 1602639740, 1602639740, 1602639740);
-INSERT INTO `cmf_img` VALUES (132, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602642849, 1602642849, 1602642849);
-INSERT INTO `cmf_img` VALUES (143, NULL, 0, '未命名图片', 'admin/20200911/db6512eceb6f0c88d3502862ef0f9d3a.png', 'admin/20200911/t_db6512eceb6f0c88d3502862ef0f9d3a.png', NULL, 1602643324, 1602643324, 1602643324);
-INSERT INTO `cmf_img` VALUES (144, NULL, 0, '未命名图片', 'admin/20200911/8fc6b24d5b5595a9460b468f76a461ad.jpg', 'admin/20200911/t_8fc6b24d5b5595a9460b468f76a461ad.jpg', NULL, 1602643324, 1602643324, 1602643324);
-INSERT INTO `cmf_img` VALUES (145, NULL, 0, '未命名图片', 'admin/20200911/d412e9b0ed13264dbd8920d2e11d1f23.jpg', 'admin/20200911/t_d412e9b0ed13264dbd8920d2e11d1f23.jpg', NULL, 1602643324, 1602643324, 1602643324);
-INSERT INTO `cmf_img` VALUES (146, NULL, 0, '未命名图片', 'admin/20200911/9f139d773c1fbc030c6c13d9f4771b2c.jpg', 'admin/20200911/t_9f139d773c1fbc030c6c13d9f4771b2c.jpg', NULL, 1602643324, 1602643324, 1602643324);
-INSERT INTO `cmf_img` VALUES (147, NULL, 0, '未命名图片', 'admin/20200911/e33e8ba2aa2343858611cd03794da5cc.jpg', 'admin/20200911/t_e33e8ba2aa2343858611cd03794da5cc.jpg', NULL, 1602643324, 1602643324, 1602643324);
+INSERT INTO `cmf_img` VALUES (153, NULL, 0, '未命名图片', 'admin/20201015/6c2a5c6a2112af02848aa2122855f3f4.jpg', 'admin/20201015/t_6c2a5c6a2112af02848aa2122855f3f4.jpg', NULL, 1602732172, 1602732172, 1602732172);
+INSERT INTO `cmf_img` VALUES (154, NULL, 0, '未命名图片', 'admin/20201015/ca6a1847e5d032d8ab850b6e4bf62dd5.jpg', 'admin/20201015/t_ca6a1847e5d032d8ab850b6e4bf62dd5.jpg', NULL, 1602732180, 1602732180, 1602732180);
+INSERT INTO `cmf_img` VALUES (156, NULL, 0, '未命名图片', 'admin/20201015/e4da4a4495ebd8576c75fb309c23a402.png', 'admin/20201015/t_e4da4a4495ebd8576c75fb309c23a402.png', NULL, 1602732247, 1602732247, 1602732247);
 
 -- ----------------------------
 -- Table structure for cmf_img_content
@@ -656,32 +609,14 @@ CREATE TABLE `cmf_img_content`  (
   `type` int(10) UNSIGNED NOT NULL COMMENT '外键，类型id',
   `content_id` int(10) UNSIGNED NOT NULL COMMENT '外键，具体内容id。如具体某一新闻，产品的id（或者某一分类的id）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 148 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 157 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '图片/内容关联表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_img_content
 -- ----------------------------
-INSERT INTO `cmf_img_content` VALUES (36, 36, 4, 6);
-INSERT INTO `cmf_img_content` VALUES (37, 37, 4, 6);
-INSERT INTO `cmf_img_content` VALUES (73, 73, 5, 11);
-INSERT INTO `cmf_img_content` VALUES (78, 78, 5, 12);
-INSERT INTO `cmf_img_content` VALUES (79, 79, 5, 12);
-INSERT INTO `cmf_img_content` VALUES (80, 80, 5, 12);
-INSERT INTO `cmf_img_content` VALUES (92, 92, 5, 10);
-INSERT INTO `cmf_img_content` VALUES (121, 121, 6, 11);
-INSERT INTO `cmf_img_content` VALUES (122, 122, 6, 11);
-INSERT INTO `cmf_img_content` VALUES (123, 123, 7, 1);
-INSERT INTO `cmf_img_content` VALUES (124, 124, 7, 1);
-INSERT INTO `cmf_img_content` VALUES (125, 125, 7, 7);
-INSERT INTO `cmf_img_content` VALUES (129, 129, 6, 10);
-INSERT INTO `cmf_img_content` VALUES (130, 130, 6, 10);
-INSERT INTO `cmf_img_content` VALUES (131, 131, 6, 10);
-INSERT INTO `cmf_img_content` VALUES (132, 132, 3, 62);
-INSERT INTO `cmf_img_content` VALUES (143, 143, 3, 61);
-INSERT INTO `cmf_img_content` VALUES (144, 144, 3, 61);
-INSERT INTO `cmf_img_content` VALUES (145, 145, 3, 61);
-INSERT INTO `cmf_img_content` VALUES (146, 146, 3, 61);
-INSERT INTO `cmf_img_content` VALUES (147, 147, 3, 61);
+INSERT INTO `cmf_img_content` VALUES (153, 153, 7, 12);
+INSERT INTO `cmf_img_content` VALUES (154, 154, 7, 13);
+INSERT INTO `cmf_img_content` VALUES (156, 156, 7, 14);
 
 -- ----------------------------
 -- Table structure for cmf_link
@@ -789,14 +724,12 @@ CREATE TABLE `cmf_news`  (
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_news
 -- ----------------------------
-INSERT INTO `cmf_news` VALUES (10, 8, 0, 5, 1, 0, 1, '粉碎台独2', '&lt;p&gt;11&lt;/p&gt;', '&lt;p&gt;22&lt;/p&gt;', NULL, '1602637471', '1602639740', '1602637561');
-INSERT INTO `cmf_news` VALUES (11, 8, 1, 6, 1, 1, 0, '台海演习', '', '', NULL, '1602638143', '1602638143', '1602638117');
-INSERT INTO `cmf_news` VALUES (12, 8, 1, 7, 1, 0, 0, '111', '', '', '', '1602641797', '1602641797', '1602641768');
+INSERT INTO `cmf_news` VALUES (13, 71, 1, 1, 1, 1, 0, '星星之火，可以燎原', '', '', '', '1602731937', '1602731937', '1602731922');
 
 -- ----------------------------
 -- Table structure for cmf_option
@@ -837,16 +770,12 @@ CREATE TABLE `cmf_pacontent`  (
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 16 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_pacontent
 -- ----------------------------
-INSERT INTO `cmf_pacontent` VALUES (10, 69, 1, 2, 1, 1, 0, '111', '', '', NULL, '1602486903', '1602578724', '1602575025');
-INSERT INTO `cmf_pacontent` VALUES (11, 69, 1, 38, 1, 1, 0, '222', '', '', NULL, '1602487011', '1602578329', '1602575025');
-INSERT INTO `cmf_pacontent` VALUES (12, 1, 1, 10, 0, 1, 1, '3333', '&lt;p&gt;666&lt;/p&gt;', '&lt;p&gt;555&lt;/p&gt;', NULL, '1602557885', '1602578594', '1602575025');
-INSERT INTO `cmf_pacontent` VALUES (13, 1, 1, 39, 1, 1, 0, '', '', '', '', '1602644320', '1602644320', '1602644319');
-INSERT INTO `cmf_pacontent` VALUES (14, 1, 1, 40, 1, 1, 0, '', '', '', '', '1602644423', '1602644423', '1602644421');
+INSERT INTO `cmf_pacontent` VALUES (15, 74, 1, 1, 1, 1, 0, '首页关于我们文字', '&lt;p&gt;文字文字&lt;/p&gt;', '', '', '1602732033', '1602732033', '1602732018');
 
 -- ----------------------------
 -- Table structure for cmf_plugin
@@ -894,14 +823,14 @@ CREATE TABLE `cmf_product`  (
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_product
 -- ----------------------------
-INSERT INTO `cmf_product` VALUES (1, 63, 1, 1, 1, 1, 1, '小新13', '&lt;p&gt;2&lt;/p&gt;', '&lt;p&gt;3&lt;/p&gt;', NULL, '1595569864', '1602639294', '1602575025');
-INSERT INTO `cmf_product` VALUES (7, 63, 1, 1, 2, 0, 1, '小新14', '&lt;p&gt;777&lt;/p&gt;', '&lt;p&gt;777&lt;/p&gt;', NULL, '1602484032', '1602639351', '1602575025');
-INSERT INTO `cmf_product` VALUES (11, 61, 1, 1, 4, 1, 0, '毁灭者1', '', '', NULL, '1602575036', '1602575036', '1602575025');
+INSERT INTO `cmf_product` VALUES (12, 75, 1, 1, 1, 1, 0, '匕首', '', '', '', '1602731838', '1602732172', '1602731809');
+INSERT INTO `cmf_product` VALUES (13, 76, 1, 1, 2, 1, 0, 'QBZ95', '', '', '', '1602732090', '1602732180', '1602732051');
+INSERT INTO `cmf_product` VALUES (14, 77, 1, 1, 3, 1, 0, '东风41', '&lt;p&gt;战略决胜&lt;/p&gt;', '', '', '1602732240', '1602732247', '1602732183');
 
 -- ----------------------------
 -- Table structure for cmf_recycle_bin
@@ -998,9 +927,6 @@ CREATE TABLE `cmf_seo`  (
 -- ----------------------------
 -- Records of cmf_seo
 -- ----------------------------
-INSERT INTO `cmf_seo` VALUES (14, '2', '3', '4', 1602639351, 1602639351);
-INSERT INTO `cmf_seo` VALUES (16, '4', '5', '61', 1602639740, 1602639740);
-INSERT INTO `cmf_seo` VALUES (17, '2', '3', '4', 1602641797, 1602641797);
 
 -- ----------------------------
 -- Table structure for cmf_seo_content
@@ -1017,9 +943,6 @@ CREATE TABLE `cmf_seo_content`  (
 -- ----------------------------
 -- Records of cmf_seo_content
 -- ----------------------------
-INSERT INTO `cmf_seo_content` VALUES (14, 14, 7, 7);
-INSERT INTO `cmf_seo_content` VALUES (16, 16, 6, 10);
-INSERT INTO `cmf_seo_content` VALUES (17, 17, 6, 12);
 
 -- ----------------------------
 -- Table structure for cmf_slide
@@ -1099,24 +1022,6 @@ CREATE TABLE `cmf_tag_content`  (
 -- ----------------------------
 -- Records of cmf_tag_content
 -- ----------------------------
-INSERT INTO `cmf_tag_content` VALUES (5, 1, 4, 6);
-INSERT INTO `cmf_tag_content` VALUES (6, 2, 4, 6);
-INSERT INTO `cmf_tag_content` VALUES (16, 2, 7, 5);
-INSERT INTO `cmf_tag_content` VALUES (21, 5, 6, 12);
-INSERT INTO `cmf_tag_content` VALUES (41, 1, 5, 11);
-INSERT INTO `cmf_tag_content` VALUES (46, 5, 5, 12);
-INSERT INTO `cmf_tag_content` VALUES (47, 3, 5, 12);
-INSERT INTO `cmf_tag_content` VALUES (64, 2, 6, 11);
-INSERT INTO `cmf_tag_content` VALUES (65, 3, 6, 11);
-INSERT INTO `cmf_tag_content` VALUES (66, 4, 7, 1);
-INSERT INTO `cmf_tag_content` VALUES (67, 5, 7, 1);
-INSERT INTO `cmf_tag_content` VALUES (68, 1, 7, 7);
-INSERT INTO `cmf_tag_content` VALUES (69, 2, 7, 7);
-INSERT INTO `cmf_tag_content` VALUES (70, 3, 6, 10);
-INSERT INTO `cmf_tag_content` VALUES (71, 2, 6, 10);
-INSERT INTO `cmf_tag_content` VALUES (72, 1, 3, 62);
-INSERT INTO `cmf_tag_content` VALUES (73, 2, 3, 62);
-INSERT INTO `cmf_tag_content` VALUES (76, 2, 3, 61);
 
 -- ----------------------------
 -- Table structure for cmf_theme
@@ -1144,7 +1049,7 @@ CREATE TABLE `cmf_theme`  (
 -- ----------------------------
 -- Records of cmf_theme
 -- ----------------------------
-INSERT INTO `cmf_theme` VALUES (1, 0, 1602560741, 0, 0, 'default', 'default', '1.0.0', 'http://demo.thinkcmf.com', '', 'ThinkCMF', 'http://www.thinkcmf.com', 'zh-cn', 'ThinkCMF默认模板', 'ThinkCMF默认模板');
+INSERT INTO `cmf_theme` VALUES (1, 0, 1602722274, 0, 0, 'default', 'default', '1.0.0', 'soupai', '', 'soupai', 'soupai', 'zh-cn', 'soupai', 'soupai');
 
 -- ----------------------------
 -- Table structure for cmf_theme_file
@@ -1230,7 +1135,7 @@ CREATE TABLE `cmf_user`  (
 -- ----------------------------
 -- Records of cmf_user
 -- ----------------------------
-INSERT INTO `cmf_user` VALUES (1, 1, 0, 0, 1602640651, 0, 0, 0.00, 1594082678, 1, 'admin', '###f10d3369c3854dd57dd1270cf04d7e83', 'admin', '516552667@qq.com', '', '', '', '::1', '', '', NULL);
+INSERT INTO `cmf_user` VALUES (1, 1, 0, 0, 1602722288, 0, 0, 0.00, 1594082678, 1, 'admin', '###f10d3369c3854dd57dd1270cf04d7e83', 'admin', '516552667@qq.com', '', '', '', '::1', '', '', NULL);
 
 -- ----------------------------
 -- Table structure for cmf_user_action
@@ -1433,6 +1338,5 @@ CREATE TABLE `cmf_video`  (
 -- ----------------------------
 -- Records of cmf_video
 -- ----------------------------
-INSERT INTO `cmf_video` VALUES (9, 67, 1, '天梯图', '&lt;p&gt;胜多负少的&lt;/p&gt;', 'admin/20200911/5694478c5c3d1e25e3e51188b0699f36.jpg', 3, 1, 1602472520, NULL);
 
 SET FOREIGN_KEY_CHECKS = 1;
