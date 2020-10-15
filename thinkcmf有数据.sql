@@ -11,7 +11,7 @@
  Target Server Version : 50726
  File Encoding         : 65001
 
- Date: 15/10/2020 11:26:44
+ Date: 15/10/2020 15:18:01
 */
 
 SET NAMES utf8mb4;
@@ -205,7 +205,7 @@ CREATE TABLE `cmf_asset`  (
   `suffix` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL DEFAULT '' COMMENT '文件后缀名,不包括点',
   `more` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL COMMENT '其它详细信息,JSON格式',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '资源表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_asset
@@ -213,6 +213,8 @@ CREATE TABLE `cmf_asset`  (
 INSERT INTO `cmf_asset` VALUES (5, 1, 13014, 1602731835, 1, 0, 'ee7f26ba7cf258b12ef1f2d02c5535d639cd764d3d34fdf0ec82374c4ab7ccd9', '匕首.jpg', 'admin/20201015/6c2a5c6a2112af02848aa2122855f3f4.jpg', 'ee7f26ba7cf258b12ef1f2d02c5535d6', 'b8852063869687ea3ba9de9c8e91e8d759e5c476', 'jpg', NULL);
 INSERT INTO `cmf_asset` VALUES (6, 1, 27618, 1602732088, 1, 0, '8995de444383bda6ffeff3c1f0c2e4741999c9a594ed20338b5c37ff03eb258a', 'QBZ95.jpg', 'admin/20201015/ca6a1847e5d032d8ab850b6e4bf62dd5.jpg', '8995de444383bda6ffeff3c1f0c2e474', 'c35c1c4fb1e1a625cb95390a2eb68e1a9d12b767', 'jpg', NULL);
 INSERT INTO `cmf_asset` VALUES (7, 1, 448391, 1602732233, 1, 0, '10b44dbe74f7c6d6337622bfc41c725632dc9e1900789f2ce6430de1a5a9fed1', '东风41.png', 'admin/20201015/e4da4a4495ebd8576c75fb309c23a402.png', '10b44dbe74f7c6d6337622bfc41c7256', 'cf1589f94272461b16718716b672adfe4180e659', 'png', NULL);
+INSERT INTO `cmf_asset` VALUES (8, 1, 95073, 1602740078, 1, 0, '6faa1d2bc77f7f96b853fbe49cbfafae4fa235e20dad5fb2308f342d8488e61a', 'July.mp4', 'admin/20201015/2e932ce33e9cc4cf43491bd22b4bf363.mp4', '6faa1d2bc77f7f96b853fbe49cbfafae', 'c644d23a63245ae4b1f2a7a190451e4670786a14', 'mp4', NULL);
+INSERT INTO `cmf_asset` VALUES (9, 1, 4090721, 1602740427, 1, 0, 'f77203c5e1a176573f77544ac0cd75691889870edfb5b81b49df5143b4ff7fde', 'testVido.mp4', 'admin/20201015/105490663ce2b2dabe8f5a40a12e86ab.mp4', 'f77203c5e1a176573f77544ac0cd7569', 'bac3f8287b8376be6f51607709168dc9d5fc678f', 'mp4', NULL);
 
 -- ----------------------------
 -- Table structure for cmf_auth_access
@@ -724,12 +726,12 @@ CREATE TABLE `cmf_news`  (
   `update_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `show_time` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '发布时间，可修改',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = MyISAM AUTO_INCREMENT = 14 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = MyISAM AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmf_news
 -- ----------------------------
-INSERT INTO `cmf_news` VALUES (13, 71, 1, 1, 1, 1, 0, '星星之火，可以燎原', '', '', '', '1602731937', '1602731937', '1602731922');
+INSERT INTO `cmf_news` VALUES (14, 71, 1, 1, 1, 1, 0, '星星之火，可以燎原', '', '', '', '1602731937', '1602745393', '1602731922');
 
 -- ----------------------------
 -- Table structure for cmf_option
@@ -742,13 +744,16 @@ CREATE TABLE `cmf_option`  (
   `option_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL COMMENT '配置值',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `option_name`(`option_name`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '全站配置表' ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '全站配置表' ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cmf_option
 -- ----------------------------
-INSERT INTO `cmf_option` VALUES (1, 1, 'site_info', '[\"{\\\"site_name\\\":\\\"ThinkCMF\\\",\\\"site_seo_title\\\":\\\"ThinkCMF\\\",\\\"site_seo_keywords\\\":\\\"ThinkCMF\\\",\\\"site_seo_description\\\":\\\"ThinkCMF\\\"}\"]');
+INSERT INTO `cmf_option` VALUES (1, 1, 'site_info', '{\"site_name\":\"\\u4e0a\\u6d77\\u6c11\\u8054\\u673a\\u68b0\\u5bc6\\u5c01\\u4ef6\\u6709\\u9650\\u516c\\u53f8\",\"site_seo_title\":\"ThinkCMF\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6\",\"site_seo_keywords\":\"ThinkCMF,php,\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6,cmf,cms,\\u7b80\\u7ea6\\u98ce, simplewind,framework\",\"site_seo_description\":\"ThinkCMF\\u662f\\u7b80\\u7ea6\\u98ce\\u7f51\\u7edc\\u79d1\\u6280\\u53d1\\u5e03\\u7684\\u4e00\\u6b3e\\u7528\\u4e8e\\u5feb\\u901f\\u5f00\\u53d1\\u7684\\u5185\\u5bb9\\u7ba1\\u7406\\u6846\\u67b6\",\"site_icp\":\"00001\",\"site_gwa\":\"\\u6d59ICP\\u5907\",\"site_admin_email\":\"\",\"site_analytics\":\"\",\"logo\":\"admin\\/20200827\\/913c49121a329e1774dc62075683b3ff.png\",\"phone\":\"0557-65542448\",\"fax\":\"0551-65542448\",\"mobile\":\"18888888888\",\"email\":\"1@qq.com\",\"qq\":\"888888\",\"address_cn\":\"\\u6d59\\u6c5f\\u5b81\\u6ce2\",\"address_en\":\"zhejiang ningbo\",\"lng\":\"121.634754\",\"lat\":\"29.809996\",\"WeChat\":\"admin\\/20201014\\/57bb5534d2afc0cb5e84e86eda3151d6.jpg\",\"site_name_en\":\"Shanghai Minlian Mechanical seals Co. LTd\",\"phoneweb\":\"admin\\/20201014\\/57bb5534d2afc0cb5e84e86eda3151d6.jpg\"}');
 INSERT INTO `cmf_option` VALUES (2, 1, 'admin_dashboard_widgets', '[{\"name\":\"CmfHub\",\"is_system\":1},{\"name\":\"Contributors\",\"is_system\":1},{\"name\":\"CmfDocuments\",\"is_system\":1},{\"name\":\"MainContributors\",\"is_system\":1},{\"name\":\"Custom1\",\"is_system\":1},{\"name\":\"Custom2\",\"is_system\":1},{\"name\":\"Custom3\",\"is_system\":1},{\"name\":\"Custom4\",\"is_system\":1},{\"name\":\"Custom5\",\"is_system\":1}]');
+INSERT INTO `cmf_option` VALUES (3, 1, 'upload_setting', '{\"0\":\"{\\\"max_files\\\":\\\"20\\\",\\\"chunk_size\\\":\\\"512\\\",\\\"file_types\\\":{\\\"image\\\":{\\\"upload_max_filesize\\\":\\\"10240\\\",\\\"extensions\\\":\\\"jpg,jpeg,png,gif,bmp4\\\"},\\\"video\\\":{\\\"upload_max_filesize\\\":\\\"102400\\\",\\\"extensions\\\":\\\"mp4,avi,wmv,rm,rmvb,mkv\\\"},\\\"audio\\\":{\\\"upload_max_filesize\\\":\\\"10240\\\",\\\"extensions\\\":\\\"mp3,wma,wav\\\"},\\\"file\\\":{\\\"upload_max_filesize\\\":\\\"10240\\\",\\\"extensions\\\":\\\"txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar\\\"}}}\",\"max_files\":\"20\",\"chunk_size\":\"512\",\"file_types\":{\"image\":{\"upload_max_filesize\":\"102400\",\"extensions\":\"jpg,jpeg,png,gif,bmp4\"},\"video\":{\"upload_max_filesize\":\"102400\",\"extensions\":\"mp4,avi,wmv,rm,rmvb,mkv\"},\"audio\":{\"upload_max_filesize\":\"10240\",\"extensions\":\"mp3,wma,wav\"},\"file\":{\"upload_max_filesize\":\"102400\",\"extensions\":\"txt,pdf,doc,docx,xls,xlsx,ppt,pptx,zip,rar\"}}}');
+INSERT INTO `cmf_option` VALUES (4, 1, 'admin_settings', '{\"admin_password\":\"\",\"admin_theme\":\"admin_simpleboot3\",\"admin_style\":\"orangeadmin\"}');
+INSERT INTO `cmf_option` VALUES (5, 1, 'cmf_settings', '{\"0\":\"{\\\"banned_usernames\\\":\\\"\\\"}\",\"banned_usernames\":\"\"}');
 
 -- ----------------------------
 -- Table structure for cmf_pacontent
