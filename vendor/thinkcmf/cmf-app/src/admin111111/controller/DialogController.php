@@ -6,21 +6,28 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
+// | Author: 老猫 <zxxjjforever@163.com>
 // +----------------------------------------------------------------------
-namespace app\portal\controller;
+namespace app\admin\controller;
 
-use cmf\controller\HomeBaseController;
+use cmf\controller\AdminBaseController;
 
-class IndexController extends HomeBaseController
+class DialogController extends AdminBaseController
 {
-
-    // 首页
-    public function index()
+    public function initialize()
     {
-        return 1;
-        return $this->fetch(":index");
+
+    }
+
+    public function map()
+    {
+        $location = $this->request->param('location');
+        $location = explode(',', $location);
+        $lng      = empty($location[0]) ? 116.424966 : $location[0];
+        $lat      = empty($location[1]) ? 39.907851 : $location[1];
+
+        $this->assign(['lng' => $lng, 'lat' => $lat]);
+        return $this->fetch();
     }
 
 }
-

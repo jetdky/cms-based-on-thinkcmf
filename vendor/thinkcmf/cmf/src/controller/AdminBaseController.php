@@ -66,7 +66,9 @@ class AdminBaseController extends BaseController
             ];
         }
 
-        config('template.view_base', WEB_ROOT . "$themePath/");
+//        config('template.view_base', WEB_ROOT . "$themePath/");
+        config('template.view_base', CMF_ROOT . "app/");
+        var_dump($themePath);
         config('template.tpl_replace_string', $viewReplaceStr);
     }
 

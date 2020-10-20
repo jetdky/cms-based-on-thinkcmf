@@ -2,22 +2,26 @@
 // +----------------------------------------------------------------------
 // | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
+// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Released under the MIT License.
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: 老猫 <thinkcmf@126.com>
 // +----------------------------------------------------------------------
+namespace app\admin\model;
 
-namespace app\demo\controller;
+use think\Model;
 
-use cmf\controller\HomeBaseController;
 
-class IndexController extends HomeBaseController
+class RecycleBinModel extends Model
 {
-    public function index()
+    protected $autoWriteTimestamp = true;
+    protected $update = false;
+
+    public function user()
     {
-        return 11;
-//        return $this->fetch(':index');
+        return $this->belongsTo('UserModel', 'user_id')->setEagerlyType(1);
     }
+
+
 }

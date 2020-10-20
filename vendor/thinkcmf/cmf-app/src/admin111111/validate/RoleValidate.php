@@ -6,21 +6,23 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
+// | Author: 小夏 < 449134904@qq.com>
 // +----------------------------------------------------------------------
-namespace app\portal\controller;
+namespace app\admin\validate;
 
-use cmf\controller\HomeBaseController;
+use think\Validate;
 
-class IndexController extends HomeBaseController
+class RoleValidate extends Validate
 {
+    protected $rule = [
+        'name' => 'require',
+    ];
 
-    // 首页
-    public function index()
-    {
-        return 1;
-        return $this->fetch(":index");
-    }
+    protected $message = [
+        'name.require' => '角色名称不能为空',
+    ];
 
+    protected $scene = [
+        'add' => ['name'],
+    ];
 }
-

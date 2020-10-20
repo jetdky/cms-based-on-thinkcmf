@@ -6,21 +6,24 @@
 // +----------------------------------------------------------------------
 // | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
-// | Author: 老猫 <thinkcmf@126.com>
+// | Author: 小夏 < 449134904@qq.com>
 // +----------------------------------------------------------------------
-namespace app\portal\controller;
+namespace app\admin\validate;
 
-use cmf\controller\HomeBaseController;
+use think\Validate;
 
-class IndexController extends HomeBaseController
+class StorageQiniuValidate extends Validate
 {
+    protected $rule = [
+        'accessKey' => 'require',
+        'secretKey' => 'require',
+        'domain'    => 'require',
+    ];
 
-    // 首页
-    public function index()
-    {
-        return 1;
-        return $this->fetch(":index");
-    }
+    protected $message = [
+        'accessKey.require' => 'AccessKey不能为空',
+        'secretKey.require' => 'secretKey不能为空',
+        'domain.require' => '空间域名不能为空',
+    ];
 
 }
-

@@ -2,22 +2,17 @@
 // +----------------------------------------------------------------------
 // | ThinkCMF [ WE CAN DO IT MORE SIMPLE ]
 // +----------------------------------------------------------------------
-// | Copyright (c) 2013-2018 http://www.thinkcmf.com All rights reserved.
+// | Copyright (c) 2013-2019 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
-// | Released under the MIT License.
+// | Licensed ( http://www.apache.org/licenses/LICENSE-2.0 )
 // +----------------------------------------------------------------------
 // | Author: 老猫 <thinkcmf@126.com>
 // +----------------------------------------------------------------------
+namespace app\admin\model;
 
-namespace app\demo\controller;
+use think\Model;
 
-use cmf\controller\HomeBaseController;
-
-class IndexController extends HomeBaseController
+class OptionModel extends Model
 {
-    public function index()
-    {
-        return 11;
-//        return $this->fetch(':index');
-    }
+
 }
