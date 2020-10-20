@@ -14,8 +14,9 @@ namespace app\index\controller;
 use app\admin\model\NewsModel;
 use app\admin\model\VideoModel;
 use cmf\controller\HomeBaseController;
+use think\Controller;
 
-class VideoController extends HomeBaseController
+class VideoController extends Controller
 {
     public function index(VideoModel $videoModel)
     {
