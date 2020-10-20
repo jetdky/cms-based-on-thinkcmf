@@ -23,12 +23,6 @@ class ClassController extends AdminBaseController
 
     public function index(ClassModel $classModel, ImgService $imgService)
     {
-        //        $content = hook_one('admin_pacontent_default_view');
-        //
-        //        if (!empty($content)) {
-        //            return $content;
-        //        }
-
         $data = $this->request->param();
         $where = [];
         if (!empty($data['keyword'])) {
@@ -40,14 +34,29 @@ class ClassController extends AdminBaseController
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if($v['parent_id'] && $v['level'] == 2) {
+            if ($v['parent_id'] && $v['level'] == 2) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            }elseif($v['parent_id'] && $v['level'] == 3){
+            } elseif ($v['parent_id'] && $v['level'] == 3) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+
+        //获得搜索分类
+        $tree = new Tree();
+        $parentId = $this->request->param("cid", 0, 'intval');
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+
+        // 获取分页显示
         $this->assign('arrayClass', $list);
+        $this->assign('selectClass', $selectClass);
         $this->assign('type', $data['type']);
         // 渲染模板输出
         return $this->fetch();
@@ -63,20 +72,15 @@ class ClassController extends AdminBaseController
 
     public function indexPacontent(ClassModel $classModel, ImgService $imgService)
     {
-        //        $content = hook_one('admin_pacontent_default_view');
-        //
-        //        if (!empty($content)) {
-        //            return $content;
-        //        }
         $data = $this->request->param();
 
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if($v['parent_id'] && $v['level'] == 2) {
+            if ($v['parent_id'] && $v['level'] == 2) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            }elseif($v['parent_id'] && $v['level'] == 3){
+            } elseif ($v['parent_id'] && $v['level'] == 3) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
@@ -103,28 +107,34 @@ class ClassController extends AdminBaseController
 
     public function indexNews(ClassModel $classModel, ImgService $imgService)
     {
-        //        $content = hook_one('admin_pacontent_default_view');
-        //
-        //        if (!empty($content)) {
-        //            return $content;
-        //        }
         $data = $this->request->param();
 
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
-
         foreach ($list as $k => $v) {
-            if($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            }elseif($v['parent_id'] && $v['level'] == 3){
+            if ($v['parent_id'] && $v['level'] == 2) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+        //获得搜索分类
+        $tree = new Tree();
+        $parentId = $this->request->param("cid", 0, 'intval');
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option lang-data='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
 
         // 获取分页显示
         //        $page = $list->render();
         $this->assign('arrayClass', $list);
+
+        $this->assign('selectClass', $selectClass);
+
         $this->assign('type', $data['type']);
         //        dump($list->items()[0]);die;
         //        $this->assign('page', $page);
@@ -142,11 +152,6 @@ class ClassController extends AdminBaseController
 
     public function indexProduct(ClassModel $classModel, ImgService $imgService)
     {
-        //        $content = hook_one('admin_pacontent_default_view');
-        //
-        //        if (!empty($content)) {
-        //            return $content;
-        //        }
         $data = $this->request->param();
 //        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
 
@@ -154,9 +159,9 @@ class ClassController extends AdminBaseController
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if($v['parent_id'] && $v['level'] == 2) {
+            if ($v['parent_id'] && $v['level'] == 2) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            }elseif($v['parent_id'] && $v['level'] == 3){
+            } elseif ($v['parent_id'] && $v['level'] == 3) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
@@ -427,9 +432,9 @@ class ClassController extends AdminBaseController
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if($v['parent_id'] && $v['level'] == 2) {
+            if ($v['parent_id'] && $v['level'] == 2) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            }elseif($v['parent_id'] && $v['level'] == 3){
+            } elseif ($v['parent_id'] && $v['level'] == 3) {
                 $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
@@ -497,6 +502,7 @@ class ClassController extends AdminBaseController
         }
         return $arr;
     }
+
     /**推荐&&取消推荐
      * @param ClassModel $classModel
      * @throws \think\Exception

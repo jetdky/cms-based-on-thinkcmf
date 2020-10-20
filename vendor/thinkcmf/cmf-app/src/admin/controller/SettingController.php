@@ -115,7 +115,7 @@ class SettingController extends AdminBaseController
 
             $cmfSettings = $this->request->param('cmf_settings/a');
 
-            $bannedUsernames                 = preg_replace("/[^0-9A-Za-z_\\x{4e00}-\\x{9fa5}-]/u", ",", $cmfSettings['banned_usernames']);
+            $bannedUsernames                 = preg_replace("/[^0-9A-Za-z_\\x{4e00}-\\x{9fa5}-]/u", ",", $cmfSettings['banned_usernames'] ?? '');
             $cmfSettings['banned_usernames'] = $bannedUsernames;
             cmf_set_option('cmf_settings', $cmfSettings);
 

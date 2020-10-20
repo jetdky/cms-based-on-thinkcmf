@@ -73,10 +73,7 @@ class NewsController extends AdminBaseController
         $list = $newsModel->where($where)
             ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
             ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
-//        $list = $newsModel->where($where)
-//            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
-//            ->order("order_num ASC")->select()->toArray();
-//        var_dump($list);die;
+
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
