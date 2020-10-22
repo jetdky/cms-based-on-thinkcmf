@@ -322,7 +322,7 @@ parse;
     }
 
     /**
-     * 幻灯片标签
+     * 标签库标签
      */
     public function tagSlides($tag, $content)
     {
@@ -345,7 +345,7 @@ parse;
     }
 
     /**
-     * 无幻灯片标签
+     * 无标签库标签
      */
     public function tagNoSlides($tag, $content)
     {

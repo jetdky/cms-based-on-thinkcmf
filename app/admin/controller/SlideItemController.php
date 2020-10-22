@@ -17,15 +17,15 @@ use app\admin\model\SlideItemModel;
 class SlideItemController extends AdminBaseController
 {
     /**
-     * 幻灯片页面列表
+     * 标签库页面列表
      * @adminMenu(
-     *     'name'   => '幻灯片页面列表',
+     *     'name'   => '标签库页面列表',
      *     'parent' => 'admin/Slide/index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面列表',
+     *     'remark' => '标签库页面列表',
      *     'param'  => ''
      * )
      * @return mixed
@@ -51,15 +51,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面添加
+     * 标签库页面添加
      * @adminMenu(
-     *     'name'   => '幻灯片页面添加',
+     *     'name'   => '标签库页面添加',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面添加',
+     *     'remark' => '标签库页面添加',
      *     'param'  => ''
      * )
      */
@@ -77,15 +77,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面添加提交
+     * 标签库页面添加提交
      * @adminMenu(
-     *     'name'   => '幻灯片页面添加提交',
+     *     'name'   => '标签库页面添加提交',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面添加提交',
+     *     'remark' => '标签库页面添加提交',
      *     'param'  => ''
      * )
      */
@@ -97,15 +97,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面编辑
+     * 标签库页面编辑
      * @adminMenu(
-     *     'name'   => '幻灯片页面编辑',
+     *     'name'   => '标签库页面编辑',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面编辑',
+     *     'remark' => '标签库页面编辑',
      *     'param'  => ''
      * )
      */
@@ -126,15 +126,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面编辑
+     * 标签库页面编辑
      * @adminMenu(
-     *     'name'   => '幻灯片页面编辑提交',
+     *     'name'   => '标签库页面编辑提交',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面编辑提交',
+     *     'remark' => '标签库页面编辑提交',
      *     'param'  => ''
      * )
      */
@@ -151,15 +151,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面删除
+     * 标签库页面删除
      * @adminMenu(
-     *     'name'   => '幻灯片页面删除',
+     *     'name'   => '标签库页面删除',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面删除',
+     *     'remark' => '标签库页面删除',
      *     'param'  => ''
      * )
      */
@@ -182,15 +182,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面隐藏
+     * 标签库页面隐藏
      * @adminMenu(
-     *     'name'   => '幻灯片页面隐藏',
+     *     'name'   => '标签库页面隐藏',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面隐藏',
+     *     'remark' => '标签库页面隐藏',
      *     'param'  => ''
      * )
      */
@@ -200,9 +200,9 @@ class SlideItemController extends AdminBaseController
         if ($id) {
             $rst = Db::name('slideItem')->where('id', $id)->update(['status' => 0]);
             if ($rst) {
-                $this->success("幻灯片隐藏成功！");
+                $this->success("标签库隐藏成功！");
             } else {
-                $this->error('幻灯片隐藏失败！');
+                $this->error('标签库隐藏失败！');
             }
         } else {
             $this->error('数据传入失败！');
@@ -210,15 +210,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面显示
+     * 标签库页面显示
      * @adminMenu(
-     *     'name'   => '幻灯片页面显示',
+     *     'name'   => '标签库页面显示',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面显示',
+     *     'remark' => '标签库页面显示',
      *     'param'  => ''
      * )
      */
@@ -228,9 +228,9 @@ class SlideItemController extends AdminBaseController
         if ($id) {
             $result = Db::name('slideItem')->where('id', $id)->update(['status' => 1]);
             if ($result) {
-                $this->success("幻灯片显示成功！");
+                $this->success("标签库显示成功！");
             } else {
-                $this->error('幻灯片显示失败！');
+                $this->error('标签库显示失败！');
             }
         } else {
             $this->error('数据传入失败！');
@@ -238,15 +238,15 @@ class SlideItemController extends AdminBaseController
     }
 
     /**
-     * 幻灯片页面排序
+     * 标签库页面排序
      * @adminMenu(
-     *     'name'   => '幻灯片页面排序',
+     *     'name'   => '标签库页面排序',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '幻灯片页面排序',
+     *     'remark' => '标签库页面排序',
      *     'param'  => ''
      * )
      */

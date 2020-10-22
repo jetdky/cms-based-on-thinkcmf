@@ -15,7 +15,7 @@ use api\home\model\SlideModel;
 class SlideService
 {
     /**
-     * 幻灯片列表
+     * 标签库列表
      * @param $map
      * @return array|\PDOStatement|string|\think\Model|null
      * @throws \think\db\exception\DataNotFoundException

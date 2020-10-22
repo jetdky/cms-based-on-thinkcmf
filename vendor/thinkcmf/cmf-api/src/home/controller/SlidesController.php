@@ -1,6 +1,6 @@
 <?php
 // +----------------------------------------------------------------------
-// | 文件说明：幻灯片
+// | 文件说明：标签库
 // +----------------------------------------------------------------------
 // | Copyright (c) 2013-2017 http://www.thinkcmf.com All rights reserved.
 // +----------------------------------------------------------------------
@@ -18,7 +18,7 @@ use cmf\controller\RestBaseController;
 class SlidesController extends RestBaseController
 {
     /**
-     * 获取幻灯片
+     * 获取标签库
      * @throws \think\db\exception\DataNotFoundException
      * @throws \think\db\exception\ModelNotFoundException
      * @throws \think\exception\DbException
@@ -36,7 +36,7 @@ class SlidesController extends RestBaseController
         $data         = $slideService->SlideList($map);
         //剔除分类状态隐藏 剔除分类下显示数据为空
         if (empty($data) || $data['items']->isEmpty()) {
-            $this->error('该组幻灯片显示数据为空');
+            $this->error('该组标签库显示数据为空');
         }
 
         if (empty($this->apiVersion) || $this->apiVersion == '1.0.0') {
@@ -45,7 +45,7 @@ class SlidesController extends RestBaseController
             $response = $data;
         }
 
-        $this->success("该组幻灯片获取成功!", $response);
+        $this->success("该组标签库获取成功!", $response);
     }
 
 }

@@ -110,13 +110,13 @@ class MenuController extends AdminBaseController
     /**
      * 后台菜单添加
      * @adminMenu(
-     *     'name'   => '后台菜单添加',
+     *     'name'   => '导航添加',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '后台菜单添加',
+     *     'remark' => '导航添加',
      *     'param'  => ''
      * )
      * @return mixed

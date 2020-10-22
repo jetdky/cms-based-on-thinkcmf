@@ -3,8 +3,8 @@
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="{:url('SlideItem/index',['slide_id'=>$slide_id])}">幻灯片页面列表</a></li>
-        <li><a href="{:url('SlideItem/add',['slide_id'=>$slide_id])}">添加幻灯片页面</a></li>
+        <li class="active"><a href="{:url('SlideItem/index',['slide_id'=>$slide_id])}">标签库页面列表</a></li>
+        <li><a href="{:url('SlideItem/add',['slide_id'=>$slide_id])}">添加标签库页面</a></li>
     </ul>
     <form method="post" class="js-ajax-form margin-top-20" action="{:url('SlideItem/listOrder')}">
         <div class="table-actions">
@@ -19,7 +19,7 @@
             <tr>
                 <th width="50">{:lang('SORT')}</th>
                 <th width="50">ID</th>
-                <th>幻灯片标题</th>
+                <th>标签库标题</th>
                 <th>描述</th>
                 <th>链接</th>
                 <th>打开方式</th>
@@ -54,10 +54,10 @@
                            class="btn btn-xs btn-danger js-ajax-delete">{:lang('DELETE')}</a>
                         <if condition="empty($vo['status']) eq 1">
                             <a href="{:url('SlideItem/cancelban',array('id'=>$vo['id']))}" class="btn btn-xs btn-warning js-ajax-dialog-btn"
-                               data-msg="确定显示此幻灯片吗？">{:lang('DISPLAY')}</a>
+                               data-msg="确定显示此标签库吗？">{:lang('DISPLAY')}</a>
                             <else/>
                             <a href="{:url('SlideItem/ban',array('id'=>$vo['id']))}" class="btn btn-xs btn-warning js-ajax-dialog-btn"
-                               data-msg="确定隐藏此幻灯片吗？">{:lang('HIDE')}</a>
+                               data-msg="确定隐藏此标签库吗？">{:lang('HIDE')}</a>
                         </if>
                     </td>
                 </tr>

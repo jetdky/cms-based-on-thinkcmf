@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\NavModel;
+use app\admin\model\UserNavModel;
 use think\Db;
 
 /**
@@ -41,7 +41,7 @@ class NavController extends AdminBaseController
             return $content;
         }
 
-        $navModel = new NavModel();
+        $navModel = new UserNavModel();
 
         $navs = $navModel->select();
         $this->assign('navs', $navs);
@@ -84,14 +84,9 @@ class NavController extends AdminBaseController
     public function addPost()
     {
 
-        $navModel = new NavModel();
+        $navModel = new UserNavModel();
         $arrData  = $this->request->post();
-
-        if (empty($arrData["is_main"])) {
-            $arrData["is_main"] = 0;
-        } else {
-            $navModel->where("is_main", 1)->update(["is_main" => 0]);
-        }
+        halt($arrData);
 
         $navModel->allowField(true)->insert($arrData);
         $this->success(lang("EDIT_SUCCESS"), url("nav/index"));
@@ -113,7 +108,7 @@ class NavController extends AdminBaseController
      */
     public function edit()
     {
-        $navModel = new NavModel();
+        $navModel = new UserNavModel();
         $intId    = $this->request->param("id", 0, 'intval');
 
         $objNavCat = $navModel->where("id", $intId)->find();
@@ -140,15 +135,8 @@ class NavController extends AdminBaseController
     public function editPost()
     {
 
-        $navModel = new NavModel();
+        $navModel = new UserNavModel();
         $arrData  = $this->request->post();
-
-        if (empty($arrData["is_main"])) {
-            $arrData["is_main"] = 0;
-        } else {
-            $navModel->where("is_main", 1)->update(["is_main" => 0]);
-        }
-
         $navModel->allowField(true)->where("id", intval($arrData["id"]))->update($arrData);
         $this->success(lang("EDIT_SUCCESS"), url("nav/index"));
 
@@ -169,7 +157,7 @@ class NavController extends AdminBaseController
      */
     public function delete()
     {
-        $navModel = new NavModel();
+        $navModel = new UserNavModel();
         $intId    = $this->request->param("id", 0, "intval");
 
         if (empty($intId)) {

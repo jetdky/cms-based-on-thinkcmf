@@ -11,6 +11,7 @@
 namespace app\admin\controller;
 
 use app\admin\model\SlideModel;
+use app\admin\model\TagModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 
@@ -18,15 +19,15 @@ class SlideController extends AdminBaseController
 {
 
     /**
-     * 幻灯片列表
+     * 标签库列表
      * @adminMenu(
-     *     'name'   => '幻灯片管理',
+     *     'name'   => '标签库管理',
      *     'parent' => 'admin/Setting/default',
      *     'display'=> true,
      *     'hasView'=> true,
      *     'order'  => 40,
      *     'icon'   => '',
-     *     'remark' => '幻灯片管理',
+     *     'remark' => '标签库管理',
      *     'param'  => ''
      * )
      * @return mixed
@@ -42,22 +43,22 @@ class SlideController extends AdminBaseController
             return $content;
         }
 
-        $slidePostModel = new SlideModel();
-        $slides         = $slidePostModel->where('delete_time', 0)->select();
+        $slidePostModel = new TagModel();
+        $slides         = $slidePostModel->select();
         $this->assign('slides', $slides);
         return $this->fetch();
     }
 
     /**
-     * 添加幻灯片
+     * 添加标签库
      * @adminMenu(
-     *     'name'   => '添加幻灯片',
+     *     'name'   => '添加标签库',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '添加幻灯片',
+     *     'remark' => '添加标签库',
      *     'param'  => ''
      * )
      */
@@ -67,22 +68,22 @@ class SlideController extends AdminBaseController
     }
 
     /**
-     * 添加幻灯片提交
+     * 添加标签库提交
      * @adminMenu(
-     *     'name'   => '添加幻灯片提交',
+     *     'name'   => '添加标签库提交',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '添加幻灯片提交',
+     *     'remark' => '添加标签库提交',
      *     'param'  => ''
      * )
      */
     public function addPost()
     {
         $data           = $this->request->param();
-        $slidePostModel = new SlideModel();
+        $slidePostModel = new TagModel();
         $result         = $this->validate($data, 'Slide');
         if ($result !== true) {
             $this->error($result);
@@ -93,44 +94,44 @@ class SlideController extends AdminBaseController
     }
 
     /**
-     * 编辑幻灯片
+     * 编辑标签库
      * @adminMenu(
-     *     'name'   => '编辑幻灯片',
+     *     'name'   => '编辑标签库',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> true,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '编辑幻灯片',
+     *     'remark' => '编辑标签库',
      *     'param'  => ''
      * )
      */
     public function edit()
     {
         $id             = $this->request->param('id');
-        $slidePostModel = new SlideModel();
+        $slidePostModel = new TagModel();
         $result         = $slidePostModel->where('id', $id)->find();
         $this->assign('result', $result);
         return $this->fetch();
     }
 
     /**
-     * 编辑幻灯片提交
+     * 编辑标签库提交
      * @adminMenu(
-     *     'name'   => '编辑幻灯片提交',
+     *     'name'   => '编辑标签库提交',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '编辑幻灯片提交',
+     *     'remark' => '编辑标签库提交',
      *     'param'  => ''
      * )
      */
     public function editPost()
     {
         $data           = $this->request->param();
-        $slidePostModel = new SlideModel();
+        $slidePostModel = new TagModel();
         $result         = $this->validate($data, 'Slide');
         if ($result !== true) {
             $this->error($result);
@@ -140,31 +141,31 @@ class SlideController extends AdminBaseController
     }
 
     /**
-     * 删除幻灯片
+     * 删除标签库
      * @adminMenu(
-     *     'name'   => '删除幻灯片',
+     *     'name'   => '删除标签库',
      *     'parent' => 'index',
      *     'display'=> false,
      *     'hasView'=> false,
      *     'order'  => 10000,
      *     'icon'   => '',
-     *     'remark' => '删除幻灯片',
+     *     'remark' => '删除标签库',
      *     'param'  => ''
      * )
      */
     public function delete()
     {
         $id             = $this->request->param('id', 0, 'intval');
-        $slidePostModel = new SlideModel();
+        $slidePostModel = new TagModel();
         $result         = $slidePostModel->where('id', $id)->find();
         if (empty($result)) {
-            $this->error('幻灯片不存在!');
+            $this->error('标签库不存在!');
         }
 
         //如果存在页面。则不能删除。
         $slidePostCount = Db::name('slide_item')->where('slide_id', $id)->count();
         if ($slidePostCount > 0) {
-            $this->error('此幻灯片有页面无法删除!');
+            $this->error('此标签库有页面无法删除!');
         }
 
         $data = [
