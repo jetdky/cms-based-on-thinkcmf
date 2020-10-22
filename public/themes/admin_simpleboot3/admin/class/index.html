@@ -64,7 +64,7 @@
                         <span class="label label-warning">暂无</span>
                     </if>
                 </td>
-                <td>{$vo.show_time}</td>
+                <td>{$vo.show_time|str_replace='T', ' ', ###}</td>
                 <td>{$vo.lang|getLang}</td>
                 <td>
                     <a class="btn btn-xs btn-primary"

@@ -30,7 +30,7 @@ class ClassController extends AdminBaseController
             $this->assign('keyword', $data['keyword']);
         }
 
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select();
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
@@ -85,6 +85,19 @@ class ClassController extends AdminBaseController
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+
+        //获得搜索分类
+        $tree = new Tree();
+        $parentId = $this->request->param("cid", 0, 'intval');
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option lang-data='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+        $this->assign('selectClass', $selectClass);
 
         // 获取分页显示
         //        $page = $list->render();
@@ -153,7 +166,6 @@ class ClassController extends AdminBaseController
     public function indexProduct(ClassModel $classModel, ImgService $imgService)
     {
         $data = $this->request->param();
-//        $pList = $classModel->where(['type' => $data['type'], 'parent_id' => 0])->order("order_num ASC")->select()->toArray();
 
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
@@ -167,7 +179,20 @@ class ClassController extends AdminBaseController
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
 
-        //        var_dump($arrayClass);die;
+        //获得搜索分类
+        $tree = new Tree();
+        $parentId = $this->request->param("cid", 0, 'intval');
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option lang-data='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+        $this->assign('selectClass', $selectClass);
+
+
         // 获取分页显示
         //        $page = $list->render();
         $this->assign('arrayClass', $list);
@@ -421,13 +446,8 @@ class ClassController extends AdminBaseController
 
     public function indexVideo(ClassModel $classModel, ImgService $imgService)
     {
-        //        $content = hook_one('admin_pacontent_default_view');
-        //
-        //        if (!empty($content)) {
-        //            return $content;
-        //        }
         $data = $this->request->param();
-
+        $array = [];
         $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
 
@@ -439,6 +459,19 @@ class ClassController extends AdminBaseController
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
+
+        //获得搜索分类
+        $tree = new Tree();
+        $parentId = $this->request->param("cid", 0, 'intval');
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option lang-data='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+        $this->assign('selectClass', $selectClass);
 
         // 获取分页显示
         //        $page = $list->render();
