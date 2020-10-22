@@ -279,11 +279,8 @@
                 <i class="fa fa-home"></i>
             </a>
             <if condition="cmf_auth_check(cmf_get_current_admin_id(),'user/AdminAsset/index')">
-                <a class="btn btn-sm btn-danger"
-                   href="javascript:openapp('{:url('user/AdminAsset/index')}','userAdminAssetindex','资源管理',true);"
-                   title="多语言切换"
-                   data-toggle="tooltip">
-                    <i class="fa fa-language"></i>
+                <a class="btn btn-sm btn-danger" title="清理runtime" href="javascript:openapp('{:url('admin/Setting/clearcache')}','index_clearcache','{:lang('ADMIN_SETTING_CLEARCACHE')}',true);">
+                    <i class="fa fa-trash-o"></i>
                 </a>
             </if>
 

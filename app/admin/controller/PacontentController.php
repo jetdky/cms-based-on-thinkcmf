@@ -45,9 +45,13 @@ class PacontentController extends AdminBaseController
         $data = $this->request->param();
         $where = [];
         if (isset($data['cid']) && $data['cid'] !== "") {
-            $where[] = ['cid', '=', $data['cid']];
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['cid', 'IN', $sonCategoryId];
             $parentId = $data['cid'];
-            //todo: 根据父类id获得所有子类id，当前只查询一级父类
         } else {
             $parentId = 0;
         }
@@ -68,6 +72,10 @@ class PacontentController extends AdminBaseController
         if (isset($data['is_recom']) && $data['is_recom'] !== "") {
             $where[] = ['is_recom', '=', $data['is_recom']];
             $this->assign('is_recom', $data['is_recom']);
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
         }
         $list = $pacontentModel->where($where)
             ->with(['pacontentImg', 'pacontentImg.imgs', 'paGetClass'])

@@ -378,4 +378,10 @@ class UserController extends AdminBaseController
             $this->error('数据传入失败！');
         }
     }
+
+    public function deleteRuntime()
+    {
+        cmf_clear_cache();
+        $this->success('成功');
+    }
 }

@@ -24,20 +24,30 @@ class ClassController extends AdminBaseController
     public function index(ClassModel $classModel, ImgService $imgService)
     {
         $data = $this->request->param();
+        $array = [];
+        $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
-        if (!empty($data['keyword'])) {
-            $where[] = array('name', 'like', '%' . $data['keyword'] . '%');
-            $this->assign('keyword', $data['keyword']);
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
         }
-
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select();
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if ($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            } elseif ($v['parent_id'] && $v['level'] == 3) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
@@ -74,14 +84,29 @@ class ClassController extends AdminBaseController
     {
         $data = $this->request->param();
 
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $where = [];
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if ($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            } elseif ($v['parent_id'] && $v['level'] == 3) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
@@ -122,11 +147,28 @@ class ClassController extends AdminBaseController
     {
         $data = $this->request->param();
 
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $where = [];
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
         foreach ($list as $k => $v) {
             if ($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
@@ -165,23 +207,38 @@ class ClassController extends AdminBaseController
 
     public function indexProduct(ClassModel $classModel, ImgService $imgService)
     {
+        //TODO: 搜索bung  搜索第二个一级分类会出现所有一级分类
         $data = $this->request->param();
-
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $where = [];
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
+//        halt($classModel->getLastSql());
         $list = build_category_tree($list);
-
         foreach ($list as $k => $v) {
-            if ($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            } elseif ($v['parent_id'] && $v['level'] == 3) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }
 
         //获得搜索分类
         $tree = new Tree();
-        $parentId = $this->request->param("cid", 0, 'intval');
+//        $parentId = $this->request->param("cid", 0, 'intval'); 搜索时获得
         $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
@@ -448,14 +505,29 @@ class ClassController extends AdminBaseController
     {
         $data = $this->request->param();
         $array = [];
-        $list = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
+        $where = [];
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
         $list = build_category_tree($list);
 
         foreach ($list as $k => $v) {
-            if ($v['parent_id'] && $v['level'] == 2) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
-            } elseif ($v['parent_id'] && $v['level'] == 3) {
-                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $list[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
             }
             $list[$k]['imgs'] = $imgService->read($v['id'], $v['type']);
         }

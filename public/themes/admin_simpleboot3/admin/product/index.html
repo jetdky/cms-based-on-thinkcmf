@@ -31,6 +31,15 @@
             <if condition="isset($is_recom) && $is_recom == 1">selected</if>
             >推荐</option>
         </select>
+        <select class="form-control" name="lang" style="width: 220px;">
+            <option value="">语言</option>
+            <option value="1"
+            <if condition="isset($lang) && $lang == 1">selected</if>
+            >中文</option>
+            <option value="0"
+            <if condition="isset($lang) && $lang == 0">selected</if>
+            >英文</option>
+        </select>
         <br><br>
         <input type="submit" class="btn btn-primary" value="搜索"/>
         <a class="btn btn-danger" href="{:url('Product/index')}">重置</a>

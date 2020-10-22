@@ -3,7 +3,7 @@
 
 function getTime($time)
 {
-    return date('Y-m-d H:i:s', $time?:0);
+    return date('Y-m-d H:i:s', $time ?: 0);
 }
 
 
@@ -66,4 +66,24 @@ function build_category_tree($array, $pid = 0, $level = 1)
         }
     }
     return $list;
+}
+
+/** 删除某文件夹下所有
+ * @param $path
+ */
+function clear_dir($path = null)
+{
+    if (is_dir($path)) {    //判断是否是目录
+        $p = scandir($path);     //获取目录下所有文件
+        foreach ($p as $value) {
+            if ($value != '.' && $value != '..') {    //排除掉当./和../
+                if (is_dir($path . '/' . $value)) {
+                    $this->clear_dir($path . '/' . $value);    //递归调用删除方法
+                    rmdir($path . '/' . $value);    //删除当前文件夹
+                } else {
+                    unlink($path . '/' . $value);    //删除当前文件
+                }
+            }
+        }
+    }
 }

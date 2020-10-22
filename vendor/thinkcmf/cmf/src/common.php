@@ -355,12 +355,12 @@ function cmf_clear_cache()
                         if (is_dir($tDir)) {
                             array_push($dirs, $tDir);
                         } else {
-//                            @unlink($tDir);
+                            @unlink($tDir);
                         }
                     }
                 }
             } else {
-//                @unlink($dir);
+                @unlink($dir);
             }
         }
     }
