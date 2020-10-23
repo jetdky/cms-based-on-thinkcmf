@@ -44,6 +44,7 @@ function initTags(tagId, url) {
         data: data['data']
     });
 }
+
 function writeCurrentDate() {
     var now = new Date();
     var year = now.getFullYear(); //得到年份
@@ -61,10 +62,43 @@ function writeCurrentDate() {
     if (hour < 10) hour = "0" + hour;
     if (minu < 10) minu = "0" + minu;
     if (sec < 10) sec = "0" + sec;
-    if (MS < 100)MS = "0" + MS;
+    if (MS < 100) MS = "0" + MS;
     var arr_week = new Array("星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六");
     week = arr_week[day];
     var time = "";
     time = year + "-" + month + "-" + date + "T" + hour + ":" + minu + ":" + sec;
     $("[name='show_time']").val(time);
+}
+
+function deleImg(contentId, type) {
+    $(document).on("click", "[class='del-img']", function () {
+        var imgId = $(this).nextAll("input").attr('data-id');
+        imgId ? imgId = imgId : imgId = 0;
+        var ajaxContentId = contentId;
+        var ajaxType = type;
+        var that = this;
+        $.ajax({
+            url: "/admin/Img/delete",
+            type: 'get',
+            data: {
+                imgId: imgId,
+                contentId: ajaxContentId,
+                type: ajaxType
+            },
+            dataType: 'json',
+            success: function (res, status, xhr) {
+                if (res.code == 0) {
+                    $(that).parent().fadeOut(200);
+                    setTimeout(function () {
+                        $(that).parent().remove();
+                    }, 200)
+                } else {
+                    alert('删除失败，请与网站 管理员联系');
+                }
+            },
+            error: function (res, status, xhr) {
+                console.log('ajax图片删除失败');
+            }
+        });
+    });
 }

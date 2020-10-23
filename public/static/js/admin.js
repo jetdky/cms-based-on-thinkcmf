@@ -1,4 +1,4 @@
-; (function () {
+;(function () {
     //全局ajax处理
     $.ajaxSetup({
         complete: function (jqXHR) {
@@ -709,7 +709,7 @@
                 url: $this_js_address_select.data('url'),
                 type: 'POST',
                 dataType: 'JSON',
-                data: { id: id },
+                data: {id: id},
                 success: function (data) {
                     if (data.code == 1) {
                         if (data.data.areas.length > 0) {
@@ -752,6 +752,7 @@ function reloadPage(win) {
     var location = win.location;
     location.href = location.pathname + location.search;
 }
+
 /**
  * 获得当前日期，格式示例 ：2020-08-30 00:00:00
  */
@@ -988,9 +989,18 @@ function uploadMultiImage(dialog_title, container_selector, item_tpl_wrapper_id,
         var tpl = $('#' + item_tpl_wrapper_id).html();
         var html = '';
         var num = 0;
-        $('.img-box li').each(function () {
-            num++;
-        });
+        // $('.img-box li').each(function () {
+        //     num++;
+        // });
+        var arrayListName = $('.img-box li').last().children().nextAll("input").attr('name');
+        var regex2 = new RegExp("\\[(\\d+)\\]", "g");// [] 中括号
+        if(arrayListName == null){
+            arrayListName = '[0]';
+        }
+        var result = arrayListName.match(regex2);
+        var trimResult = result[0].replace('[', '');
+        trimResult = Number(trimResult.replace(']', ''));
+        num = ++trimResult;
         $.each(files, function (i, item) {
             var itemtpl = tpl;
             console.log(item);

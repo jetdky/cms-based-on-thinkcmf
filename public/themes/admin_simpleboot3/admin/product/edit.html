@@ -54,7 +54,7 @@
                                     <img src="/upload/{$vo['thumb_img']}">
                                     <img class="del-img" src="/static/images/cancel.png">
                                     <input type="hidden" name="img_list[{$key}]"
-                                           value="{$vo['origi_img']}">
+                                           value="{$vo['origi_img']}" data-id="{$vo['id']}">
                                 </li>
                             </volist>
                         </ul>
@@ -79,7 +79,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-2 col-sm-10">
                         <!-- js-ajax-submit -->
-                        <button type="submit" class="btn btn-primary">{:lang('SAVE')}</button>
+                        <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
                         <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
                     </div>
                 </div>
@@ -184,6 +184,7 @@
     editorcontent2.render('note');
     initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$product['id'].'/typeId/'.$type)}");
     clickHide('is_auto_seo', 'seo', 1);
+    deleImg("{$product['id']}", "{$type}");
 </script>
 </body>
 </html>

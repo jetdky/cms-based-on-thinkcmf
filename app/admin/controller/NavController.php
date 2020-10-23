@@ -13,6 +13,7 @@ namespace app\admin\controller;
 use cmf\controller\AdminBaseController;
 use app\admin\model\UserNavModel;
 use think\Db;
+use tree\Tree;
 
 /**
  * Class NavController 导航类别管理控制器
@@ -42,8 +43,14 @@ class NavController extends AdminBaseController
         }
 
         $navModel = new UserNavModel();
-
         $navs = $navModel->select();
+        $navs = build_category_tree($navs);
+        foreach ($navs as $k => $v) {
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $navs[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }
+        }
+
         $this->assign('navs', $navs);
 
         return $this->fetch();
@@ -65,6 +72,18 @@ class NavController extends AdminBaseController
      */
     public function add()
     {
+        //获得所有分类用于填写
+        $navModel = new UserNavModel();
+        $navs = $navModel->select();
+        $navs = build_category_tree($navs);
+        foreach ($navs as $k => $v) {
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $navs[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }
+        }
+
+        $this->assign('navs', $navs);
+
         return $this->fetch();
     }
 
@@ -86,7 +105,6 @@ class NavController extends AdminBaseController
 
         $navModel = new UserNavModel();
         $arrData  = $this->request->post();
-        halt($arrData);
 
         $navModel->allowField(true)->insert($arrData);
         $this->success(lang("EDIT_SUCCESS"), url("nav/index"));
@@ -114,6 +132,15 @@ class NavController extends AdminBaseController
         $objNavCat = $navModel->where("id", $intId)->find();
         $arrNavCat = $objNavCat ? $objNavCat->toArray() : [];
 
+        $navs = $navModel->select();
+        $navs = build_category_tree($navs);
+        foreach ($navs as $k => $v) {
+            if ($v['parent_id'] && $v['level'] >= 2) {
+                $navs[$k]['name'] = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $v['level'] - 1) . $v['name'];
+            }
+        }
+
+        $this->assign('navs', $navs);
         $this->assign($arrNavCat);
         return $this->fetch();
     }

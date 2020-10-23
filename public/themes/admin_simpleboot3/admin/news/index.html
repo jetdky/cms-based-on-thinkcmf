@@ -8,7 +8,7 @@
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url('News/index')}">
         <input type="text" class="form-control" name="keyword" style="width: 220px;"
-               value="{:input('request.keyword/s','')}" placeholder="请输入新闻标题">
+               value="{:input('request.keyword/s','')}" placeholder="请输入文章标题">
         <select class="form-control" name="cid" style="width: 220px;">
             <option value="">全部分类</option>
             {$selectClass}
@@ -158,18 +158,13 @@
 <script src="__STATIC__/js/admin.js"></script>
 <script>
     window.onload = function () {
-    <
-        foreach
-        name = "list"
-        item = "vo" >
-            layer.photos({
+        <foreach name = "list" item = "vo" >
+        layer.photos({
                 photos: "[name='imgPreview_{$vo.id}']",
                 shadeClose: true,
                 closeBtn: 2,
                 anim: 0
-            });
-    <
-        /foreach>
+            });</foreach>
     }
 </script>
 <script>

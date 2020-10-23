@@ -27,12 +27,14 @@ class ClassController extends AdminBaseController
         $array = [];
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
+        $whereSearch = [];
         if (isset($data['cid']) && $data['cid'] !== "") {
             $sonCategory = build_category_tree($result, $data['cid']);
             $sonCategoryId = [];
             foreach ($sonCategory as $value){
                 $sonCategoryId[] = $value['id'];
             }
+            $sonCategoryId[] = $data['cid'];
             $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
             $parentId = $data['cid'];
         } else {
@@ -40,6 +42,7 @@ class ClassController extends AdminBaseController
         }
         if(isset($data['lang']) && $data['lang'] !== ""){
             $where[] = ['lang', '=', $data['lang']];
+            $whereSearch[] = ['lang', '=', $data['lang']];
             $this->assign('lang', $data['lang']);
         }
         $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
@@ -55,7 +58,7 @@ class ClassController extends AdminBaseController
         //获得搜索分类
         $tree = new Tree();
         $parentId = $this->request->param("cid", 0, 'intval');
-        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data['type']])->where($whereSearch)->order(["order_num" => "ASC"])->select();
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
@@ -86,12 +89,14 @@ class ClassController extends AdminBaseController
 
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
+        $whereSearch = [];
         if (isset($data['cid']) && $data['cid'] !== "") {
             $sonCategory = build_category_tree($result, $data['cid']);
             $sonCategoryId = [];
             foreach ($sonCategory as $value){
                 $sonCategoryId[] = $value['id'];
             }
+            $sonCategoryId[] = $data['cid'];
             $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
             $parentId = $data['cid'];
         } else {
@@ -99,6 +104,7 @@ class ClassController extends AdminBaseController
         }
         if(isset($data['lang']) && $data['lang'] !== ""){
             $where[] = ['lang', '=', $data['lang']];
+            $whereSearch[] = ['lang', '=', $data['lang']];
             $this->assign('lang', $data['lang']);
         }
         $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
@@ -114,7 +120,7 @@ class ClassController extends AdminBaseController
         //获得搜索分类
         $tree = new Tree();
         $parentId = $this->request->param("cid", 0, 'intval');
-        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data['type']])->where($whereSearch)->order(["order_num" => "ASC"])->select();
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
@@ -149,12 +155,14 @@ class ClassController extends AdminBaseController
 
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
+        $whereSearch= [];
         if (isset($data['cid']) && $data['cid'] !== "") {
             $sonCategory = build_category_tree($result, $data['cid']);
             $sonCategoryId = [];
             foreach ($sonCategory as $value){
                 $sonCategoryId[] = $value['id'];
             }
+            $sonCategoryId[] = $data['cid'];
             $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
             $parentId = $data['cid'];
         } else {
@@ -162,6 +170,7 @@ class ClassController extends AdminBaseController
         }
         if(isset($data['lang']) && $data['lang'] !== ""){
             $where[] = ['lang', '=', $data['lang']];
+            $whereSearch[] = ['lang', '=', $data['lang']];
             $this->assign('lang', $data['lang']);
         }
         $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
@@ -175,7 +184,7 @@ class ClassController extends AdminBaseController
         //获得搜索分类
         $tree = new Tree();
         $parentId = $this->request->param("cid", 0, 'intval');
-        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data['type']])->where($whereSearch)->order(["order_num" => "ASC"])->select();
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
@@ -211,12 +220,14 @@ class ClassController extends AdminBaseController
         $data = $this->request->param();
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
+        $whereSearch = [];
         if (isset($data['cid']) && $data['cid'] !== "") {
             $sonCategory = build_category_tree($result, $data['cid']);
             $sonCategoryId = [];
             foreach ($sonCategory as $value){
                 $sonCategoryId[] = $value['id'];
             }
+            $sonCategoryId[] = $data['cid'];
             $where[] = ['parent_id', 'IN', $sonCategoryId ?: $data['cid']];
             $parentId = $data['cid'];
         } else {
@@ -224,6 +235,7 @@ class ClassController extends AdminBaseController
         }
         if(isset($data['lang']) && $data['lang'] !== ""){
             $where[] = ['lang', '=', $data['lang']];
+            $whereSearch[] = ['lang', '=', $data['lang']];
             $this->assign('lang', $data['lang']);
         }
         $list = $classModel->where(['type' => $data['type']])->where($where)->order("order_num ASC")->select()->toArray();
@@ -239,7 +251,7 @@ class ClassController extends AdminBaseController
         //获得搜索分类
         $tree = new Tree();
 //        $parentId = $this->request->param("cid", 0, 'intval'); 搜索时获得
-        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data['type']])->where($whereSearch)->order(["order_num" => "ASC"])->select();
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;

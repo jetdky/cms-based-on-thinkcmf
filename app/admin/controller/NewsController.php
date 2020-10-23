@@ -37,11 +37,16 @@ class NewsController extends AdminBaseController
     public function index(NewsModel $newsModel)
     {
         $tree = new Tree();
-        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
 
         $data = $this->request->param();
         $where = [];
+        $whereSearch = [];
+        if (isset($data['lang']) && $data['lang'] !== "") {
+            $whereSearch[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $result = Db::name('class')->where(["type" => $this->categoryType])->where($whereSearch)->order(["order_num" => "ASC"])->select();
         if (isset($data['keyword']) && $data['keyword'] !== "") {
             $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
             $this->assign('keyword', $data['keyword']);
@@ -52,6 +57,7 @@ class NewsController extends AdminBaseController
             foreach ($sonCategory as $value){
                 $sonCategoryId[] = $value['id'];
             }
+            $sonCategoryId[] = $data['cid'];
             $where[] = ['cid', 'IN', $sonCategoryId];
             $parentId = $data['cid'];
         } else {

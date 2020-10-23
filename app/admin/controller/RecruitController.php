@@ -6,27 +6,23 @@ namespace app\admin\controller;
 
 use app\admin\model\ClassModel;
 use app\admin\model\ImgContentModel;
-use app\admin\model\LinkModel;
-use app\admin\model\MessageModel;
-use app\admin\model\PacontentModel;
-use app\admin\model\ProductModel;
+use app\admin\model\RecruitModel;
 use app\admin\model\TagContentModel;
-use app\admin\model\VideoModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
 use app\admin\service\TagService;
-use app\admin\validate\PacontentValidate;
+use app\admin\validate\RecruitValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;
-use think\db\Query;
 use tree\Tree;
 
-class PacontentController extends AdminBaseController
+class RecruitController extends AdminBaseController
 {
 
-    public $type = 5;
-    public $categoryType = 1;
+    public $type = 88;   //图片分类
+
+//    public $categoryType = 2;  //分类分类，区别分类
 
     public function initialize()
     {
@@ -34,42 +30,16 @@ class PacontentController extends AdminBaseController
         $this->assign("type", $this->type);
     }
 
-    public function index(PacontentModel $pacontentModel)
+    public function index(RecruitModel $RecruitModel)
     {
-
-        $tree = new Tree();
-        $parentId = $this->request->param("cid", 0, 'intval');
         $array = [];
 
         $data = $this->request->param();
         $where = [];
-        $whereSearch = [];
-        if (isset($data['lang']) && $data['lang'] !== "") {
-            $whereSearch[] = ['lang', '=', $data['lang']];
-            $this->assign('lang', $data['lang']);
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
+            $this->assign('keyword', $data['keyword']);
         }
-        $result = Db::name('class')->where(["type" => $this->categoryType])->where($whereSearch)->order(["order_num" => "ASC"])->select();
-        if (isset($data['cid']) && $data['cid'] !== "") {
-            $sonCategory = build_category_tree($result, $data['cid']);
-            $sonCategoryId = [];
-            foreach ($sonCategory as $value) {
-                $sonCategoryId[] = $value['id'];
-            }
-            $sonCategoryId[] = $data['cid'];
-            $where[] = ['cid', 'IN', $sonCategoryId];
-            $parentId = $data['cid'];
-        } else {
-            $parentId = 0;
-        }
-
-        //根据上次搜索分类选中分类
-        foreach ($result as $r) {
-            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[] = $r;
-        }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
-        $tree->init($array);
-        $selectClass = $tree->getTree(0, $str);
 
         if (isset($data['status']) && $data['status'] !== "") {
             $where[] = ['status', '=', $data['status']];
@@ -81,17 +51,16 @@ class PacontentController extends AdminBaseController
         }
         if (isset($data['lang']) && $data['lang'] !== "") {
             $where[] = ['lang', '=', $data['lang']];
-            $whereSearch[] = ['lang', '=', $data['lang']];
             $this->assign('lang', $data['lang']);
         }
-        $list = $pacontentModel->where($where)
-            ->with(['pacontentImg', 'pacontentImg.imgs', 'paGetClass'])
+        $list = $RecruitModel->where($where)
+            ->with(['recruitImg', 'recruitImg.imgs'])
             ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
-        $this->assign("selectClass", $selectClass);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -107,36 +76,38 @@ class PacontentController extends AdminBaseController
         $tree = new Tree();
         $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $order_num = $FunctionService->get_order_num('Pacontent');
-        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
-        $array = [];
-        foreach ($result as $r) {
-            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[] = $r;
-        }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
-        $tree->init($array);
-        $selectClass = $tree->getTree(0, $str);
-        $this->assign("selectClass", $selectClass);
+//        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
+        $order_num = $FunctionService->get_order_num('Recruit');
+//        $array = [];
+//        foreach ($result as $r) {
+//            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+//            $array[] = $r;
+//        }
+//        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+//        $tree->init($array);
+//        $selectClass = $tree->getTree(0, $str);
+//        $this->assign("selectClass", $selectClass);
         $this->assign("order_num", $order_num);
         return $this->fetch();
     }
 
 
-    public function addPost(PacontentModel $pacontentModel, PacontentValidate $pacontentValidate, ImgService $imgService)
+    public function addPost(RecruitModel $RecruitModel, RecruitValidate $RecruitValidate, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         $data = $this->request->param();
-        $result = $this->validate($data, 'Pacontent.add');
+        $data['show_time'] = str_replace('T', ' ', $data['show_time']);
+        $result = $this->validate($data, 'Recruit.add');
         if ($result !== true) {
             $this->error($result);
         }
-        Db::transaction(function () use ($pacontentModel, $imgService, $data) {
-            $pacontentModel->allowField(true)->save($data);
+        Db::transaction(function () use ($RecruitModel, $imgService, $tagService, $seoService, $data) {
+            $RecruitModel->allowField(true)->save($data);
             if (isset($data['img_list'])) {
-                $imgService->doSave($data['img_list'], $data['type'], $pacontentModel->id);
+                $imgService->doSave($data['img_list'], $data['type'], $RecruitModel->id);
             }
+
         });
-        $this->success("添加成功！", url("Pacontent/index", ['type' => $this->type]));
+        $this->success("添加成功！", url("Recruit/index", ['type' => $this->type]));
     }
 
     /**
@@ -152,39 +123,20 @@ class PacontentController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function edit(PacontentModel $pacontentModel)
+    public function edit(RecruitModel $RecruitModel)
     {
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
-        $pacontent = $pacontentModel->where("id", $id)->find();
-        $paclass = DB::name('class')->where(['id' => $pacontent['cid']])->find();
-
-        $tree = new Tree();
-        if ($paclass['parent_id'] == 0) {
-            $parentId = $paclass['id'];
-        } else {
-            $parentId = $paclass['parent_id'];
-        }
+        $Recruit = $RecruitModel->where("id", $id)->find();
         $imgService = new ImgService();
-        $pacontent['imgs'] = $imgService->read($id, $this->type);
-        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
-        $array = [];
-        foreach ($result as $r) {
-            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
-            $array[] = $r;
-        }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
-        $tree->init($array);
-        $selectClass = $tree->getTree(0, $str);
-        $this->assign("selectClass", $selectClass);
-        $this->assign("pacontent", $pacontent);
-
+        $Recruit['imgs'] = $imgService->read($id, $this->type);
+        $this->assign("recruit", $Recruit);
         return $this->fetch();
     }
 
 
-    public function editPost(PacontentModel $pacontentModel, ImgService $imgService, TagService $tagService, SeoService $seoService)
+    public function editPost(RecruitModel $RecruitModel, ImgService $imgService, TagService $tagService, SeoService $seoService)
     {
         if ($this->request->isPost()) {
             $data = $this->request->param();
@@ -193,18 +145,21 @@ class PacontentController extends AdminBaseController
                 // 验证失败 输出错误信息
                 $this->error($result);
             } else {
-                Db::transaction(function () use ($pacontentModel, $imgService, $tagService, $seoService, $data) {
+                Db::transaction(function () use ($RecruitModel, $imgService, $tagService, $seoService, $data) {
                     if (isset($data['img_list'])) {
                         $imgService->delete($data['id'], $data['type']);
                         $imgService->doSave($data['img_list'], $data['type'], $data['id']);
                     } else {
                         $imgService->delete($data['id'], $data['type']);
                     }
-                    $result = $pacontentModel->allowField(true)->update($data);
+
+
+
+                    $result = $RecruitModel->allowField(true)->update($data);
                 });
 
                 if ($result !== false) {
-                    $this->success("保存成功！", url("Pacontent/index", ['type' => $data['type']]));
+                    $this->success("保存成功！", url("Recruit/index", ['type' => $data['type']]));
                 } else {
                     $this->error("保存失败！");
                 }
@@ -216,7 +171,7 @@ class PacontentController extends AdminBaseController
     public function delete()
     {
         $id = $this->request->param('id', 0, 'intval');
-        if (Db::name('pacontent')->delete($id) !== false) {
+        if (Db::name('Recruit')->delete($id) !== false) {
             $this->success("删除成功！");
         } else {
             $this->error("删除失败！");
@@ -230,9 +185,9 @@ class PacontentController extends AdminBaseController
     {
         $id = $this->request->param('id', 0, 'intval');
         if (!empty($id)) {
-            $result = Db::name('pacontent')->where(["id" => $id])->setField('status', '0');
+            $result = Db::name('Recruit')->where(["id" => $id])->setField('status', '0');
             if ($result !== false) {
-                $this->success("内容停用成功！", url("Pacontent/index"));
+                $this->success("内容停用成功！", url("Recruit/index"));
             } else {
                 $this->error('内容停用失败！');
             }
@@ -248,9 +203,9 @@ class PacontentController extends AdminBaseController
     {
         $id = $this->request->param('id', 0, 'intval');
         if (!empty($id)) {
-            $result = Db::name('pacontent')->where(["id" => $id])->setField('status', '1');
+            $result = Db::name('Recruit')->where(["id" => $id])->setField('status', '1');
             if ($result !== false) {
-                $this->success("内容显示成功！", url("Pacontent/index"));
+                $this->success("内容显示成功！", url("Recruit/index"));
             } else {
                 $this->error('内容显示失败！');
             }
@@ -260,9 +215,9 @@ class PacontentController extends AdminBaseController
     }
 
 
-    public function listOrder(PacontentModel $pacontentModel)
+    public function listOrder(RecruitModel $RecruitModel)
     {
-        parent::listOrders($pacontentModel);
+        parent::listOrders($RecruitModel);
         $this->success("排序更新成功！");
     }
 
@@ -279,19 +234,19 @@ class PacontentController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function toggle(PacontentModel $pacontentModel)
+    public function toggle(RecruitModel $RecruitModel)
     {
         $data = $this->request->param();
 
         if (isset($data['ids']) && !empty($data["display"])) {
             $ids = $this->request->param('ids/a');
-            $pacontentModel->where('id', 'in', $ids)->update(['status' => 1]);
+            $RecruitModel->where('id', 'in', $ids)->update(['status' => 1]);
             $this->success("更新成功！");
         }
 
         if (isset($data['ids']) && !empty($data["hide"])) {
             $ids = $this->request->param('ids/a');
-            $pacontentModel->where('id', 'in', $ids)->update(['status' => 0]);
+            $RecruitModel->where('id', 'in', $ids)->update(['status' => 0]);
             $this->success("更新成功！");
         }
 
@@ -299,32 +254,32 @@ class PacontentController extends AdminBaseController
     }
 
     /**
-     * @param PacontentModel $pacontentModel
+     * @param RecruitModel $RecruitModel
      * 批量删除
      */
 
-    public function deleteAll(PacontentModel $pacontentModel)
+    public function deleteAll(RecruitModel $RecruitModel)
     {
-        parent::deleteAlls($pacontentModel);
+        parent::deleteAlls($RecruitModel);
         $this->success('删除成功！');
     }
 
     /**推荐&&取消推荐
-     * @param PacontentModel $pacontentModel
+     * @param ProductModel $productModel
      * @throws \think\Exception
      * @throws \think\exception\PDOException
      */
-    public function recom(PacontentModel $pacontentModel)
+    public function recom(RecruitModel $RecruitModel)
     {
         $data = $this->request->param();
-        $pacontentModel->where('id', $data['id'])->update(['is_recom' => 1]);
+        $RecruitModel->where('id', $data['id'])->update(['is_recom' => 1]);
         $this->success('推荐成功！');
     }
 
-    public function cancelRecom(PacontentModel $pacontentModel)
+    public function cancelRecom(RecruitModel $RecruitModel)
     {
         $data = $this->request->param();
-        $pacontentModel->where('id', $data['id'])->update(['is_recom' => 0]);
+        $RecruitModel->where('id', $data['id'])->update(['is_recom' => 0]);
         $this->success('取消推荐成功！');
     }
 
@@ -334,7 +289,7 @@ class PacontentController extends AdminBaseController
      */
     public function getClassList(ClassModel $classModel)
     {
-        $list = $classModel->where(['type' => $this->categoryType])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => 2])->order("order_num ASC")->select()->toArray();
         return json_encode($list);
     }
 
@@ -346,27 +301,30 @@ class PacontentController extends AdminBaseController
     {
         $data = $this->request->param();
         $id_array = explode(',', $data['id']);
-        Db::name('pacontent')->whereIn('id', $id_array)->update(['cid' => $data['cid'], 'lang' => $data['lang']]);
+        Db::name('Recruit')->whereIn('id', $id_array)->update(['cid' => $data['cid'], 'lang' => $data['lang']]);
         return true;
+
     }
 
     /**
      * ajax 批量复制
      * @param
      */
-    public function saveCopy(PacontentModel $pacontentModel, ImgContentModel $imgContentModel, TagContentModel $tagContentModel)
+    public function saveCopy(RecruitModel $RecruitModel, ImgContentModel $imgContentModel, TagContentModel $tagContentModel)
     {
         $data = $this->request->param();
         $id_array = explode(',', $data['id']);
-        $pacontentData = $pacontentModel->whereIn('id', $id_array)->select()->toArray();
-        foreach ($pacontentData as $k => $v) {
+        $RecruitData = $RecruitModel->whereIn('id', $id_array)
+            ->with(['RecruitImg', 'RecruitImg.imgs', 'RecruitClass'])
+            ->order("order_num ASC")->select()->toArray();
+        foreach ($RecruitData as $k => $v) {
             $imgs = $imgContentModel->where(['content_id' => $v['id'], 'type' => $this->type])->select()->toArray();
             $tags = $tagContentModel->where(['content_id' => $v['id'], 'type' => $this->type])->select()->toArray();
             unset($v['id']);
             $v['cid'] = $data['cid'];
             $v['lang'] = $data['lang'];
-            $pacontentModel->isUpdate(false)->data($v, true)->save($v);
-            $id = $pacontentModel->id;
+            $RecruitModel->isUpdate(false)->data($v, true)->save($v);
+            $id = $RecruitModel->id;
             if (!empty($imgs)) {
                 $b = [];
                 foreach ($imgs as $vimg) {
@@ -389,4 +347,6 @@ class PacontentController extends AdminBaseController
         }
         return true;
     }
+
+
 }

@@ -6,6 +6,7 @@ use app\admin\model\ImgModel;
 use app\admin\model\ImgContentModel;
 use think\facade\Env;
 use think\Image;
+
 class ImgService
 {
     /**
@@ -21,22 +22,23 @@ class ImgService
     {
         $imgRes = true;
         $imgContentRes = true;
+        $i = 0;
         // $order = cal_array_order_num($imgList, 'Img', $typeId);
         // for ($i = 0; $i < count($imgList); $i++) {
         //     if (!isset($isCover[$i])) {
         //         $isCover[$i] = 0;
         //     }
         // }
-        for ($i = 0; $i < count($imgList) && $imgRes && $imgContentRes; $i++) {
+        foreach ($imgList as $value) {
             //存储图片
             // $imgArrayData['order_num'] = $order[$i];
             // $imgArrayData['is_cover'] = $isCover[$i];
-            $imgArrayData['origi_img'] = $imgList[$i];
-            $imgNameBeforeLastSlash = substr($imgList[$i], 0, strrpos($imgList[$i], "/") + 1);
-            $thumbName = str_replace("/", "t_", strrchr($imgList[$i], "/"));
-            $originDir =  Env::get('root_path'). 'public/upload/';
-            $image = Image::open($originDir . $imgList[$i]);
-            $image->thumb(150, 150)->save($originDir. $imgNameBeforeLastSlash . $thumbName);
+            $imgArrayData['origi_img'] = $value;
+            $imgNameBeforeLastSlash = substr($value, 0, strrpos($value, "/") + 1);
+            $thumbName = str_replace("/", "t_", strrchr($value, "/"));
+            $originDir = Env::get('root_path') . 'public/upload/';
+            $image = Image::open($originDir . $value);
+            $image->thumb(150, 150)->save($originDir . $imgNameBeforeLastSlash . $thumbName);
             $imgArrayData['thumb_img'] = $imgNameBeforeLastSlash . $thumbName;
             $imgArrayData['show_time'] = time();
             $ImgModel = new ImgModel();
@@ -49,6 +51,7 @@ class ImgService
             $imgContentArrayData['type'] = $typeId;
             $imgContentArrayData['content_id'] = $id;
             $imgContentRes = $ImgContentModel->save($imgContentArrayData);
+            $i++;
         }
         if ($i == count($imgList)) {
             return true;
@@ -86,4 +89,20 @@ class ImgService
         return $imgContentModel->where('content_id', $id)->where('type', $typeId)->delete();
     }
 
+    public function deleteImgByName($imgId, $contentId, $type)
+    {
+        //删除对应关系即可
+        $imgContentModel = new ImgContentModel();
+        //存在关联关系
+        if ($imgId) {
+            $bool = $imgContentModel->where('img_id', $imgId)
+                ->where('type', $type)
+                ->where('content_id', $contentId)
+                ->delete();
+        } else {
+            //不存在关联关系
+            $bool = true;
+        }
+        return $bool;
+    }
 }
