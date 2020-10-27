@@ -15,7 +15,7 @@ class ProductValidate extends Validate
     ];
     protected $message = [
         'name.require' => '产品名称不能为空',
-        'cid.unique'  => '产品分类不能为空',
+        'cid.require'  => '产品分类不能为空',
     ];
 
     protected $scene = [

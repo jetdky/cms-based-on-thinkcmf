@@ -167,6 +167,9 @@
     initTags('#tagAdd', "{:url('/admin/Tag/InitTags')}");
     clickHide('is_auto_seo', 'seo', 1);
     writeCurrentDate();
+    deleImg("0", "{$type}");
+    toggleCategoryByLang('cid');
+
 </script>
 </body>
 </html>

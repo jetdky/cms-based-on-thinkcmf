@@ -35,8 +35,8 @@ class IndexController extends AdminBaseController
      */
     public function index()
     {
-        $content = hook_one('admin_index_index_view');
 
+        $content = hook_one('admin_index_index_view');
         if (!empty($content)) {
             return $content;
         }

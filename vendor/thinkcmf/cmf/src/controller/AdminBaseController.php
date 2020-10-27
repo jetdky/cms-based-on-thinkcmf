@@ -36,11 +36,24 @@ class AdminBaseController extends BaseController
                 return $this->redirect(url("admin/Public/login"));
             }
         }
+
+        //如果是超级管理员则给管理菜单权限
+        $super_admin_authorized_by_DKY = 0;
+        $custom_admin_id = session('ADMIN_ID');
+        if ($custom_admin_id != 1) {
+            $custom_role_id = Db::name('role_user')->where('user_id', $custom_admin_id)->value('role_id');
+        }else{
+            $custom_role_id = 1;
+        }
+        if ($custom_role_id == 1) {
+            $super_admin_authorized_by_DKY = 1;
+        }
+        $this->assign('super_admin_authorized_by_DKY', $super_admin_authorized_by_DKY);
     }
 
     public function _initializeView()
     {
-        $cmfAdminThemePath    = config('template.cmf_admin_theme_path');
+        $cmfAdminThemePath = config('template.cmf_admin_theme_path');
         $cmfAdminDefaultTheme = cmf_get_current_admin_theme();
 
         $themePath = "{$cmfAdminThemePath}{$cmfAdminDefaultTheme}";
@@ -51,17 +64,17 @@ class AdminBaseController extends BaseController
         $cdnSettings = cmf_get_option('cdn_settings');
         if (empty($cdnSettings['cdn_static_root'])) {
             $viewReplaceStr = [
-                '__ROOT__'     => $root,
-                '__TMPL__'     => "{$root}/{$themePath}",
-                '__STATIC__'   => "{$root}/static",
+                '__ROOT__' => $root,
+                '__TMPL__' => "{$root}/{$themePath}",
+                '__STATIC__' => "{$root}/static",
                 '__WEB_ROOT__' => $root
             ];
         } else {
-            $cdnStaticRoot  = rtrim($cdnSettings['cdn_static_root'], '/');
+            $cdnStaticRoot = rtrim($cdnSettings['cdn_static_root'], '/');
             $viewReplaceStr = [
-                '__ROOT__'     => $root,
-                '__TMPL__'     => "{$cdnStaticRoot}/{$themePath}",
-                '__STATIC__'   => "{$cdnStaticRoot}/static",
+                '__ROOT__' => $root,
+                '__TMPL__' => "{$cdnStaticRoot}/{$themePath}",
+                '__STATIC__' => "{$cdnStaticRoot}/static",
                 '__WEB_ROOT__' => $cdnStaticRoot
             ];
         }
@@ -91,10 +104,10 @@ class AdminBaseController extends BaseController
             return true;
         }
 
-        $module     = $this->request->module();
+        $module = $this->request->module();
         $controller = $this->request->controller();
-        $action     = $this->request->action();
-        $rule       = $module . $controller . $action;
+        $action = $this->request->action();
+        $rule = $module . $controller . $action;
 
         $notRequire = ["adminIndexindex", "adminMainindex"];
         if (!in_array($rule, $notRequire)) {

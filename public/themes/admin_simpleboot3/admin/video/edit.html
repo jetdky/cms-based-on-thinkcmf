@@ -3,19 +3,19 @@
 <body>
 <div class="wrap">
     <ul class="nav nav-tabs">
-        <li><a href="{:url('video/index')}">视频</a></li>
-        <li><a href="{:url('video/add')}">添加视频</a></li>
-        <li class="active"><a>编辑视频</a></li>
+        <li><a href="{:url('video/index')}">文件</a></li>
+        <li><a href="{:url('video/add')}">添加文件</a></li>
+        <li class="active"><a>编辑文件</a></li>
     </ul>
     <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('video/editPost')}">
         <div class="form-group">
-            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>视频名称</label>
+            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>文件名称</label>
             <div class="col-md-6 col-sm-10">
                 <input type="text" class="form-control" id="input-user_login" name="name" value="{$video['name']}">
             </div>
         </div>
         <div class="form-group">
-            <label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>视频分类</label>
+            <label for="input-user_email" class="col-sm-2 control-label"><span class="form-required">*</span>文件分类</label>
             <div class="col-md-6 col-sm-10">
                 <select name="cid" id="js-smtpsecure" class="form-control">
                     {$selectClass}
@@ -24,35 +24,68 @@
         </div>
         <!--
         <div class="form-group">
-            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>视频简介</label>
+            <label for="input-user_login" class="col-sm-2 control-label"><span class="form-required">*</span>文件简介</label>
             <div class="col-md-6 col-sm-10">
                 <input type="text" class="form-control" id="input-user_login" name="content" value="{$video['content']}">
             </div>
         </div>
         -->
-        <div class="col-md-6 col-sm-10" id="previewVideoDiv">
-            <input type="hidden" class="form-control" id="input-video" name="path" value="admin/20201015/105490663ce2b2dabe8f5a40a12e86ab.mp4">
-            <a href="javascript:uploadOne('视频上传','#input-video','video');">上传视频</a>
+<!--        <div class="form-group">-->
+<!--                        <video id="previewVideo" height="200px" controls="">-->
+<!--                            <source src="/upload/{$video['path']}" type="video/mp4">-->
+<!--                        </video>-->
+<!--        </div>-->
 
-            <video id="previewVideo" height="200px" controls="">
-                <source src="../../../upload/admin/20201015/105490663ce2b2dabe8f5a40a12e86ab.mp4" type="video/mp4">
-            </video>
-        </div>
         <div class="form-group">
-            <label for="input-video" class="col-sm-2 control-label">视频</label>
-            <div class="col-md-6 col-sm-10">
+            <label for="input-video" class="col-sm-2 control-label">文件</label>
+            <div class="col-md-6 col-sm-10" id="previewVideoDiv">
                 <input type="text" class="form-control" id="input-video" name="path">
-                <a href="javascript:uploadOne('视频上传','#input-video','video');">上传视频</a>
+                <a href="javascript:uploadOne('文件上传','#input-video','file');">上传文件</a>
             </div>
         </div>
-        <div class="form-group">
-            <label for="input-image" class="col-sm-2 control-label">视频</label>
-            <div class="col-md-6 col-sm-10">
-<!--                <img src="{$Think.APP_PATH}{'/'.$pacontent['paphoto']}">-->
-                <input type="text" class="form-control" id="input-image" value="{$video['path']}" name="path">
-                <a href="javascript:uploadOne('视频上传','#input-video','video');">上传视频</a>
-            </div>
-        </div>
+<!--        <div class="form-group">-->
+<!--            <label for="input-image" class="col-sm-2 control-label">图片</label>-->
+<!--            <div class="col-md-6 col-sm-10">-->
+<!--                <input type="hidden" class="form-control" id="input-image">-->
+<!--                <a class="btn btn-primary"-->
+<!--                   href="javascript:uploadMultiImage('文件封面上传','#input-image', 'input-image');">文件封面上传</a>-->
+<!--                <ul class="img-box">-->
+<!--                    &lt;!&ndash; 存放预览图片 &ndash;&gt;-->
+<!--                    <volist name="$video['imgs']" id="vo">-->
+<!--                        <li class="img-list">-->
+<!--                            <img src="/upload/{$vo['thumb_img']}">-->
+<!--                            <img class="del-img" src="/static/images/cancel.png">-->
+<!--                            <input type="hidden" name="img_list[{$key}]"-->
+<!--                                   value="{$vo['origi_img']}" data-id="{$vo['id']}">-->
+<!--                        </li>-->
+<!--                    </volist>-->
+<!--                </ul>-->
+<!--            </div>-->
+<!--        </div>-->
+
+
+<!--        <div class="col-md-6 col-sm-10" id="previewVideoDiv">-->
+
+
+<!--            <video id="previewVideo" height="200px" controls="">-->
+<!--                <source src="/upload/{$video['path']}" type="video/mp4">-->
+<!--            </video>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="input-video" class="col-sm-2 control-label">文件</label>-->
+<!--            <div class="col-md-6 col-sm-10">-->
+<!--                <input type="text" class="form-control" id="input-video" name="path">-->
+<!--                <a href="javascript:uploadOne('文件上传','#input-video','video');">上传文件</a>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label for="input-image" class="col-sm-2 control-label">文件</label>-->
+<!--            <div class="col-md-6 col-sm-10">-->
+<!--&lt;!&ndash;                <img src="{$Think.APP_PATH}{'/'.$pacontent['paphoto']}">&ndash;&gt;-->
+<!--                <input type="text" class="form-control" id="input-image" value="{$video['path']}" name="path">-->
+<!--                <a href="javascript:uploadOne('文件上传','#input-video','video');">上传文件</a>-->
+<!--            </div>-->
+<!--        </div>-->
 
 
 
@@ -111,6 +144,9 @@
 <script type="text/javascript">
     var editorcontent = new baidu.editor.ui.Editor();
     editorcontent.render('content');
+    toggleCategoryByLang('cid');
+    deleImg("{$video['id']}", "{$type}");
+
 </script>
 </body>
 </html>

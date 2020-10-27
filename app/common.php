@@ -60,7 +60,7 @@ function build_category_tree($array, $pid = 0, $level = 1)
             //把数组放到list中
             $list[] = $value;
             //把这个节点从数组中移除,减少后续递归消耗
-            unset($array[$key]);
+//            unset($array[$key]);
             //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
             build_category_tree($array, $value['id'], $level + 1);
         }

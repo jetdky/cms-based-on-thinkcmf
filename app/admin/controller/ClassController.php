@@ -63,7 +63,7 @@ class ClassController extends AdminBaseController
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $str = "<option lang-data='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
 
@@ -86,6 +86,7 @@ class ClassController extends AdminBaseController
     public function indexPacontent(ClassModel $classModel, ImgService $imgService)
     {
         $data = $this->request->param();
+        $array = [];
 
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
@@ -152,6 +153,7 @@ class ClassController extends AdminBaseController
     public function indexNews(ClassModel $classModel, ImgService $imgService)
     {
         $data = $this->request->param();
+        $array = [];
 
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
@@ -216,8 +218,9 @@ class ClassController extends AdminBaseController
 
     public function indexProduct(ClassModel $classModel, ImgService $imgService)
     {
-        //TODO: 搜索bung  搜索第二个一级分类会出现所有一级分类
         $data = $this->request->param();
+        $array = [];
+
         $result = $classModel->where(['type' => $data['type']])->order("order_num ASC")->select()->toArray();
         $where = [];
         $whereSearch = [];
@@ -286,7 +289,7 @@ class ClassController extends AdminBaseController
         $data = $this->request->param();
         $order_num = $FunctionService->get_order_num('class', $data['type']);
         $tree = new Tree();
-        $parentId = $this->request->param("parent_id", 0, 'intval');
+        $parentId = @$data['parent_id'] ?: 0;
         $result = Db::name('class')->where(["type" => $data])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
@@ -296,6 +299,7 @@ class ClassController extends AdminBaseController
         $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
+        $this->assign("lang", @$data['lang'] ?: 1);
         $this->assign("selectClass", $selectClass);
         $this->assign("type", $data['type']); //1为内容的分类
         $this->assign('order_num', $order_num);
@@ -331,7 +335,7 @@ class ClassController extends AdminBaseController
             }
         });
 
-        $this->success("添加成功！", url("Class/index", ['type' => $data['type']]));
+        $this->success("添加成功！", url("Class/add", ['type' => $this->type, 'parent_id' => $data['parent_id'], 'lang' => $data['lang']]));
     }
 
     /**

@@ -179,10 +179,10 @@ return [
     "MESSAGE_PHONE"                      => '电话',
     "MESSAGE_ADDRESS"                    => '地址',
     "MESSAGE_STATUS"                     => '状态',
-    //视频
-    "VIDEO_NAME"                         => '视频名称',
+    //文件
+    "VIDEO_NAME"                         => '文件名称',
     "VIDEO_STATUS"                       => '是否显示',
-    "VIDEO_CONTENT"                      => '视频介绍',
+    "VIDEO_CONTENT"                      => '文件介绍',
     "VIDEO_TIME"                         => '添加时间',
 
 

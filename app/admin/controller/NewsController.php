@@ -105,9 +105,9 @@ class NewsController extends AdminBaseController
      * **/
     public function add(FunctionService $FunctionService)
     {
-        $tree = new Tree();
-        $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
+        $tree = new Tree();
+        $parentId = @$data['cid'] ?: 0;
         $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $order_num = $FunctionService->get_order_num('news');
         $array = [];
@@ -115,11 +115,14 @@ class NewsController extends AdminBaseController
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $str = "<option lang='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
+
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
         $this->assign("order_num", $order_num);
+        $this->assign("lang", @$data['lang'] ?: 1);
+
         return $this->fetch();
     }
 
@@ -144,7 +147,7 @@ class NewsController extends AdminBaseController
                 $seoService->dosave($data, $data['type'], $newsModel->id);
             }
         });
-        $this->success("添加成功！", url("News/index", ['type' => $this->type]));
+        $this->success("添加成功！", url("News/add", ['type' => $this->type, 'cid' => $data['cid'], 'lang' => $data['lang']]));
     }
 
     /**
@@ -184,7 +187,7 @@ class NewsController extends AdminBaseController
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $str = "<option lang='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);

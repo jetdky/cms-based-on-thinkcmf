@@ -181,6 +181,7 @@
     initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$news['id'].'/typeId/'.$type)}");
     clickHide('is_auto_seo', 'seo', 1);
     deleImg("{$news['id']}", "{$type}");
+    toggleCategoryByLang('cid');
 
 </script>
 </body>

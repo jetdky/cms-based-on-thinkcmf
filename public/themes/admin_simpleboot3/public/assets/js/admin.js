@@ -1,3 +1,9 @@
+/**
+ * 点击隐藏
+ * @param clickElemName
+ * @param hideElemId
+ * @param judgeHideVal
+ */
 function clickHide(clickElemName, hideElemId, judgeHideVal) {
     //初始化隐藏
     var initVal = $("input[name='" + clickElemName + "']:checked").val();
@@ -15,6 +21,11 @@ function clickHide(clickElemName, hideElemId, judgeHideVal) {
     });
 }
 
+/**
+ * 初始化标签
+ * @param tagId
+ * @param url
+ */
 function initTags(tagId, url) {
     var data = '';
     $.ajax({
@@ -45,6 +56,9 @@ function initTags(tagId, url) {
     });
 }
 
+/**
+ * 获得时间
+ */
 function writeCurrentDate() {
     var now = new Date();
     var year = now.getFullYear(); //得到年份
@@ -70,6 +84,11 @@ function writeCurrentDate() {
     $("[name='show_time']").val(time);
 }
 
+/**
+ * 删除图片
+ * @param contentId
+ * @param type
+ */
 function deleImg(contentId, type) {
     $(document).on("click", "[class='del-img']", function () {
         var imgId = $(this).nextAll("input").attr('data-id');
@@ -98,6 +117,33 @@ function deleImg(contentId, type) {
             },
             error: function (res, status, xhr) {
                 console.log('ajax图片删除失败');
+            }
+        });
+    });
+}
+
+/**
+ * 根据语言切换分类
+ * @param categorySelectName
+ */
+function toggleCategoryByLang(categorySelectName) {
+    var readyVal = $('[name="lang"]').val();
+    $('[name="' + categorySelectName + '"]').children().each(function () {
+        if ($(this).attr('lang') == readyVal) {
+            $(this).prop('hidden', false);
+        } else {
+            $(this).prop('hidden', true);
+        }
+    });
+
+    $('[name="lang"]').on('change', function () {
+        var lang = $(this).val();
+        var that = this;
+        $('[name="' + categorySelectName + '"]').children().each(function () {
+            if ($(this).attr('lang') == lang) {
+                $(this).prop('hidden', false);
+            } else {
+                $(this).prop('hidden', true);
             }
         });
     });

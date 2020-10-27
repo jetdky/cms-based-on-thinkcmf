@@ -947,12 +947,12 @@ function uploadOne(dialog_title, input_selector, filetype, extra_params, app) {
         var val = files[0].filepath;
         $(input_selector).val(files[0].filepath);
         $(input_selector + '-preview').attr('href', files[0].preview_url);
-        var videoTpl = `
-                <video id="previewVideo" height="200px" controls>
-                    <source src = "../../../upload/${val}" type="video/mp4">
-                </video>
-        `;
-        $("#previewVideoDiv").append(videoTpl);
+        // var videoTpl = `
+        //         <video id="previewVideo" height="200px" controls>
+        //             <source src = "../../../upload/${val}" type="video/mp4">
+        //         </video>
+        // `;
+        // $("#previewVideoDiv").append(videoTpl);
         $(input_selector + '-name').val(files[0].name);
         $(input_selector + '-name-text').text(files[0].name);
     }, extra_params, 0, filetype, app);

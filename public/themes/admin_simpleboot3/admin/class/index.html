@@ -2,14 +2,14 @@
 </head>
 
 <body>
-<php>$typeList = array('1'=>'单页分类','2'=>'文章分类','3'=>'产品分类','4'=>'视频分类','5'=>'单页分类');
+<php>$typeList = array('1'=>'单页分类','2'=>'文章分类','3'=>'产品分类','4'=>'文件分类','5'=>'单页分类');
     $controllerList = ['1'=>'indexPacontent', '2'=>'indexNews', '3'=>'indexProduct', '4' => 'indexVideo'];
     $nowGet = 'Class/' . $controllerList[$type];
 </php>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
         <li class="active"><a href="{:url('Class/index',['type'=>$type])}">{$typeList[$type]}</a></li>
-        <li><a href="{:url('Class/add',['type'=>$type])}">{$typeList[$type]}</a></li>
+        <li><a href="{:url('Class/add',['type'=>$type])}">添加{$typeList[$type]}</a></li>
     </ul>
     <form class="well form-inline margin-top-20" method="get" action="{:url($nowGet)}">
         <input type="hidden" name="type" value="{$type}">

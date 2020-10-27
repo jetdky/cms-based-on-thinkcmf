@@ -38,7 +38,7 @@
                 <div class="form-group">
                     <label class="col-sm-2 control-label">补充信息</label>
                     <div class="col-md-6 col-sm-10">
-                        <input name="other_info" class="form-control" type="text" value="{$product.other_info}" />
+                        <textarea name="other_info" class="form-control">{$product.other_info}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -185,6 +185,7 @@
     initTags('#tagAdd', "{:url('/admin/Tag/readTags/id/'.$product['id'].'/typeId/'.$type)}");
     clickHide('is_auto_seo', 'seo', 1);
     deleImg("{$product['id']}", "{$type}");
+    toggleCategoryByLang('cid');
 </script>
 </body>
 </html>

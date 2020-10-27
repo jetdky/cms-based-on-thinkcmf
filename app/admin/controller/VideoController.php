@@ -5,9 +5,11 @@ namespace app\admin\controller;
 
 
 use app\admin\model\ClassModel;
+use app\admin\model\ImgContentModel;
 use app\admin\model\ProductModel;
 use app\admin\model\VideoModel;
 use app\admin\service\ClassService;
+use app\admin\service\ImgService;
 use app\admin\validate\ProductValidate;
 use app\admin\validate\VideoValidate;
 use cmf\controller\AdminBaseController;
@@ -16,23 +18,75 @@ use tree\Tree;
 
 class VideoController extends AdminBaseController
 {
+    public $type = 9; //图片标识
+    public $categoryType = 4;  //分类标识
+
+    public function initialize()
+    {
+        parent::initialize();
+        $this->assign("type", $this->type);
+    }
+
     public function index(VideoModel $videoModel)
     {
 
+        $tree = new Tree();
+        $array = [];
+
         $data = $this->request->param();
         $where = [];
-        if (!empty($data['keyword'])) {
-            $where[] = array('name', 'like', '%' . $data['keyword'] . '%');
+        $whereSearch = [];
+        if (isset($data['lang']) && $data['lang'] !== "") {
+            $whereSearch[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
+        $result = Db::name('class')->where(["type" => $this->categoryType])->where($whereSearch)->order(["order_num" => "ASC"])->select();
+        if (isset($data['keyword']) && $data['keyword'] !== "") {
+            $where[] = ['name', 'like', '%' . $data['keyword'] . '%'];
             $this->assign('keyword', $data['keyword']);
         }
+        if (isset($data['cid']) && $data['cid'] !== "") {
+            $sonCategory = build_category_tree($result, $data['cid']);
+            $sonCategoryId = [];
+            foreach ($sonCategory as $value){
+                $sonCategoryId[] = $value['id'];
+            }
+            $sonCategoryId[] = $data['cid'];
+            $where[] = ['cid', 'IN', $sonCategoryId];
+            $parentId = $data['cid'];
+        } else {
+            $parentId = 0;
+        }
+        //根据上次搜索分类选中分类
+        foreach ($result as $r) {
+            $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
+            $array[] = $r;
+        }
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($array);
+        $selectClass = $tree->getTree(0, $str);
+
+        if (isset($data['status']) && $data['status'] !== "") {
+            $where[] = ['status', '=', $data['status']];
+            $this->assign('status', $data['status']);
+        }
+        if (isset($data['is_recom']) && $data['is_recom'] !== "") {
+            $where[] = ['is_recom', '=', $data['is_recom']];
+            $this->assign('is_recom', $data['is_recom']);
+        }
+        if(isset($data['lang']) && $data['lang'] !== ""){
+            $where[] = ['lang', '=', $data['lang']];
+            $this->assign('lang', $data['lang']);
+        }
         $list = $videoModel->where($where)
-            ->with(['videoClass'])
-            ->order("order_num ASC")
-            ->paginate(10);
+            ->with(['videoImg', 'videoImg.imgs', 'videoClass'])
+            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
         $this->assign('page', $page);
+        $this->assign("selectClass", $selectClass);
         // 渲染模板输出
         return $this->fetch();
     }
@@ -46,15 +100,15 @@ class VideoController extends AdminBaseController
     public function add(Tree $tree, VideoModel $videoModel)
     {
         $tree = new Tree();
-        $parentId = $this->request->param("parent_id", 0, 'intval');
         $data = $this->request->param();
-        $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
+        $parentId = @$data['cid'] ?: 0;
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $str = "<option lang='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
@@ -65,11 +119,13 @@ class VideoController extends AdminBaseController
             $orderbydata = 1;
         }
         $this->assign("orderbydata", $orderbydata);
+        $this->assign("lang", @$data['lang'] ?: 1);
+
         return $this->fetch();
     }
 
 
-    public function addPost(VideoModel $videoModel, VideoValidate $videoValidate)
+    public function addPost(VideoModel $videoModel, VideoValidate $videoValidate,ImgService $imgService)
     {
         $data = $this->request->param();
         $isFindVideo = $videoModel->where(['name' => $data['name'], 'lang' => $data['lang']])->find();
@@ -86,9 +142,14 @@ class VideoController extends AdminBaseController
         if ($result !== true) {
             $this->error($result);
         }
-        $videoModel->allowField(true)->save($data);
+        Db::transaction(function () use ($videoModel, $imgService,  $data) {
+            $videoModel->allowField(true)->save($data);
+            if (isset($data['img_list'])) {
+                $imgService->doSave($data['img_list'], $data['type'], $videoModel->id);
+            }
+        });
 
-        $this->success("添加成功！", url("Video/index"));
+        $this->success("添加成功！", url("Video/add", ['type' => $this->type, 'cid' => $data['cid'], 'lang' => $data['lang']]));
     }
 
     /**
@@ -104,14 +165,8 @@ class VideoController extends AdminBaseController
      *     'param'  => ''
      * )
      */
-    public function edit()
+    public function edit(ImgService $imgService,VideoModel $videoModel)
     {
-        /*
-        $content = hook_one('admin_pacontent_edit_view');
-        if (!empty($content)) {
-            return $content;
-        }
-        */
 
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
@@ -128,17 +183,19 @@ class VideoController extends AdminBaseController
         } else {
             $parentId = $videoClass['parent_id'];
         }
+        $video['imgs'] = $imgService->read($id, $this->type);
 
-        $result = Db::name('class')->where(["type" => 4])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';
             $array[] = $r;
         }
-        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $str = "<option lang='\$lang' value='\$id' \$selected>\$spacer \$name</option>";
         $tree->init($array);
         $selectClass = $tree->getTree(0, $str);
         $this->assign("selectClass", $selectClass);
+        $this->assign("video", $video);
         return $this->fetch();
     }
 
@@ -301,7 +358,7 @@ class VideoController extends AdminBaseController
      */
     public function getClassList(ClassModel $classModel)
     {
-        $list = $classModel->where(['type' => 4])->order("order_num ASC")->select()->toArray();
+        $list = $classModel->where(['type' => $this->categoryType])->order("order_num ASC")->select()->toArray();
         return json_encode($list);
     }
 
