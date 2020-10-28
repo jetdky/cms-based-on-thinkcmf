@@ -2,8 +2,8 @@
 
 namespace app\admin\service;
 
-use app\admin\common\ImgModel;
-use app\admin\common\ImgContentModel;
+use app\common\model\ImgModel;
+use app\common\model\ImgContentModel;
 use think\facade\Env;
 use think\Image;
 
