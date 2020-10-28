@@ -7,7 +7,7 @@ namespace app\index\controller;
 use app\admin\model\LinkModel;
 use think\Controller;
 
-class LinkController extends Controller
+class LinkController extends BaseController
 {
     //  如果有单独的友情链接页面
 

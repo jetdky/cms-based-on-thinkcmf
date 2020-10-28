@@ -12,9 +12,8 @@
 namespace app\index\controller;
 
 use app\admin\model\NewsModel;
-use cmf\controller\HomeBaseController;
 
-class NewsController extends HomeBaseController
+class NewsController extends BaseController
 {
     public function index(NewsModel $newsModel)
     {

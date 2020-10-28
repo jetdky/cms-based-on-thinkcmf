@@ -9,15 +9,15 @@
 // | Author: 老猫 <thinkcmf@126.com>
 // +----------------------------------------------------------------------
 
-namespace app\demo\controller;
+namespace app\index\controller;
 
-use cmf\controller\HomeBaseController;
 
-class IndexController extends HomeBaseController
+class IndexController extends BaseController
 {
     public function index()
     {
-        return 11;
-//        return $this->fetch(':index');
+        $a = config('default_module');
+        $b=1;
+        return view();
     }
 }
