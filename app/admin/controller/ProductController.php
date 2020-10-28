@@ -4,16 +4,15 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\ClassModel;
-use app\admin\model\ImgContentModel;
-use app\admin\model\NewsModel;
-use app\admin\model\ProductModel;
-use app\admin\model\TagContentModel;
+use app\common\model\ClassModel;
+use app\common\model\ImgContentModel;
+use app\common\model\NewsModel;
+use app\common\model\ProductModel;
+use app\common\model\TagContentModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
 use app\admin\service\TagService;
-use app\admin\validate\NewsValidate;
 use app\admin\validate\ProductValidate;
 use cmf\controller\AdminBaseController;
 use think\Db;

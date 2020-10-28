@@ -3,8 +3,8 @@
 
 namespace app\admin\service;
 
-use app\admin\model\TagModel;
-use app\admin\model\TagContentModel;
+use app\admin\common\TagModel;
+use app\admin\common\TagContentModel;
 
 class TagService
 {

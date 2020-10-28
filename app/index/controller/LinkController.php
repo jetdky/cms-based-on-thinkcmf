@@ -4,7 +4,7 @@
 namespace app\index\controller;
 
 
-use app\admin\model\LinkModel;
+use app\common\model\LinkModel;
 use think\Controller;
 
 class LinkController extends BaseController

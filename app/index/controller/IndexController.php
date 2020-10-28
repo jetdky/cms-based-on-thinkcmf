@@ -16,8 +16,7 @@ class IndexController extends BaseController
 {
     public function index()
     {
-        $a = config('default_module');
-        $b=1;
-        return view();
+//        $data = model('')
+//        return view();
     }
 }

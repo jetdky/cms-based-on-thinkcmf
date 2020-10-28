@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\SlideModel;
-use app\admin\model\TagModel;
+use app\common\model\SlideModel;
+use app\common\model\TagModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 

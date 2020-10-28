@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\UserNavModel;
+use app\common\model\UserNavModel;
 use think\Db;
 use tree\Tree;
 

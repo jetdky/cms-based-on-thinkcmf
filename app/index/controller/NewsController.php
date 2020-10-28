@@ -11,7 +11,7 @@
 
 namespace app\index\controller;
 
-use app\admin\model\NewsModel;
+use app\common\model\NewsModel;
 
 class NewsController extends BaseController
 {

@@ -12,7 +12,7 @@ namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
 use think\Db;
-use app\admin\model\AdminMenuModel;
+use app\common\model\AdminMenuModel;
 
 class IndexController extends AdminBaseController
 {

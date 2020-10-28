@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\ThemeModel;
+use app\common\model\ThemeModel;
 use think\Db;
 use think\Validate;
 use tree\Tree;

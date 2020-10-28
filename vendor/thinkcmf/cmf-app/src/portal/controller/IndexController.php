@@ -18,7 +18,6 @@ class IndexController extends HomeBaseController
     // 首页
     public function index()
     {
-        return 1;
         return $this->fetch(":index");
     }
 

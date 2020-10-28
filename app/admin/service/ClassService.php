@@ -4,7 +4,7 @@
 namespace app\admin\service;
 
 
-use app\admin\model\ClassModel;
+use app\common\model\ClassModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 

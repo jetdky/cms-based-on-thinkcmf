@@ -4,7 +4,7 @@
 namespace app\index\controller;
 
 
-use app\admin\model\ProductModel;
+use app\common\model\ProductModel;
 
 class ProductController extends BaseController
 {

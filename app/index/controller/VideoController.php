@@ -11,8 +11,8 @@
 
 namespace app\index\controller;
 
-use app\admin\model\NewsModel;
-use app\admin\model\VideoModel;
+use app\common\model\NewsModel;
+use app\common\model\VideoModel;
 use think\Controller;
 
 class VideoController extends BaseController

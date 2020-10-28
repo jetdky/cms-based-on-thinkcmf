@@ -3,8 +3,8 @@
 
 namespace app\admin\service;
 
-use app\admin\model\SeoModel;
-use app\admin\model\SeoContentModel;
+use app\admin\common\SeoModel;
+use app\admin\common\SeoContentModel;
 
 class SeoService
 {

@@ -4,10 +4,10 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\ClassModel;
-use app\admin\model\ImgContentModel;
-use app\admin\model\RecruitModel;
-use app\admin\model\TagContentModel;
+use app\common\model\ClassModel;
+use app\common\model\ImgContentModel;
+use app\common\model\RecruitModel;
+use app\common\model\TagContentModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;
