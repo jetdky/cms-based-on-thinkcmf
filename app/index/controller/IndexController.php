@@ -23,4 +23,12 @@ class IndexController extends BaseController
 
         return view('', $content);
     }
+
+    public function demo($id)
+    {
+        echo "<pre>";
+        print_r($id);
+        echo "</pre>";
+        die;
+    }
 }
