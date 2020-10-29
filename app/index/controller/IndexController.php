@@ -12,11 +12,15 @@
 namespace app\index\controller;
 
 
+use app\common\model\ProductModel;
+
 class IndexController extends BaseController
 {
     public function index()
     {
-//        $data = model('')
-//        return view();
+        $pacontentController = new PacontentController();
+        $content = $pacontentController->getPacontentByPageName('集团概况');
+
+        return view('', $content);
     }
 }

@@ -12,9 +12,9 @@ namespace app\admin\controller;
 
 use app\admin\logic\HookLogic;
 use cmf\controller\AdminBaseController;
-use app\admin\model\HookModel;
-use app\admin\model\PluginModel;
-use app\admin\model\HookPluginModel;
+use app\common\model\HookModel;
+use app\common\model\PluginModel;
+use app\common\model\HookPluginModel;
 use think\Db;
 
 /**

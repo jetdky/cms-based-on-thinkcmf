@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use app\admin\logic\MenuLogic;
-use app\admin\model\AdminMenuModel;
+use app\common\model\AdminMenuModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\facade\Cache;

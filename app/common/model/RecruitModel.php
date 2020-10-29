@@ -4,11 +4,14 @@
 namespace app\common\model;
 
 
-use think\Model;
 
-class RecruitModel extends Model
+class RecruitModel extends BaseModel
 {
 
+    public function initialize()
+    {
+        $this->tableType = 88;
+    }
     public function recruitImg()
     {
         return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', 88);

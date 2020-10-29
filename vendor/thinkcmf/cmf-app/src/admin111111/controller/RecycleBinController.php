@@ -10,8 +10,8 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\RecycleBinModel;
-use app\admin\model\RouteModel;
+use app\common\model\RecycleBinModel;
+use app\common\model\RouteModel;
 use cmf\controller\AdminBaseController;
 use think\Db;
 use think\Exception;

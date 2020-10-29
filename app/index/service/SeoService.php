@@ -1,10 +1,10 @@
 <?php
 
 
-namespace app\admin\service;
+namespace app\index\service;
 
-use app\admin\model\SeoModel;
-use app\admin\model\SeoContentModel;
+use app\common\model\SeoModel;
+use app\common\model\SeoContentModel;
 
 class SeoService
 {

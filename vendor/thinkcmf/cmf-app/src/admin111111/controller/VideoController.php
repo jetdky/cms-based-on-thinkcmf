@@ -4,9 +4,9 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\ClassModel;
-use app\admin\model\ProductModel;
-use app\admin\model\VideoModel;
+use app\common\model\ClassModel;
+use app\common\model\ProductModel;
+use app\common\model\VideoModel;
 use app\admin\service\ClassService;
 use app\admin\validate\ProductValidate;
 use app\admin\validate\VideoValidate;

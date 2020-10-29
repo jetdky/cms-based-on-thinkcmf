@@ -11,7 +11,7 @@
 namespace cmf\controller;
 
 use cmf\model\ThemeFileModel;
-use app\admin\model\ThemeModel;
+use app\common\model\ThemeModel;
 use think\facade\View;
 use think\Controller;
 class HomeBaseController extends BaseController

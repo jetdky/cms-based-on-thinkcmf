@@ -87,3 +87,18 @@ function clear_dir($path = null)
         }
     }
 }
+
+/**
+ *created by dengkunyao
+ * @param $array
+ * @param $id
+ * 判断id是否在array有子类
+ */
+function is_have_son($array, $id){
+    foreach($array as $key => $value){
+        if ($value['parent_id'] == $id){
+             return true;
+        }
+    }
+    return false;
+}

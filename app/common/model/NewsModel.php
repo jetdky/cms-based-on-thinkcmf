@@ -8,6 +8,11 @@ use think\Model;
 
 class NewsModel extends Model
 {
+    public function initialize()
+    {
+        $this->tableType = 6;
+        $this->categoryType = 2;
+    }
     public function newsClass()
     {
         return $this->hasOne('ClassModel', 'id', 'cid');

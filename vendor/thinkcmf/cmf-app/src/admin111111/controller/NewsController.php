@@ -4,14 +4,14 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\ClassModel;
-use app\admin\model\ImgContentModel;
-use app\admin\model\ImgModel;
-use app\admin\model\NewsModel;
-use app\admin\model\PacontentModel;
-use app\admin\model\TagContentModel;
-use app\admin\model\TagModel;
-use app\admin\model\VideoModel;
+use app\common\model\ClassModel;
+use app\common\model\ImgContentModel;
+use app\common\model\ImgModel;
+use app\common\model\NewsModel;
+use app\common\model\PacontentModel;
+use app\common\model\TagContentModel;
+use app\common\model\TagModel;
+use app\common\model\VideoModel;
 use app\admin\service\FunctionService;
 use app\admin\service\ImgService;
 use app\admin\service\SeoService;

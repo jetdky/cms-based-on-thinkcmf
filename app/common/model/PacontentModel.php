@@ -4,17 +4,23 @@
 namespace app\common\model;
 
 
-use think\Model;
 
-class PacontentModel extends Model
+class PacontentModel extends BaseModel
 {
+    public function initialize()
+    {
+        $this->tableType = 5;
+        $this->categoryType = 1;
+    }
     public function paGetClass(){
         return $this->hasOne('ClassModel','id','cid');
     }
     public function pacontentImg()
     {
-        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', 5);
+        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', $this->tableType);
     }
+
+
     public function setShowTimeAttr($value)
     {
         return strtotime($value);

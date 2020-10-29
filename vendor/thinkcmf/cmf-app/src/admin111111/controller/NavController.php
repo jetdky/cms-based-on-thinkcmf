@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\NavModel;
+use app\common\model\NavModel;
 use think\Db;
 
 /**

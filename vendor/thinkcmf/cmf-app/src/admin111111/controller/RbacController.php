@@ -14,7 +14,7 @@ use cmf\controller\AdminBaseController;
 use think\Db;
 use think\facade\Cache;
 use tree\Tree;
-use app\admin\model\AdminMenuModel;
+use app\common\model\AdminMenuModel;
 
 class RbacController extends AdminBaseController
 {

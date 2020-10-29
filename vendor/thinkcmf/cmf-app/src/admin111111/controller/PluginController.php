@@ -11,8 +11,8 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\PluginModel;
-use app\admin\model\HookPluginModel;
+use app\common\model\PluginModel;
+use app\common\model\HookPluginModel;
 use mindplay\annotations\Annotations;
 use think\Db;
 use think\facade\Cache;

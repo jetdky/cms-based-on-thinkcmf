@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\controller;
 
-use app\admin\model\NavMenuModel;
+use app\common\model\NavMenuModel;
 use cmf\controller\AdminBaseController;
 use tree\Tree;
 

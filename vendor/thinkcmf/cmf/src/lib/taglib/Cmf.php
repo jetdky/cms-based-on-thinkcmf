@@ -127,7 +127,7 @@ if (!function_exists('{$parseNavigationFuncName}')) {
 ?>
 
 <?php
-    \$navMenuModel = new \app\admin\model\NavMenuModel();
+    \$navMenuModel = new \app\common\model\NavMenuModel();
     \$menus = \$navMenuModel->navMenusTreeArray({$navId},{$maxLevel});
 ?>
 <if condition="'{$root}'==''">
@@ -234,7 +234,7 @@ if (!function_exists('{$parseSubNavigationFuncName}')) {
 ?>
 
 <?php
-    \$navMenuModel = new \app\admin\model\NavMenuModel();
+    \$navMenuModel = new \app\common\model\NavMenuModel();
     \$menus = \$navMenuModel->subNavMenusTreeArray({$parent},{$maxLevel});
 ?>
 <if condition="'{$root}'==''">

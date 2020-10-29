@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\api;
 
-use app\admin\model\SlideModel;
+use app\common\model\SlideModel;
 use think\db\Query;
 
 class SlideApi

@@ -170,13 +170,8 @@ class NewsController extends AdminBaseController
         $this->assign('id', $id);
         $news = $newsModel->where("id", $id)->find();
         $newsClass = DB::name('class')->where(['id' => $news['cid']])->find();
+        $parentId = $newsClass['id'];
 
-        $tree = new Tree();
-        if ($newsClass['parent_id'] == 0) {
-            $parentId = $newsClass['id'];
-        } else {
-            $parentId = $newsClass['parent_id'];
-        }
         $imgService = new ImgService();
         $seoService = new SeoService();
         $news['imgs'] = $imgService->read($id, $this->type);

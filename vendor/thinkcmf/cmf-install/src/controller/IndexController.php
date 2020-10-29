@@ -12,7 +12,7 @@ namespace app\install\controller;
 
 use app\admin\logic\HookLogic;
 use app\admin\logic\MenuLogic;
-use app\admin\model\ThemeModel;
+use app\common\model\ThemeModel;
 use app\user\logic\UserActionLogic;
 use cmf\controller\BaseController;
 use think\Db;

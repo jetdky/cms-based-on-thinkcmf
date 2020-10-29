@@ -162,11 +162,8 @@ class PacontentController extends AdminBaseController
         $paclass = DB::name('class')->where(['id' => $pacontent['cid']])->find();
 
         $tree = new Tree();
-        if ($paclass['parent_id'] == 0) {
-            $parentId = $paclass['id'];
-        } else {
-            $parentId = $paclass['parent_id'];
-        }
+        $parentId = $paclass['id'];
+
         $imgService = new ImgService();
         $pacontent['imgs'] = $imgService->read($id, $this->type);
         $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();

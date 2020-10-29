@@ -1,9 +1,9 @@
 <?php
 
-namespace app\admin\service;
+namespace app\index\service;
 
-use app\admin\model\ImgModel;
-use app\admin\model\ImgContentModel;
+use app\common\model\ImgModel;
+use app\common\model\ImgContentModel;
 use think\facade\Env;
 use think\Image;
 

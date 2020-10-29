@@ -4,10 +4,15 @@
 namespace app\common\model;
 
 
-use think\Model;
 
-class ProductModel extends Model
+class ProductModel extends BaseModel
 {
+    public function initialize()
+    {
+        $this->tableType = 7;
+        $this->categoryType = 3;
+    }
+
     public function productClass(){
         return $this->hasOne('ClassModel','id','cid');
     }

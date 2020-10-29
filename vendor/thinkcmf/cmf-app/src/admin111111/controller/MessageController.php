@@ -4,9 +4,9 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\LinkModel;
-use app\admin\model\MessageModel;
-use app\admin\model\VideoModel;
+use app\common\model\LinkModel;
+use app\common\model\MessageModel;
+use app\common\model\VideoModel;
 use cmf\controller\AdminBaseController;
 
 class MessageController extends AdminBaseController

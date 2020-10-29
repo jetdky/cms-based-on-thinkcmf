@@ -176,13 +176,8 @@ class VideoController extends AdminBaseController
 
         $this->assign("video", $video);
         $videoClass = DB::name('class')->where(['id' => $video['cid']])->find();
-
         $tree = new Tree();
-        if ($videoClass['parent_id'] == 0) {
-            $parentId = $videoClass['id'];
-        } else {
-            $parentId = $videoClass['parent_id'];
-        }
+        $parentId = $videoClass['id'];
         $video['imgs'] = $imgService->read($id, $this->type);
 
         $result = Db::name('class')->where(["type" => $this->categoryType])->order(["order_num" => "ASC"])->select();

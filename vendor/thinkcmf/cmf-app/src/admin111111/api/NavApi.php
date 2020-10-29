@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\api;
 
-use app\admin\model\NavModel;
+use app\common\model\NavModel;
 use think\db\Query;
 
 class NavApi

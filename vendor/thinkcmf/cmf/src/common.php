@@ -1159,7 +1159,7 @@ function cmf_plugin_url($url, $vars = [], $domain = false)
     global $CMF_GV_routes;
 
     if (empty($CMF_GV_routes)) {
-        $routeModel    = new \app\admin\model\RouteModel();
+        $routeModel    = new \app\common\model\RouteModel();
         $CMF_GV_routes = $routeModel->getRoutes();
     }
 
@@ -1620,7 +1620,7 @@ function cmf_get_cmf_settings($key = "")
 {
     $cmfSettings = cache("cmf_settings");
     if (empty($cmfSettings)) {
-        $objOptions = new \app\admin\model\OptionModel();
+        $objOptions = new \app\common\model\OptionModel();
         $objResult  = $objOptions->where("option_name", 'cmf_settings')->find();
         $arrOption  = $objResult ? $objResult->toArray() : [];
         if ($arrOption) {
@@ -1699,7 +1699,7 @@ function cmf_url($url = '', $vars = '', $suffix = true, $domain = false)
     global $CMF_GV_routes;
 
     if (empty($CMF_GV_routes)) {
-        $routeModel    = new \app\admin\model\RouteModel();
+        $routeModel    = new \app\common\model\RouteModel();
         $CMF_GV_routes = $routeModel->getRoutes();
     }
 

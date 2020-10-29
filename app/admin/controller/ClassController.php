@@ -316,11 +316,6 @@ class ClassController extends AdminBaseController
         if ($result !== true) {
             $this->error($result);
         }
-//        $parentClass = ClassModel::get($data['parent_id']);
-//
-//        if ($parentClass['parent_id'] != 0) {
-//            $this->error('只支持二级分类');
-//        }
 
         Db::transaction(function () use ($classModel, $imgService, $tagService, $seoService, $data) {
             $classModel->allowField(true)->save($data);
@@ -335,7 +330,7 @@ class ClassController extends AdminBaseController
             }
         });
 
-        $this->success("添加成功！", url("Class/add", ['type' => $this->type, 'parent_id' => $data['parent_id'], 'lang' => $data['lang']]));
+        $this->success("添加成功！", url("Class/add", ['type' => $data['type'], 'parent_id' => $data['parent_id'], 'lang' => $data['lang']]));
     }
 
     /**

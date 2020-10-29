@@ -10,7 +10,7 @@
 // +----------------------------------------------------------------------
 namespace app\admin\validate;
 
-use app\admin\model\RouteModel;
+use app\common\model\RouteModel;
 use think\Validate;
 
 class SettingSiteValidate extends Validate

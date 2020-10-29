@@ -4,9 +4,9 @@
 namespace app\admin\controller;
 
 
-use app\admin\model\ClassModel;
-use app\admin\model\LinkModel;
-use app\admin\model\PacontentModel;
+use app\common\model\ClassModel;
+use app\common\model\LinkModel;
+use app\common\model\PacontentModel;
 use app\admin\validate\ClassValidate;
 use app\admin\validate\PacontentValidate;
 use cmf\controller\AdminBaseController;

@@ -4,11 +4,14 @@
 namespace app\common\model;
 
 
-use think\Model;
 
-class VideoModel extends Model
+class VideoModel extends BaseModel
 {
-
+    public function initialize()
+    {
+        $this->tableType = 9;
+        $this->categoryType = 4;
+    }
     public function videoClass(){
         return $this->hasOne('ClassModel','id','cid');
     }

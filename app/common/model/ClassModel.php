@@ -14,6 +14,16 @@ class ClassModel extends Model
         return $this->belongsTo('Pacontent','cid','id');
     }
 
+    public function classSeo()
+    {
+        return $this->hasMany('SeoContentModel', 'content_id', 'id');
+    }
+
+    public function classTag()
+    {
+        return $this->hasMany('TagContentModel', 'content_id', 'id');
+    }
+
     public function setShowTimeAttr($value)
     {
         return strtotime($value);

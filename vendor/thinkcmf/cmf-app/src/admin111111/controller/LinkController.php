@@ -11,7 +11,7 @@
 namespace app\admin\controller;
 
 use cmf\controller\AdminBaseController;
-use app\admin\model\LinkModel;
+use app\common\model\LinkModel;
 
 class LinkController extends AdminBaseController
 {

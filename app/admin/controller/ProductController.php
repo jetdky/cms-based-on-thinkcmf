@@ -168,11 +168,8 @@ class ProductController extends AdminBaseController
         $productClass = DB::name('class')->where(['id' => $product['cid']])->find();
 
         $tree = new Tree();
-        if ($productClass['parent_id'] == 0) {
-            $parentId = $productClass['id'];
-        } else {
-            $parentId = $productClass['parent_id'];
-        }
+        $parentId = $productClass['id'];
+
         $imgService = new ImgService();
         $seoService = new SeoService();
         $product['imgs'] = $imgService->read($id, $this->type);
