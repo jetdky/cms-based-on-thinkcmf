@@ -69,8 +69,8 @@
                     <textarea name="note" id="note">{$classinfo['note']}</textarea>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-10">
+            <div class="form-group submit">
+                <div class="col-sm-offset-1 col-sm-10">
                     <input type="hidden" name="id" value="{$classinfo['id']}"/>
                     <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('SAVE')}</button>
                     <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
@@ -150,21 +150,21 @@
             </div>
             <div id="seo">
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 col-md-4 control-label"><span
                             class="form-required">*</span>title</label>
                     <div class="col-md-6 col-sm-10">
                         <input class="form-control" type="text" name="seo_title" value="{$classinfo.seo.title}">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 col-md-4 control-label"><span
                             class="form-required">*</span>keywords</label>
                     <div class="col-md-6 col-sm-10">
                         <textarea rows="5" cols="5" class="form-control" name="seo_keywords">{$classinfo.seo.keywords}</textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label"><span
+                    <label class="col-sm-2 col-md-4 control-label"><span
                             class="form-required">*</span>description</label>
                     <div class="col-md-6 col-sm-10">
                         <textarea rows="5" cols="5" class="form-control" name="seo_description">{$classinfo.seo.description}</textarea>
