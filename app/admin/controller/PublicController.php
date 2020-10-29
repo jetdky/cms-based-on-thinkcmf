@@ -58,13 +58,13 @@ class PublicController extends AdminBaseController
         }
 
         $captcha = $this->request->param('captcha');
-        if (empty($captcha)) {
-            $this->error(lang('CAPTCHA_REQUIRED'));
-        }
-        //验证码
-        if (!cmf_captcha_check($captcha)) {
-            $this->error(lang('CAPTCHA_NOT_RIGHT'));
-        }
+//        if (empty($captcha)) {
+//            $this->error(lang('CAPTCHA_REQUIRED'));
+//        }
+//        //验证码
+//        if (!cmf_captcha_check($captcha)) {
+//            $this->error(lang('CAPTCHA_NOT_RIGHT'));
+//        }
 
         $name = $this->request->param("username");
         if (empty($name)) {
