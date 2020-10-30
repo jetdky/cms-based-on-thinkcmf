@@ -1,3 +1,5 @@
+
+
 /**
  * 点击隐藏
  * @param clickElemName
@@ -112,7 +114,7 @@ function deleImg(contentId, type) {
                         $(that).parent().remove();
                     }, 200)
                 } else {
-                    alert('删除失败，请与网站 管理员联系');
+                    layer.alert('删除失败，请与网站 管理员联系');
                 }
             },
             error: function (res, status, xhr) {
@@ -148,3 +150,4 @@ function toggleCategoryByLang(categorySelectName) {
         });
     });
 }
+

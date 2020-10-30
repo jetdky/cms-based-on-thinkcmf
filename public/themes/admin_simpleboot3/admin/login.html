@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8"/>
-    <title>搜派后台管理系统</title>
+    <title>后台管理系统</title>
     <meta http-equiv="X-UA-Compatible" content="chrome=1,IE=edge"/>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta name="robots" content="noindex,nofollow">
@@ -16,6 +16,8 @@
     <link href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/login.css" rel="stylesheet">
     <link href="__STATIC__/js/layui/css/layui.css" rel="stylesheet" type="text/css">
     <script type="text/javascript" charset="utf-8" src="__STATIC__/js/layui/layui.all.js"></script>
+	<script type="text/javascript" charset="utf-8" src="__STATIC__/js/layui/layui.js"></script>
+	<script type="text/javascript" charset="utf-8" src="__STATIC__/js/sliderVerify/sliderVerify.js"></script>
     <script type="text/javascript" charset="utf-8" src="__STATIC__/js/xm-select/xm-select.js"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" charset="utf-8" src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
@@ -33,27 +35,38 @@
 </head>
 <body>
 <div class="wrap">
+    <div style="position: absolute; left: 5px; bottom: 20px; color: white;">
+        <span>Copyright © 2020 浙江搜派信息科技有限公司。</span>
+    </div>
     <div class="container">
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <h1 class="text-center">搜派后台管理系统</h1>
-                <form class="js-ajax-form" action="{:url('public/doLogin')}" method="post">
+<!--			<div class="loginImg">-->
+<!--				<img src = "__TMPL__/public/assets/images/loginBc.png" alt = "">-->
+<!--			</div>-->
+			<div class="logoImg">
+				<img src = "__TMPL__/public/assets/images/login01.png" alt = "">
+			</div>
+      <div class="row">
+            <div class="col-md-5 col-md-offset-7">
+                <form class="js-ajax-form" id="form" action="{:url('public/doLogin')}" method="post">
+									<h1 class="text-center loginName" style="font-size: 30px">后台管理系统登录</h1>
                     <div class="form-group">
                         <input type="text" id="input_username" class="form-control" name="username"
-                               placeholder="{:lang('USERNAME_OR_EMAIL')}" title="{:lang('USERNAME_OR_EMAIL')}"
+                               placeholder="用户名" title="{:lang('USERNAME_OR_EMAIL')}"
                                value="{:cookie('admin_username')}" data-rule-required="true" data-msg-required="">
                     </div>
-
                     <div class="form-group">
                         <input type="password" id="input_password" class="form-control" name="password"
                                placeholder="{:lang('PASSWORD')}" title="{:lang('PASSWORD')}" data-rule-required="true"
                                data-msg-required="">
                     </div>
-
-
-                    <div class="form-group">
+										<div class="layui-form-item">
+											<div class="">
+												<div id="slider"></div>
+											</div>
+										</div>
+                    <div class="form-group" lay-filter = "formDemo" style="display: none">
                         <input type="hidden" name="redirect" value="">
-                        <button class="btn btn-primary btn-block js-ajax-submit" type="submit" style="margin-left: 0px"
+                        <button id="btn" class="btn btn-primary btn-block js-ajax-submit" type="submit" style="margin-left: 0px"
                                 data-loadingmsg="{:lang('LOADING')}">
                             {:lang('LOGIN')}
                         </button>
@@ -62,7 +75,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 <script type="text/javascript">
@@ -80,6 +92,32 @@
     (function () {
         document.getElementById('input_username').focus();
     })();
+</script>
+<script type="text/javascript" charset="utf-8">
+  layui.config({
+    base: '__STATIC__/js/sliderVerify/'
+  }).use(['sliderVerify', 'jquery', 'form'], function() {
+    var sliderVerify = layui.sliderVerify,
+      $ = layui.jquery,
+      form = layui.form;
+    var slider = sliderVerify.render({
+      elem: '#slider',
+      e: 'good',
+      //当验证通过回调
+      onOk: function(){
+          var loading = layer.msg('正在登录', { icon: 16, shade: 0.3, time: 0 });
+          if($("#input_username").val() == ""){
+                slider.reset();
+                layer.close(loading);
+          }
+          if($("#input_password").val() == ""){
+              slider.reset();
+              layer.close(loading);
+          }
+          document.getElementById("btn").click();
+      }
+    })
+  })
 </script>
 </body>
 </html>

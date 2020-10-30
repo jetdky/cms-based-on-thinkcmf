@@ -12,7 +12,7 @@
  * @param	{Function}	加载完毕 (可选)
  * @param	{Function}	加载错误 (可选)
  * @example imgReady('http://www.google.com.hk/intl/zh-CN/images/logo_cn.png', function () {
-		alert('size ready: width=' + this.width + '; height=' + this.height);
+		layer.alert('size ready: width=' + this.width + '; height=' + this.height);
 	});
  */
 var imgReady = (function () {

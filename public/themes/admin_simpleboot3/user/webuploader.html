@@ -208,15 +208,15 @@
                         window['expressinstallcallback'] = function (state) {
                             switch (state) {
                                 case 'Download.Cancelled':
-                                    alert('您取消了更新！')
+                                    layer.alert('您取消了更新！')
                                     break;
 
                                 case 'Download.Failed':
-                                    alert('安装失败')
+                                    layer.alert('安装失败')
                                     break;
 
                                 default:
-                                    alert('安装已成功，请刷新！');
+                                    layer.alert('安装已成功，请刷新！');
                                     break;
                             }
                             delete window['expressinstallcallback'];
@@ -248,7 +248,7 @@
 
                 return;
             } else if (!WebUploader.Uploader.support()) {
-                alert('Web Uploader 不支持您的浏览器！');
+                layer.alert('Web Uploader 不支持您的浏览器！');
                 return;
             }
 
@@ -722,7 +722,7 @@
             });
 
             $info.on('click', '.ignore', function () {
-                alert('todo');
+                layer.alert('todo');
             });
 
             $upload.addClass('state-' + state);

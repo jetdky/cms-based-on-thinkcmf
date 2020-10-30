@@ -21,7 +21,7 @@ var _topDialog, _proxyDialog, _zIndex,
 $(function () {
 	!window.jQuery && document.compatMode === 'BackCompat'
 	// 不支持怪异模式，请用主流的XHTML1.0或者HTML5的DOCTYPE申明
-	&& alert('artDialog Error: document.compatMode === "BackCompat"');
+	&& layer.alert('artDialog Error: document.compatMode === "BackCompat"');
 });
 	
 	

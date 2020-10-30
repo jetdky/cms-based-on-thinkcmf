@@ -174,7 +174,7 @@
             str += $(this).val() + ",";
         });
         if (str == "") {
-            alert('未选择视频');
+            layer.alert('未选择项目');
             return false;
         }
         str = str.substring(0, str.length - 1)
@@ -183,10 +183,7 @@
             function (data) {
                 var data_array = JSON.parse(data);
 
-                for (var i = 0; i < data_array.length; i++) {
-                    content = content + '<option value="' + data_array[i]['id'] + '">' + data_array[i]['name'] + '</option>';
-                }
-
+                content += data_array;
                 content += '</select>';
                 content += '<select id="lang"> ' +
                     '<option>请选语言</option>' +
@@ -201,18 +198,18 @@
                         let cid = $("#yesia ").val();
                         let lang = $("#lang ").val();
                         if (cid == '请选分类') {
-                            alert('未选择视频分类');
+                            layer.alert('未选择项目分类');
                             return false;
                         }
                         if (lang == '请选语言') {
-                            alert('未选择视频分类');
+                            layer.alert('未选择项目分类');
                             return false;
                         }
 
                         $.get(
                             '/admin/News/saveMove?id=' + str + '&cid=' + cid + '&lang=' + lang,
                             function (d) {
-                                alert('保存成功！');
+                                layer.alert('保存成功！');
                                 layer.close(index)
                                 window.location.href = '/admin/News/index';
 
@@ -235,7 +232,7 @@
             str += $(this).val() + ",";
         });
         if (str == "") {
-            alert('未选择视频');
+            layer.alert('未选择项目');
             return false;
         }
         str = str.substring(0, str.length - 1)
@@ -244,10 +241,7 @@
             function (data) {
                 var data_array = JSON.parse(data);
 
-                for (var i = 0; i < data_array.length; i++) {
-                    content = content + '<option value="' + data_array[i]['id'] + '">' + data_array[i]['name'] + '</option>';
-                }
-
+                content += data_array;
                 content += '</select>';
                 content += '<select id="lang"> ' +
                     '<option>请选语言</option>' +
@@ -262,11 +256,11 @@
                         let cid = $("#yesia ").val();
                         let lang = $("#lang ").val();
                         if (cid == '请选分类') {
-                            alert('未选择视频分类');
+                            layer.alert('未选择项目分类');
                             return false;
                         }
                         if (lang == '请选语言') {
-                            alert('未选择视频分类');
+                            layer.alert('未选择项目分类');
                             return false;
                         }
 
@@ -274,7 +268,7 @@
                             '/admin/News/saveCopy?id=' + str + '&cid=' + cid + '&lang=' + lang,
                             function (d) {
                                 console.log(d);
-                                alert('保存成功！');
+                                layer.alert('保存成功！');
                                 layer.close(index)
                                 window.location.href = '/admin/News/index';
                             }

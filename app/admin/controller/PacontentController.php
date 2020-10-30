@@ -38,7 +38,6 @@ class PacontentController extends AdminBaseController
     {
 
         $tree = new Tree();
-//        $parentId = $this->request->param("cid", 0, 'intval');
         $array = [];
 
         $data = $this->request->param();
@@ -332,7 +331,12 @@ class PacontentController extends AdminBaseController
      */
     public function getClassList(ClassModel $classModel)
     {
-        $list = $classModel->where(['type' => $this->categoryType])->order("order_num ASC")->select()->toArray();
+        $tree = new Tree();
+        $result = $classModel->where(['type' => $this->categoryType])->order("order_num ASC")->select()->toArray();
+
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($result);
+        $list = $tree->getTree(0, $str);
         return json_encode($list);
     }
 

@@ -181,7 +181,7 @@
             str += $(this).val() + ",";
         });
         if(str==""){
-            alert('未选择文件');
+            layer.alert('未选择文件');
             return false;
         }
         str=str.substring(0,str.length-1)
@@ -190,11 +190,7 @@
             function(data){
                 var data_array=JSON.parse(data);
 
-                for (var i=0;i<data_array.length;i++)
-                {
-                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
-                }
-
+                content += data_array;
                 content+='</select>';
                 content+='<select id="lang"> ' +
                     '<option>请选语言</option>'+
@@ -209,18 +205,18 @@
                         let cid=$("#yesia ").val();
                         let lang=$("#lang ").val();
                         if(cid=='请选分类'){
-                            alert('未选择文件分类');
+                            layer.alert('未选择文件分类');
                             return false;
                         }
                         if(lang=='请选语言'){
-                            alert('未选择文件分类');
+                            layer.alert('未选择文件分类');
                             return false;
                         }
 
                         $.get(
                             '/admin/video/saveMove?id='+str+'&cid='+cid+'&lang='+lang,
                             function(d){
-                                alert('保存成功！');
+                                layer.alert('保存成功！');
                                 layer.close(index)
                                 window.location.href='/admin/video/index';
 
@@ -244,7 +240,7 @@
             str += $(this).val() + ",";
         });
         if(str==""){
-            alert('未选择文件');
+            layer.alert('未选择文件');
             return false;
         }
         str=str.substring(0,str.length-1)
@@ -253,11 +249,7 @@
             function(data){
                 var data_array=JSON.parse(data);
 
-                for (var i=0;i<data_array.length;i++)
-                {
-                    content=content+'<option value="'+data_array[i]['id']+'">'+data_array[i]['name']+'</option>';
-                }
-
+                content += data_array;
                 content+='</select>';
                 content+='<select id="lang"> ' +
                     '<option>请选语言</option>'+
@@ -272,18 +264,18 @@
                         let cid=$("#yesia ").val();
                         let lang=$("#lang ").val();
                         if(cid=='请选分类'){
-                            alert('未选择文件分类');
+                            layer.alert('未选择文件分类');
                             return false;
                         }
                         if(lang=='请选语言'){
-                            alert('未选择文件分类');
+                            layer.alert('未选择文件分类');
                             return false;
                         }
 
                         $.get(
                             '/admin/video/saveCopy?id='+str+'&cid='+cid+'&lang='+lang,
                             function(d){
-                                alert('保存成功！');
+                                layer.alert('保存成功！');
                                 layer.close(index)
                                 window.location.href='/admin/video/index';
                             }

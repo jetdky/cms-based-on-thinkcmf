@@ -1,7 +1,38 @@
 body {
-    background: #fff;
+    background: #0886E9;
 }
 
 .wrap {
-    margin-top: 180px;
+    margin-top: 260px;
+}
+.loginName{
+	line-height: 80px;
+	position: relative;
+}
+.loginName:after{
+	position: absolute;
+	content: '';
+	height: 2px;
+	width: 100%;
+	background: #E5E5E5;
+	bottom: 10px;
+	left: 0;
+}
+form{
+	border: 1px solid #c5c5c5;
+	padding: 50px!important;
+	background: #ffffff;
+}
+.loginImg{
+	position: absolute;
+	left: 400px;
+	top: 230px;
+}
+.loginImg img{
+	width: 250px;
+}
+.logoImg{
+	position: absolute;
+	left: 30px;
+	top: 10px;
 }

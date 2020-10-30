@@ -5,3 +5,7 @@ body {
 .wrap {
     margin-top: 180px;
 }
+.loginName{
+	line-height: 80px;
+	border-bottom: 1px solid #E5E5E5;
+}

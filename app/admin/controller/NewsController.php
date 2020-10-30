@@ -166,6 +166,7 @@ class NewsController extends AdminBaseController
     public function edit(NewsModel $newsModel)
     {
 
+        $tree = new Tree();
         $id = $this->request->param('id', 0, 'intval');
         $this->assign('id', $id);
         $news = $newsModel->where("id", $id)->find();
@@ -355,7 +356,12 @@ class NewsController extends AdminBaseController
      */
     public function getClassList(ClassModel $classModel)
     {
-        $list = $classModel->where(['type' => 2])->order("order_num ASC")->select()->toArray();
+        $tree = new Tree();
+        $result = $classModel->where(['type' => $this->categoryType])->order("order_num ASC")->select()->toArray();
+
+        $str = "<option value='\$id' \$selected>\$spacer \$name</option>";
+        $tree->init($result);
+        $list = $tree->getTree(0, $str);
         return json_encode($list);
     }
 
