@@ -105,16 +105,17 @@
       e: 'good',
       //当验证通过回调
       onOk: function(){
-          var loading = layer.msg('正在登录', { icon: 16, shade: 0.3, time: 0 });
+          var loading = layer.msg('正在登录', { icon: 16, shade: 0.3, time: 2000 });
           if($("#input_username").val() == ""){
-                slider.reset();
+                // slider.reset();
                 layer.close(loading);
           }
           if($("#input_password").val() == ""){
-              slider.reset();
+              // slider.reset();
               layer.close(loading);
           }
           document.getElementById("btn").click();
+          slider.reset();
       }
     })
   })

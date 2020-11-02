@@ -290,7 +290,7 @@ class ClassController extends AdminBaseController
         $order_num = $FunctionService->get_order_num('class', $data['type']);
         $tree = new Tree();
         $parentId = @$data['parent_id'] ?: 0;
-        $result = Db::name('class')->where(["type" => $data])->order(["order_num" => "ASC"])->select();
+        $result = Db::name('class')->where(["type" => $data['type']])->order(["order_num" => "ASC"])->select();
         $array = [];
         foreach ($result as $r) {
             $r['selected'] = $r['id'] == $parentId ? 'selected' : '';

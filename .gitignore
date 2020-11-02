@@ -1,9 +1,2 @@
-.buildpath
-.DS_Store
-.project
-.settings
 .idea
 .vscode
-.git
-Vagrantfile
-.vagrant

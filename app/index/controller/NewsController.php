@@ -12,45 +12,18 @@
 namespace app\index\controller;
 
 use app\common\model\NewsModel;
+use app\index\service\ClassService;
+use app\index\service\NewsService;
 
 class NewsController extends BaseController
 {
     public function index(NewsModel $newsModel)
     {
-        //  根据新闻分类id获取新闻列表
-//        $param = $this->request['param'];
-        $param['cid'] = 8;
-        $where = [];
-        if (!empty($param['cid'])) {
-            $where['cid'] = $param['cid'];
-        }
-//        $where['lang'] = $param['lang'];
-        $where['lang'] = 1;
-        $list = $newsModel->where($where)
-            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
-            ->order("order_num ASC")->paginate(10, false);
-      $this->assign('newsList',$list);
-        return $this->fetch();
-    }
-
-    public function info(NewsModel $newsModel)
-    {
-        //  根据新闻id获取新闻详情
-//        $param = $this->request['param'];
-        $param['id'] = 10;
-        $news = $newsModel->with(['newsImg', 'newsImg.imgs', 'newsClass'])->find($param['id']);
-
-        //  下一页
-        $prov = $newsModel->where('id','>' ,$param['id'])
-            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
-            ->order("order_num ASC")->paginate(1, false)->toArray();
-        //  下一页
-        $next = $newsModel->where('id','<' ,$param['id'])
-            ->with(['newsImg', 'newsImg.imgs', 'newsClass'])
-            ->order("order_num ASC")->paginate(1, false)->toArray();
-        $this->assign('prov',$prov);
-        $this->assign('next',$next);
-        $this->assign('news',$news);
-        return $this->fetch();
+        $a = new NewsService();
+//        $c = $a->getNews('新闻中心', 10,'asc', $newsModel);
+//        $b = (new ClassService())->getNewsCategory('莫宁');
+        $d = $a->getNewsDetail(3, $newsModel);
+        halt($d);
+        //TODO: 新闻
     }
 }

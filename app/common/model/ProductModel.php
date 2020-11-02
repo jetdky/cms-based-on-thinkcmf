@@ -17,9 +17,19 @@ class ProductModel extends BaseModel
         return $this->hasOne('ClassModel','id','cid');
     }
 
+    public function productSeo()
+    {
+        return $this->hasMany('SeoContentModel', 'content_id', 'id')->where('type', $this->tableType);
+    }
+
+    public function productTag()
+    {
+        return $this->hasMany('TagContentModel', 'content_id', 'id')->where('type', $this->tableType);
+    }
+
     public function productImg()
     {
-        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', 7);
+        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', $this->tableType);
     }
 
     public function setShowTimeAttr($value)

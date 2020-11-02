@@ -18,9 +18,19 @@ class NewsModel extends Model
         return $this->hasOne('ClassModel', 'id', 'cid');
     }
 
+    public function newsSeo()
+    {
+        return $this->hasMany('SeoContentModel', 'content_id', 'id')->where('type', $this->tableType);
+    }
+
+    public function newsTag()
+    {
+        return $this->hasMany('TagContentModel', 'content_id', 'id')->where('type', $this->tableType);
+    }
+
     public function newsImg()
     {
-        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', 6);
+        return $this->hasMany('ImgContentModel', 'content_id', 'id')->where('type', $this->tableType);
     }
 
     public function setShowTimeAttr($value)

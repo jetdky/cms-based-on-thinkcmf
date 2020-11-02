@@ -24,6 +24,11 @@ class ClassModel extends Model
         return $this->hasMany('TagContentModel', 'content_id', 'id');
     }
 
+    public function classImg()
+    {
+        return $this->hasMany('ImgContentModel', 'content_id', 'id');
+    }
+
     public function setShowTimeAttr($value)
     {
         return strtotime($value);
