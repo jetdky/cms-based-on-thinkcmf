@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$content['pageInfo']['class_seo']['title']}</title>
+    <meta name="keywords" content="{$content['pageInfo']['class_seo']['keywords']}">
+    <meta name="description" content="{$content['pageInfo']['class_seo']['description']}">
+    <include file="public/top_quote"/>
+</head>
+<body>
+<!--导航-->
+<include file="public/header"/>
+
+<!--轮播图-->
+<div class="home-rota">
+    <img src="/upload/{$content['pageData'][0]['data'][0]['pacontent_img'][0]['imgs']['origi_img']}"/>
+</div>
+
+<div class="home-center">
+
+
+    <!--关于我们-->
+
+    <div class="about">
+        <div class="about-title">
+            <div class="info">
+
+                <div class="about-title-con">
+                    <p>
+
+                        <span><a href="/index.html">首页</a></span>
+
+                        <span>》</span>
+
+                        <span><a href="/message.html">留言反馈</a></span>
+
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-content">
+            <div class="info">
+                <div class="about-con clearfix">
+
+                    <div class="about-right">
+                        <div class="message">
+
+                            <div class="message-input">
+
+                                <form action="{:url('index/message/add')}" method="post">
+                                    <div class="myContact-right-input">
+
+                                        <ul>
+                                            <li><label>留言标题</label>
+                                                <input name="name" type="text"/>
+                                            </li>
+
+                                            <li><label>您的姓名</label>
+                                                <input name="username" type="text"/>
+                                            </li>
+
+                                            <li><label>您的电话</label>
+                                                <input name="phone" type="text"/>
+                                            </li>
+
+                                            <li><label>您的邮箱</label>
+                                                <input name="email" type="text"/>
+                                            </li>
+
+                                            <li><label>留言内容</label><textarea name="content"></textarea></li>
+
+                                            <li><label></label>
+                                                <input class="msg-btn" name="" type="submit" value="提交"/>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="contact-call">
+                                <ul class="clearfix">
+                                    <li><img src="__STATIC__/a_indexStatic/img/dsu6.png"/><span>{$messageContent['pageData'][1]['data'][0]['other_info']}</span></li>
+
+                                    <li><img src="__STATIC__/a_indexStatic/img/q5qz.png"/><span>{$messageContent['pageData'][1]['data'][1]['other_info']}</span></li>
+
+                                    <li><img src="__STATIC__/a_indexStatic/img/awpq.png"/><span>{$messageContent['pageData'][1]['data'][2]['other_info']}</span></li>
+
+                                    <li><img src="__STATIC__/a_indexStatic/img/2vws.png"/><span>{$messageContent['pageData'][1]['data'][3]['other_info']}</span></li>
+
+                                    <li><img src="__STATIC__/a_indexStatic/img/5nl7.png"/><span>{$messageContent['pageData'][1]['data'][4]['other_info']}</span></li>
+                                    <li><img src="__STATIC__/a_indexStatic/img/5nl7.png"/><span>{$messageContent['pageData'][1]['data'][5]['other_info']}</span></li>
+                                </ul>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="about-left">
+                        <p class="about-left-title">留言反馈</p>
+
+                        <div class="about-left-nav">
+                            <ul>
+                                <li><a href="/about.html" class="a-box">关于我们</a></li>
+
+                                <li><a href="/net.html" class="a-box">营销网络</a></li>
+
+                                <li><a href="/contact.html" class="a-box">联系方式</a></li>
+
+                                <li  class="about-li"><a href="/message.html" class="a-box">留言反馈</a></li>
+                            </ul>
+                        </div>
+
+                        <div class="about-left-call">
+
+                            <div class="about-left-call-pic">
+
+                                <img src="__STATIC__/a_indexStatic/img/02at.png"/>
+
+                            </div>
+
+                            <div class="about-left-call-text">
+
+                                <p>售后服务热线:</p>
+
+                                <p>{$bottom['pageData'][1]['data'][0]['other_info']}</p>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<include file="public/footer"/>
+
+</body>
+</html>

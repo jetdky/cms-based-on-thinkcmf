@@ -1,0 +1,47 @@
+<include file="public@header"/>
+</head>
+<body>
+<div class="wrap">
+    <ul class="nav nav-tabs">
+        <li><a href="{:url('message/index')}">所有留言</a></li>
+        <li class="active"><a href="{:url('message/edit')}">查看留言</a></li>
+    </ul>
+    <div class="row">
+        <form class="form-horizontal js-ajax-form margin-top-20">
+            <div class="form-group">
+                <label class="col-sm-2 control-label">主题</label>
+                <div class="col-md-6 col-sm-10">
+                    <input type="text" class="form-control" disabled value="{$data['name']}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">内容</label>
+                <div class="col-md-6 col-sm-10">
+                    <textarea id="content" type="text" style="height: 200px" disabled>{$data['content']|        nl2br}</textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <a class="btn btn-default" href="javascript:history.back(-1);">{:lang('BACK')}</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="__STATIC__/js/admin.js"></script>
+<script type="text/javascript">
+    //编辑器路径定义
+    var editorURL = GV.WEB_ROOT;
+</script>
+<script type="text/javascript" src="/static/js/ueditor/ueditor.config.js"></script>
+<script type="text/javascript" src="/static/js/ueditor/ueditor.all.min.js"></script>
+<script type="text/javascript">
+    var editorcontent1 = new baidu.editor.ui.Editor();
+    editorcontent1.ready(function() {
+        //不可编辑
+        editorcontent1.setDisabled();
+    });
+    editorcontent1.render('content');
+</script>
+</body>
+</html>

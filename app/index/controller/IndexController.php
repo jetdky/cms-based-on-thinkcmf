@@ -12,28 +12,22 @@
 namespace app\index\controller;
 
 
-use app\common\model\ClassModel;
-use app\common\model\PacontentModel;
-use app\common\model\ProductModel;
 use app\index\service\ClassService;
+use app\index\service\NewsService;
+use app\index\service\ProductService;
+use app\index\service\PacontentService;
 
 class IndexController extends BaseController
 {
-    public function index(ClassService $classService, ClassModel $classModel)
+    public function index(ClassService $classService, PacontentService $pacontentService, ProductService $productService, NewsService $newsService)
     {
-//        $pacontentController = new PacontentController();
-//        $content = $pacontentController->getPacontentByPageName('新闻动态');
-//        halt($content);
-//        return view('', $content);
-        $content = $classService->getProductCategory('集团产业');
-        halt($content);
-    }
 
-    public function demo($id)
-    {
-        echo "<pre>";
-        print_r($id);
-        echo "</pre>";
-        die;
+        $content['content'] = $pacontentService->getPacontentByPageName('首页');
+        $content['productCategory'] = $classService->getCategory('product');
+        $content['products'] = $productService->getProducts('', 4)->toArray();
+        $content['newsCategory'] = $classService->getCategory('news');
+        $content['news'] = $newsService->getNews('', 5)->toArray();
+
+        return view('', $content);
     }
 }

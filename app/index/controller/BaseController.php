@@ -4,39 +4,30 @@
 namespace app\index\controller;
 
 
-use app\common\model\LinkModel;
+use app\index\service\NavService;
+use app\index\service\PacontentService;
+use app\index\service\ProductService;
 use think\Controller;
 
 class BaseController extends Controller
 {
+    protected function initialize()
+    {
+        //导航
+        $navService = new NavService();
+        $pacontentService = new PacontentService();
+        $content['nav'] = $navService->getTreeNav();
+        $content['siteInfo'] = cmf_get_option('site_info');
+        $content['bottom'] = $pacontentService->getPacontentByPageName('顶部底部侧边');
+        //电话  {$bottom['pageData'][1]['data'][0]['content']|htmlspecialchars_decode}
 
-//pacontent
-//public $pacontentType = 5;
-//public $pacontentCategoryType = 1;
-
-//video
-//    public $videoType = 9; //图片标识
-//    public $videoCategoryType = 4;  //分类标识
-
-//product
-//    public $productType = 7;
-//    public $productCategoryType = 3;
-
-//news
-//    public $newsType = 6;
-//    public $newsCategoryType = 2;
-
-//recruit
-//    public $recruitType = 88;   //图片分类
-
-    public function initialize(){
-        //功能模块和表类型以及表分类类型对应
-        //   友情链接
-        $linkModel = new LinkModel();
-        $links     = $linkModel->select();
-        $this->assign('links', $links);
-
+        $this->assign($content);
     }
 
+    public function getTopAndBottom()
+    {
+        $pacontentService = new PacontentService();
+        return $pacontentService->getPacontentByPageName('顶部底部侧边');
 
+    }
 }

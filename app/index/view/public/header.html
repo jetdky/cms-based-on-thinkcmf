@@ -1,0 +1,39 @@
+<header class="home-header">
+    <div class="info">
+        <div class="home-header-con clearfix">
+            <div class="home-header-logo">
+                <a class="a-box" href="{:url('index/index/index')}"><img alt="logo" src="/upload/{$siteInfo['logo_cn']}"/></a>
+            </div>
+
+            <div class="home-header-name">
+                <p><strong>{$siteInfo['site_name']}</strong></p>
+                <p>{$siteInfo['site_name_en']}</p>
+            </div>
+
+            <div class="home-header-nav">
+                <nav class="home-ul">
+                    <volist name="nav" id="vo">
+                        <li <if condition="$i == 0">class="on"</if> >
+                            <a class="a-box" href="{$vo['url']}">{$vo['name']}</a>
+                        <if condition="isset($vo['_child'])">
+                            <dl>
+                                <volist name="vo['_child']" id="voo">
+                                    <dd>
+                                        <a href="{$voo['url']}">{$voo['name']}</a>
+                                    </dd>
+                                </volist>
+                            </dl>
+                        </if>
+                        </li>
+                    </volist>
+                </nav>
+            </div>
+            <!--移动端-->
+            <!--手机导航栏按钮-->
+            <div class="phone-btn">
+                <div class="phone-btn-ico"></div>
+            </div>
+
+        </div>
+    </div>
+</header>

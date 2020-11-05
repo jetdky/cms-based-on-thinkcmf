@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$content['product_seo']['title']}</title>
+    <meta name="keywords" content="{$content['product_seo']['keywords']}">
+    <meta name="description" content="{$content['product_seo']['description']}">
+    <include file="public/top_quote"/>
+</head>
+<body>
+<!--导航-->
+<include file="public/header"/>
+
+<!--轮播图-->
+<div class="home-rota">
+    <img src="/upload/{$indexContent['pageData'][0]['data'][0]['pacontent_img'][0]['imgs']['origi_img']}"/>
+</div>
+
+<div class = "home-center">
+
+
+    <!--关于我们-->
+
+    <div class = "about">
+
+        <div class = "about-title">
+
+            <div class = "info">
+
+                <div class = "about-title-con">
+
+                    <p>
+
+                        <span><a href = "/index.html">首页</a></span>
+
+                        <span>》</span>
+
+                        <span><a href = "{:url('index/product/category',['id'=> $vo['id']])}">{$nowCategory['name']}</a></span>
+
+                        <span>》</span>
+
+                        <span><a href = "">{$content['name']}</a></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class = "about-content">
+
+            <div class = "info">
+                <div class = "about-con clearfix">
+                    <div class = "about-right">
+                        <div class = "product-detail">
+                            <div class = "product-detail-title">
+                                <h1>{$content['name']}</h1>
+                            </div>
+                            <div class = "product-detail-pic">
+                                <div class = "spec-preview" id = "preview">
+												<span class = "jqzoom">
+													<img alt="{$content['name']}" jqimg = "/upload/{$content['product_img'][0]['imgs']['origi_img']}" src = "/upload/{$content['product_img'][0]['imgs']['origi_img']}"/>
+												</span>
+                                </div>
+
+                                <div class = "spec-scroll clearfix">
+
+                                    <a class = "prev">&lt;</a>
+
+                                    <a class = "next">&gt;</a>
+
+                                    <div class = "items">
+
+                                        <ul>
+                                            <volist name="content['product_img']" id="vo">
+                                                <li><img alt="{$content['name']}" bimg = "/upload/{$vo['imgs']['origi_img']}" onmousemove = "preview(this);" src = "/upload/{$vo['imgs']['origi_img']}"></li>
+                                            </volist>
+                                        </ul>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class = "product-detail-text">
+                               {$content['content']|htmlspecialchars_decode}
+                            </div>
+                            <div class = "product-detail-page">
+                                <p>上一个：
+                                    <if condition="$content['pre_and_next']['prev']">
+                                        <a href = "{:url('index/product/detail',['id'=> $content['pre_and_next']['prev']['id']])}">{$content['pre_and_next']['prev']['name']}</a>
+                                    <else />
+                                        <a>没有了</a>
+                                    </if>
+                                </p>
+
+                                <p>下一个：
+                                    <if condition="$content['pre_and_next']['next']">
+                                        <a href = "{:url('index/product/detail',['id'=> $content['pre_and_next']['next']['id']])}">{$content['pre_and_next']['next']['name']}</a>
+                                        <else />
+                                        <a>没有了</a>
+                                    </if>
+                                </p>
+                            </div>
+                            <if condition="$relatedProducts">
+                                <div class = "relevantPro">
+                                    <p class="relevantProName">相关产品</p>
+                                    <ul>
+                                        <volist name="relatedProducts" id="vo">
+                                            <li><a href = "{:url('index/product/detail', ['id' => $vo['id']])}">
+                                                <img src = "/upload/{$vo['product_img'][0]['imgs']['origi_img']}" alt = "{$vo['name']}">
+                                                <p>{$vo['name']}</p>
+                                            </a></li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </if>
+
+                            <if condition="$relatedNews">
+                                <div class = "relevantNew">
+                                    <p class="relevantProName">相关新闻</p>
+                                    <ul>
+                                        <volist name="relatedNews" id="vo">
+                                            <li>
+                                                <a href="{:url('index/news/detail', ['id' => $vo['id']])}">{$vo['name']}</a>
+                                            </li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </if>
+                        </div>
+                    </div>
+                    <div class = "about-left">
+
+                        <p class = "about-left-title">
+                            产品分类
+                        </p>
+
+                        <div class = "about-left-nav">
+                            <ul>
+                                <volist name="productCategory" id="vo">
+                                    <li class = "about-li">
+                                        <a class = "a-box" href = "{:url('index/product/category',['id'=>$vo['id']])}">{$vo['name']}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                            <p class = "about-left-title">
+                                推荐资讯
+                            </p>
+                            <ul class="newRecommend">
+                                <volist name="recomNews" id="vo">
+                                    <li>
+                                        <a href = "{:url('index/news/detail',['id'=>$vo['id']])}">{$vo['name']}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+
+                        <div class = "about-left-call">
+                            <div class = "about-left-call-pic">
+                                <img src = "__STATIC__/a_indexStatic/img/02at.png"/>
+                            </div>
+
+                            <div class = "about-left-call-text">
+                                <p>售后服务热线:</p>
+
+                                <p>{$bottom['pageData'][1]['data'][0]['other_info']}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<include file="public/footer"/>
+</body>
+</html>

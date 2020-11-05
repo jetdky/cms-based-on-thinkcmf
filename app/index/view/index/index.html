@@ -1,10 +1,284 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{$content['pageInfo']['class_seo']['title']}</title>
+    <meta name="keywords" content="{$content['pageInfo']['class_seo']['keywords']}">
+    <meta name="description" content="{$content['pageInfo']['class_seo']['description']}">
+    <include file="public/top_quote"/>
 </head>
 <body>
-{$pageInfo['class_tag']['name']}
+    <!--导航-->
+    <include file="public/header"/>
+
+    <!--轮播图-->
+    <div class="home-rota">
+        <div class="swiper-container">
+            <div class="swiper-wrapper">
+                <volist name="content['pageData'][0]['data'][0]['pacontent_img']" id="vo">
+                    <div class="swiper-slide"><img alt="轮播图" src="/upload/{$vo['imgs']['origi_img']}"/></div>
+                </volist>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+
+        <div class="home-rota-text">
+            <p><strong>诚</strong>则立 &nbsp;<strong>信</strong>则胜</p>
+
+            <p>Manufacturing quality sincere cooperation</p>
+        </div>
+    </div>
+
+    <!--搜索-->
+    <div class="home-search">
+        <div class="info">
+            <div class="home-search-con clearfix">
+                <div class="home-search-left">
+                    <span style="color: rgb(152,0,0);">热门关键词：</span>
+                    <volist name="content['pageData'][1]['data']" id="vo">
+                        <span><a href="{$vo['other_info']}">{$vo['name']}</a></span>
+                    </volist>
+                </div>
+                <div class="home-search-right">
+                    <form action="{:url('index/product/index')}" method="get">
+                        <input class="search-box" name="keywords" placeholder="请输入产品名" type="text"/>
+                        <input class="search-btn" type="submit" value=""/>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home-center">
+    <!--关于我们-->
+    <div class="myAbout">
+        <div class="info">
+            <div class="myAbout-con clearfix">
+                <div class="myAbout-left">
+                    <img alt="关于我们" src="/upload/{$content['pageData'][2]['data'][0]['pacontent_img'][0]['imgs']['origi_img']}"/>
+                    <span></span>
+                </div>
+
+                <div class="myAbout-right">
+                    <p>
+                        <span style="color: rgb(61, 133, 198);font-size: 20px;">宁波威康新材料有限公司</span>
+                    </p>
+                    {$content['pageData'][2]['data'][0]['content']|htmlspecialchars_decode}
+                    <div class="myAbout-right-box">
+                        <div class="myAbout-right-num">
+                            <div class="myAbout-right-num-pic">
+
+                                <a class="a-box" href="/about.html">
+
+                                    <img class="img1" src="__STATIC__/a_indexStatic/img/01at.png"/>
+
+                                    <img class="img2" src="__STATIC__/a_indexStatic/img/01ac.png"/>
+
+                                </a>
+
+                            </div>
+
+                            <p>企业简介</p>
+                        </div>
+
+                        <div class="myAbout-right-num">
+
+                            <div class="myAbout-right-num-pic">
+
+                                <a class="a-box" href="/contact.html">
+
+                                    <img class="img1" src="__STATIC__/a_indexStatic/img/02at.png"/>
+
+                                    <img class="img2" src="__STATIC__/a_indexStatic/img/02ac.png"/>
+
+                                </a>
+
+                            </div>
+
+                            <p>联系方式</p>
+
+                        </div>
+
+                        <div class="myAbout-right-num">
+
+                            <div class="myAbout-right-num-pic">
+
+                                <a class="a-box" href="/message.html">
+
+                                    <img class="img1" src="__STATIC__/a_indexStatic/img/03at.png"/>
+
+                                    <img class="img2" src="__STATIC__/a_indexStatic/img/03ac.png"/>
+
+                                </a>
+
+                            </div>
+
+                            <p>留言反馈</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--产品-->
+    <div class="myProduct">
+        <div class="info">
+            <div class="myProduct-con">
+                <div class="myProduct-title">
+                    <h2>热销产品</h2>
+                </div>
+
+                <div class="myProduct-nav clearfix">
+                    <ul>
+                        <volist name="productCategory" id="vo">
+                            <li>
+                                <a class="a-box" href="{:url('index/product/category', ['id' => $vo['id']])}">{$vo['name']}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                <div class="myProduct-pro clearfix">
+                    <volist name="products['data']" id="vo">
+                        <div class="myProduct-num">
+                            <div class="myProduct-num-pic">
+                                <a href="{:url('index/product/detail', ['id' => $vo['id']])}">
+                                    <img alt="{$vo['name']}" src="/upload/{$vo['product_img'][0]['imgs']['origi_img']}"/>
+                                </a>
+                            </div>
+
+                            <div class="myProduct-num-text">
+                                <a href="{:url('index/product/detail', ['id' => $vo['id']])}">{$vo['name']}</a>
+                            </div>
+                        </div>
+                    </volist>
+                </div>
+                <div class="myProduct-more">
+                    <a class="a-box" href="/product.html">更多产品</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--新闻-->
+    <div class="myNews">
+        <div class="info">
+            <div class="myNews-con">
+                <div class="myProduct-title">
+
+                    <h2>新闻动态</h2>
+
+                </div>
+
+                <div class="myNews-nav">
+                    <ul>
+                        <volist name="newsCategory" id="vo">
+                            <li>
+                                <a class="a-box" href="{:url('index/news/category', ['id' => $vo['id']])}">{$vo['name']}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+
+                <div class="myNews-content clearfix">
+                    <div class="myNews-left">
+                        <div class="myNews-left-pic">
+                            <a href="{:url('index/news/detail', ['id' => $news['data'][0]['id']])}"><img alt="{$news['data'][0]['name']}" src="/upload/{$news['data'][0]['news_img'][0]['imgs']['origi_img']}"/></a>
+                        </div>
+                        <div class="myNews-left-btn">
+                            <ul>
+                                <li>1</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="myNews-right">
+                        <volist name="news['data']" id="vo" offset="1">
+                            <div class="myNews-num clearfix">
+                                <div class="myNews-num-time">
+                                    <p>{$vo['show_time']|substr=8,2}</p>
+                                    <p>{$vo['show_time']|substr=0,7}</p>
+                                </div>
+                                <div class="myNews-num-text">
+                                    <p>
+                                        <a href="{:url('index/news/detail', ['id' => $vo['id']])}">{$vo['name']}</a>
+                                    </p>
+                                    <p>{$vo['news_seo']['description']}......</p>
+                                </div>
+                            </div>
+                        </volist>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--联系我们-->
+
+    <div class="myContact">
+        <div class="info">
+            <div class="myContact-con">
+                <div class="myProduct-title">
+
+                    <h2>联系方式</h2>
+
+                    <p>我们将一如既往地为我们的客户提供较好的服务及创造较大的利益空间</p>
+
+                </div>
+
+                <div class="myContact-content clearfix">
+                    <div class="myContact-left">
+                        <div class="myContact-left-map">
+                            <div id="dituContent" style="width: 100%;height:360px;"></div>
+                        </div>
+
+                        <div class="myContact-left-text">
+                            {$content['pageData'][3]['data'][0]['content']|htmlspecialchars_decode}
+                        </div>
+                    </div>
+
+                    <div class="myContact-right">
+                        <form action="{:url('index/message/add')}" method="post">
+                            <div class="myContact-right-title">
+                                <p>留言反馈</p>
+
+                                <p>请留下您的宝贵意见，以便我们更好的为你服务</p>
+                            </div>
+                            <div class="myContact-right-input">
+                                <ul>
+                                    <li><label>留言标题</label>
+                                        <input name="name" type="text"/>
+                                    </li>
+
+                                    <li><label>您的姓名</label>
+                                        <input name="username" type="text"/>
+                                    </li>
+
+                                    <li><label>您的电话</label>
+                                        <input name="phone" type="text"/>
+                                    </li>
+
+                                    <li><label>您的邮箱</label>
+                                        <input name="email" type="text"/>
+                                    </li>
+
+                                    <li><label>留言内容</label><textarea name="content"></textarea></li>
+
+                                    <li><label></label>
+                                        <input class="msg-btn" name="" type="submit" value="提交"/>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <include file="public/footer"/>
 </body>
 </html>

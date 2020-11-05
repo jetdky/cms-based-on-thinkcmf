@@ -85,7 +85,7 @@ class PacontentController extends AdminBaseController
         }
         $list = $pacontentModel->where($where)
             ->with(['pacontentImg', 'pacontentImg.imgs', 'paGetClass'])
-            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+            ->order("order_num ASC")->paginate(20, false, ['query' => $data]);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);

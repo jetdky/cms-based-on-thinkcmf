@@ -3,17 +3,10 @@
 <body>
 <div class="wrap js-check-wrap">
     <ul class="nav nav-tabs">
-        <li class="active"><a href="{:url('message/index')}">所有留言板</a></li>
+        <li class="active"><a href="{:url('message/index')}">所有留言</a></li>
     </ul>
     <form method="post" class="js-ajax-form margin-top-20" action="{:url('message/listOrder')}">
         <div class="table-actions">
-            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
-            <button class="btn btn-sm btn-success js-ajax-submit" type="submit"
-                    data-action="{:url('message/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
-            </button>
-            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
-                    data-action="{:url('message/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
-            </button>
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('message/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
             </button>
@@ -24,11 +17,9 @@
             <tr>
                 <th width="16"><label><input type="checkbox" class="js-check-all" data-direction="x"
                                              data-checklist="js-check-x"></label></th>
-                <th width="50">{:lang('SORT')}</th>
                 <th width="50">ID</th>
-                <th>{:lang('MESSAGE_NAME')}</th>
-                <th>{:lang('MESSAGE_PHONE')}</th>
-                <th>{:lang('MESSAGE_ADDRESS')}</th>
+                <th>主题</th>
+                <th>时间</th>
                 <th width="50">{:lang('STATUS')}</th>
                 <th width="120">{:lang('ACTIONS')}</th>
             </tr>
@@ -38,25 +29,22 @@
                 <tr>
                     <td><input type="checkbox" class="js-check" data-yid="js-check-y" data-xid="js-check-x" name="ids[]"
                                value="{$vo.id}"></td>
-                    <td><input name='order_nums[{$vo.id}]' class="input input-order mr5" type='text' size='3'
-                               value='{$vo.order_num}'></td>
                     <td>{$vo.id}</td>
                     <td>{$vo.name}</td>
-                    <td>{$vo.phone}</td>
-                    <td>{$vo.address}</td>
+                    <td>{$vo.create_time}</td>
                     <td>
                         <empty name="vo.status">
-                            <span class="label label-default">
-                                {$status[$vo['status']]}
+                            <span class="label label-danger">
+                                未读
                             </span>
                             <else/>
                             <span class="label label-success">
-                                {$status[$vo['status']]}
+                                已读
                             </span>
                         </empty>
                     </td>
                     <td>
-                        <a class="btn btn-xs btn-primary" href="{:url('message/edit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                        <a class="btn btn-xs btn-primary" href="{:url('message/edit',array('id'=>$vo['id']))}">查看</a>
                         <a class="btn btn-xs btn-danger" href="{:url('message/delete',array('id'=>$vo['id']))}" class="js-ajax-delete">
                             {:lang('DELETE')}
                         </a>
@@ -66,13 +54,6 @@
             </tbody>
         </table>
         <div class="table-actions">
-            <button class="btn btn-sm btn-primary js-ajax-submit" type="submit">{:lang('SORT')}</button>
-            <button class="btn btn-sm btn-success js-ajax-submit" type="submit"
-                    data-action="{:url('message/toggle',array('display'=>1))}" data-subcheck="true">{:lang('DISPLAY')}
-            </button>
-            <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
-                    data-action="{:url('message/toggle',array('hide'=>1))}" data-subcheck="true">{:lang('HIDE')}
-            </button>
             <button class="btn btn-sm btn-danger js-ajax-submit" type="submit"
                     data-action="{:url('message/deleteAll')}" data-subcheck="true">{:lang('DELETE_ALL')}
             </button>

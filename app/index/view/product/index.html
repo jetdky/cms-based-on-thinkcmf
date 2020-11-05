@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{$indexContent['pageInfo']['class_seo']['title']}</title>
+    <meta name="keywords" content="{$indexContent['pageInfo']['class_seo']['keywords']}">
+    <meta name="description" content="{$indexContent['pageInfo']['class_seo']['description']}">
+    <include file="public/top_quote"/>
+</head>
+<body>
+<!--导航-->
+<include file="public/header"/>
+
+<!--轮播图-->
+<div class="home-rota">
+    <img src="/upload/{$indexContent['pageData'][0]['data'][0]['pacontent_img'][0]['imgs']['origi_img']}"/>
+</div>
+
+<div class = "home-center">
+
+
+    <!--关于我们-->
+
+    <div class = "about">
+
+        <div class = "about-title">
+
+            <div class = "info">
+
+                <div class = "about-title-con">
+
+                    <p>
+
+                        <span><a href = "/index.html">首页</a></span>
+
+                        <span>》</span>
+
+                        <span><a href = "/product.html">产品展示</a></span>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class = "about-content">
+
+            <div class = "info">
+
+                <div class = "about-con clearfix">
+
+
+                    <div class = "about-right">
+                        <h1>产品展示</h1>
+                        <div class = "product clearfix">
+                            <volist name="products['data']" id="vo">
+                                <div class = "product-num">
+                                    <div class = "product-num-pic">
+                                        <a class = "a-box" href = "{:url('index/product/detail', ['id' => $vo['id']])}"><img alt="{$vo['name']}" src = "/upload/{$vo['product_img'][0]['imgs']['origi_img']}"/></a>
+                                    </div>
+                                    <div class = "product-num-name">
+                                        <a class = "a-box" href = "{:url('index/product/detail', ['id' => $vo['id']])}">{$vo['name']}</a>
+                                    </div>
+                                </div>
+                            </volist>
+                        </div>
+
+                        <div class = "product-page">
+                            <span>共{$products['total']}条记录</span>
+                            {$page}
+                        </div>
+
+                    </div>
+                    <div class = "about-left">
+
+                        <p class = "about-left-title">
+                            产品分类
+                        </p>
+
+                        <div class = "about-left-nav">
+                            <ul>
+                                <volist name="productCategory" id="vo">
+                                    <li class = "about-li">
+                                        <a class = "a-box" href = "{:url('index/product/category',['id'=>$vo['id']])}">{$vo['name']}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                            <p class = "about-left-title">
+                                推荐资讯
+                            </p>
+                            <ul class="newRecommend">
+                                <volist name="recomNews" id="vo">
+                                    <li>
+                                        <a href = "{:url('index/news/detail',['id'=>$vo['id']])}">{$vo['name']}</a>
+                                    </li>
+                                </volist>
+                            </ul>
+                        </div>
+
+                        <div class = "about-left-call">
+                            <div class = "about-left-call-pic">
+                                <img src = "__STATIC__/a_indexStatic/img/02at.png"/>
+                            </div>
+
+                            <div class = "about-left-call-text">
+                                <p>售后服务热线:</p>
+
+                                <p>{$bottom['pageData'][1]['data'][0]['other_info']}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<include file="public/footer"/>
+</body>
+</html>

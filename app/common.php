@@ -48,10 +48,15 @@ function removeHtml($data)
  * @return $list 分好类的数组 直接遍历即可 $level可以用来遍历缩进
  */
 
-function build_category_tree($array, $pid = 0, $level = 1)
+function build_category_tree($array, $pid = 0, $level = 1, $is_first = 1)
 {
     //声明静态数组,避免递归调用时,多次声明导致数组覆盖
     static $list = [];
+
+    //解决多次调用值重复
+    if ($is_first){
+        $list = [];
+    }
     foreach ($array as $key => $value) {
         //第一次遍历,找到父节点为根节点的节点 也就是pid=0的节点
         if ($value['parent_id'] == $pid) {
@@ -62,7 +67,7 @@ function build_category_tree($array, $pid = 0, $level = 1)
             //把这个节点从数组中移除,减少后续递归消耗
 //            unset($array[$key]);
             //开始递归,查找父ID为该节点ID的节点,级别则为原级别+1
-            build_category_tree($array, $value['id'], $level + 1);
+            build_category_tree($array, $value['id'], $level + 1, 0);
         }
     }
     return $list;
@@ -94,11 +99,38 @@ function clear_dir($path = null)
  * @param $id
  * 判断id是否在array有子类
  */
-function is_have_son($array, $id){
-    foreach($array as $key => $value){
-        if ($value['parent_id'] == $id){
-             return true;
+function is_have_son($array, $id)
+{
+    foreach ($array as $key => $value) {
+        if ($value['parent_id'] == $id) {
+            return true;
         }
     }
     return false;
+}
+
+function list_to_tree($list, $pk = 'id', $pid = 'pid', $child = '_child', $root = 0)
+{
+    // 创建Tree
+    $tree = array();
+    if (is_array($list)) {
+        // 创建基于主键的数组引用
+        $refer = array();
+        foreach ($list as $key => $data) {
+            $refer[$data[$pk]] =& $list[$key];
+        }
+        foreach ($list as $key => $data) {
+            // 判断是否存在parent
+            $parentId = $data[$pid];
+            if ($root == $parentId) {
+                $tree[] =& $list[$key];
+            } else {
+                if (isset($refer[$parentId])) {
+                    $parent =& $refer[$parentId];
+                    $parent[$child][] =& $list[$key];
+                }
+            }
+        }
+    }
+    return $tree;
 }

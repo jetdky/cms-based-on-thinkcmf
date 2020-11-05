@@ -119,6 +119,13 @@
       }
     })
   })
+  $(window).keydown( function(e) {
+      var key = window.event?e.keyCode:e.which;
+      if(key.toString() == "13"){
+          return false;
+      }
+  });
 </script>
+
 </body>
 </html>

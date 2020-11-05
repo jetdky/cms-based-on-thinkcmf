@@ -34,6 +34,6 @@ class TagService
                 $ids[] = $value['id'];
             }
         }
-        return $ids;
+        return $model->where('id', 'in', $ids)->with($class .'_img.imgs')->select()->toArray();
     }
 }

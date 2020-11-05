@@ -31,9 +31,9 @@ class AdminBaseController extends BaseController
             $this->assign("admin", $user);
         } else {
             if ($this->request->isPost()) {
-                $this->error("您还没有登录！", url("admin/public/login"));
+                $this->error("您还没有登录！", url("index/index/index"));
             } else {
-                return $this->redirect(url("admin/Public/login"));
+                return $this->redirect(url("index/index/index"));
             }
         }
 

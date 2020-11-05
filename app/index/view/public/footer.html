@@ -1,0 +1,35 @@
+<footer class="home-footer">
+    <div class="info">
+        <div class="footer-con clearfix">
+            <div class="footer-left">
+                <div class="footer-nav">
+                    <ul class="clearfix">
+                        <volist name="nav" id="vo">
+                            <li>
+                                <a class="a-box" href="{$vo['url']}">{$vo['name']}</a>
+                            </li>
+                        </volist>
+                    </ul>
+                </div>
+                {$bottom['pageData'][3]['data'][0]['content']|htmlspecialchars_decode}
+            </div>
+            <ul class="left">
+                <p>友情链接</p>
+                <volist name="bottom['pageData'][0]['data']" id="vo">
+                    <li><a href="{$vo['other_info']}">{$vo['name']}</a></li>
+                </volist>
+            </ul>
+            <div class="footer-right clearfix">
+                <div class="footer-right-erweima">
+                    <img src="/upload/{$siteInfo['qr']}"/>
+                </div>
+                <div class="footer-right-text">
+                    <p>扫描二维码</p>
+                    <p>关注我们</p>
+                </div>
+            </div>
+
+            <span class="flags">{$bottom['pageData'][2]['data'][0]['other_info']}</span>
+        </div>
+    </div>
+</footer>

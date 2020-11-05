@@ -6,30 +6,38 @@
 namespace app\index\service;
 
 
-use app\common\model\ClassModel;
+use app\common\model\NewsModel;
 
 class NewsService
 {
-    public function getNews($categoryName = '', $everyPageNum = 10, $order = 'asc', $newsModel)
+    public function getNews($id = '', $everyPageNum = 10, $order = 'asc', $keywords = '')
     {
+        $newsModel = new NewsModel();
         $where['type'] = $newsModel->categoryType;
-        $where['name'] = $categoryName;
+        $where['id'] = $id;
         $where['status'] = 1;
-        if ($categoryName) {
-            $category = (new ClassModel())->where($where)->find();
-            $whereNoSubCategory['cid'] = $category['id'];
+        $whereNoSubCategory = [];
+        if ($id) {
+//            $category = (new ClassModel())->where($where)->find();
+            $whereNoSubCategory['cid'] = $id;
         }
-        $subCategories = (new ClassService())->getNewsCategory($categoryName);
-        if (!reset($subCategories)) {
-            //如果没有子类则直接读分类下产品
-            $news = $newsModel->where($whereNoSubCategory)->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->order('order_num ' . $order)->paginate($everyPageNum);
-        } else {
-            //有子类，则读取子类下所有产品
-            foreach ($subCategories as $value) {
-                $sonCategoryId[] = $value['id'];
+        $subCategories = (new ClassService())->getCategory('news', $id);
+        if (!$keywords) {
+            //非搜索
+            if (!reset($subCategories)) {
+                //如果没有子类则直接读分类下产品
+                $news = $newsModel->where($whereNoSubCategory)->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->order('order_num ' . $order)->paginate($everyPageNum);
+            } else {
+                //有子类，则读取子类下所有产品
+                $sonCategoryId = [];
+                foreach ($subCategories as $value) {
+                    $sonCategoryId[] = $value['id'];
+                }
+                $whereSonId[] = ['cid', 'IN', $sonCategoryId];
+                $news = $newsModel->where($whereSonId)->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->order('order_num ' . $order)->paginate($everyPageNum);
             }
-            $whereSonId[] = ['cid', 'IN', $sonCategoryId];
-            $news = $newsModel->where($whereSonId)->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->order('order_num ' . $order)->paginate($everyPageNum);
+        } else {
+            $news = $newsModel->where($whereNoSubCategory)->where('name', 'like', '%' . $keywords . '%')->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->order('order_num ' . $order)->paginate($everyPageNum);
         }
 
         //调整格式
@@ -45,7 +53,8 @@ class NewsService
                 unset($news[$key]['news_seo']);
                 $news[$key]['news_seo'] = $temp;
             }
-
+            //description为文章中前面80词
+            $news[$key]['news_seo']['description'] = mb_substr(strip_tags(htmlspecialchars_decode($value['content'])), 0, 80);
             //如果标签不为空
             if (reset($value['news_tag'])) {
                 $temp = $value['news_tag'][0]['tags']['id'];
@@ -56,8 +65,9 @@ class NewsService
         return $news;
     }
 
-    public function getNewsDetail($id, $newsModel)
+    public function getNewsDetail($id)
     {
+        $newsModel = new NewsModel();
         $detail = $newsModel->where('id', $id)->with(['newsSeo.seo', 'newsTag.tags', 'newsImg.imgs'])->find()->toArray();
         $siteInfo = cmf_get_option('site_info');
 
@@ -71,16 +81,48 @@ class NewsService
             unset($detail['news_seo']);
             $detail['news_seo'] = $temp;
         }
-
+        $detail['news_seo']['description'] = mb_substr(strip_tags(htmlspecialchars_decode($detail['content'])), 0, 80);
         //如果标签不为空
         if (reset($detail['news_tag'])) {
             $temp = $detail['news_tag'][0]['tags']['id'];
             unset($detail['news_tag']);
             $detail['news_tag'] = $temp;
         }
-        $detail['pre_and_next']['next'] = $newsModel->where('cid', $detail['cid'])->where('id', '>', $detail['id'])->value('id');
-        $detail['pre_and_next']['prev'] = $newsModel->where('cid', $detail['cid'])->where('id', '<', $detail['id'])->value('id');
+        $detail['pre_and_next']['next'] = $newsModel->field("id,name")->where('cid', $detail['cid'])->where('id', '>', $detail['id'])->find();
+        $detail['pre_and_next']['prev'] = $newsModel->field("id,name")->where('cid', $detail['cid'])->where('id', '<', $detail['id'])->find();
 
         return $detail;
+    }
+
+    public function getNewsNums($id = '', $order = 'asc', $keywords = '')
+    {
+        $newsModel = new NewsModel();
+        $where['type'] = $newsModel->categoryType;
+        $where['id'] = $id;
+        $where['status'] = 1;
+        $whereNoSubCategory = [];
+        if ($id) {
+//            $category = (new ClassModel())->where($where)->find();
+            $whereNoSubCategory['cid'] = $id;
+        }
+        $subCategories = (new ClassService())->getCategory('news', $id);
+        if (!$keywords) {
+            //非搜索
+            if (!reset($subCategories)) {
+                //如果没有子类则直接读分类下产品
+                $news = $newsModel->where($whereNoSubCategory)->count();
+            } else {
+                //有子类，则读取子类下所有产品
+                $sonCategoryId = [];
+                foreach ($subCategories as $value) {
+                    $sonCategoryId[] = $value['id'];
+                }
+                $whereSonId[] = ['cid', 'IN', $sonCategoryId];
+                $news = $newsModel->where($whereSonId)->count();
+            }
+        } else {
+            $news = $newsModel->where($whereNoSubCategory)->where('name', 'like', '%' . $keywords . '%')->count();
+        }
+        return $news;
     }
 }

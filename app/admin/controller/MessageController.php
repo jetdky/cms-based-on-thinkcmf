@@ -107,11 +107,10 @@ class MessageController extends AdminBaseController
      */
     public function edit()
     {
-        $id = $this->request->param('id', 0, 'intval');
-        $linkModel = new LinkModel();
-        $link = $linkModel->get($id);
-        $this->assign('targets', $this->targets);
-        $this->assign('link', $link);
+        $data = $this->request->param();
+        model('message')->where('id', $data['id'])->update(['status' => 1]);
+        $message = model('message')->find($data['id']);
+        $this->assign('data', $message);
         return $this->fetch();
     }
 

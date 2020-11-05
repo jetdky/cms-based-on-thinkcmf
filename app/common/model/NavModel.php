@@ -17,10 +17,4 @@ class NavModel extends Model
 {
 
 
-    public function navMenusTreeArray(){
-
-
-    }
-
-
 }

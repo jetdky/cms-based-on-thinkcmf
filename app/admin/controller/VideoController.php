@@ -80,7 +80,7 @@ class VideoController extends AdminBaseController
         }
         $list = $videoModel->where($where)
             ->with(['videoImg', 'videoImg.imgs', 'videoClass'])
-            ->order("order_num ASC")->paginate(10, false, ['query' => $data]);
+            ->order("order_num ASC")->paginate(20, false, ['query' => $data]);
 
         // 获取分页显示
         $page = $list->render();
